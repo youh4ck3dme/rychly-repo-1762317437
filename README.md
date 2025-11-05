@@ -193,3 +193,4 @@ Pri problémoch skontrolujte:
 ---
 
 **💇‍♂️ Šťastné kódovanie! - PAPI Hair Design tím**
+# Snimka-obrazovky-2025-11-05-o-5-19-25-1
