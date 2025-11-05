@@ -1,0 +1,9 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Bold Style Icon - Dynamic angular design -->
+  <path d="M12 52 L32 12 L52 52" stroke="#2C2C2C" stroke-width="3" fill="none"/>
+  <path d="M20 40 L44 40" stroke="#DC143C" stroke-width="3"/>
+  <polygon points="32,16 38,26 26,26" fill="#DC143C"/>
+  <circle cx="18" cy="46" r="2" fill="#DC143C"/>
+  <circle cx="46" cy="46" r="2" fill="#DC143C"/>
+  <path d="M24 34 Q32 30 40 34" stroke="#2C2C2C" stroke-width="2" fill="none"/>
+</svg>

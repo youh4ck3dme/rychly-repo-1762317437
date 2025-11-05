@@ -1,0 +1,126 @@
+---
+export interface Props {
+  title: string;
+  description: string;
+  structuredData?: object;
+}
+
+const { title, description, structuredData } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="sk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#2563eb" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/assets/site.webmanifest" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={Astro.url} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+
+    <!-- Structured Data -->
+    {structuredData && (
+      <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    )}
+  </head>
+  <body class="font-sans antialiased bg-white text-gray-900">
+    <slot />
+  
+    <!-- Google Analytics -->
+    <script>
+      // Google Analytics 4
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'GA_MEASUREMENT_ID'); // Replace with actual GA ID
+  
+      // Track page views
+      gtag('event', 'page_view', {
+        page_title: document.title,
+        page_location: window.location.href,
+        page_path: window.location.pathname
+      });
+  
+      // Track user interactions
+      document.addEventListener('DOMContentLoaded', function() {
+        // Track AI Analysis clicks
+        const aiButtons = document.querySelectorAll('a[href*="analyze"], button[class*="ai"]');
+        aiButtons.forEach(button => {
+          button.addEventListener('click', () => {
+            gtag('event', 'ai_analysis_started', {
+              event_category: 'engagement',
+              event_label: 'AI Analysis Button'
+            });
+          });
+        });
+  
+        // Track booking clicks
+        const bookingButtons = document.querySelectorAll('a[href*="kontakty"], a[href*="booking"]');
+        bookingButtons.forEach(button => {
+          button.addEventListener('click', () => {
+            gtag('event', 'booking_initiated', {
+              event_category: 'conversion',
+              event_label: 'Booking Button'
+            });
+          });
+        });
+  
+        // Track AR camera usage
+        const arButtons = document.querySelectorAll('button[class*="ar"], button[class*="camera"]');
+        arButtons.forEach(button => {
+          button.addEventListener('click', () => {
+            gtag('event', 'ar_camera_opened', {
+              event_category: 'feature_usage',
+              event_label: 'AR Camera'
+            });
+          });
+        });
+  
+        // Track social sharing
+        const shareButtons = document.querySelectorAll('button[class*="share"], button[class*="social"]');
+        shareButtons.forEach(button => {
+          button.addEventListener('click', () => {
+            gtag('event', 'social_share_clicked', {
+              event_category: 'engagement',
+              event_label: 'Social Share'
+            });
+          });
+        });
+      });
+  
+      // Error tracking
+      window.addEventListener('error', function(event) {
+        gtag('event', 'exception', {
+          description: event.message,
+          fatal: false
+        });
+      });
+    </script>
+  
+    <!-- Google Tag Manager (noscript fallback) -->
+    <noscript>
+      <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
+              height="0" width="0" style="display:none;visibility:hidden">
+      </iframe>
+    </noscript>
+  </body>
+  </html>
+
+<style is:global>
+  @import "../styles/global.css";
+</style>
+</html>

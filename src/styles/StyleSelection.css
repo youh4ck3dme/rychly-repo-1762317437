@@ -1,0 +1,330 @@
+/* Style Selection Component Styles */
+.style-selection {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.style-selection__header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.style-selection__title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.style-selection__subtitle {
+  font-size: 1.125rem;
+  color: #666;
+  font-weight: 400;
+  line-height: 1.5;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.style-selection__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.style-option {
+  position: relative;
+  background: #ffffff;
+  border: 2px solid #f0f0f0;
+  border-radius: 16px;
+  padding: 2rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  min-height: 180px;
+  overflow: hidden;
+  
+  /* Perfect pixel alignment */
+  box-sizing: border-box;
+  will-change: transform, box-shadow;
+}
+
+.style-option:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  border-color: var(--accent-color, #e0e0e0);
+}
+
+.style-option--selected {
+  border-color: var(--accent-color, #007bff);
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 1) 0%, 
+    rgba(var(--accent-color-rgb, 0, 123, 255), 0.03) 100%
+  );
+}
+
+.style-option--selected .style-option__border {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.style-option__content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  gap: 1.5rem;
+}
+
+.style-option__icon {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, 
+    rgba(var(--accent-color-rgb, 0, 123, 255), 0.1) 0%, 
+    rgba(var(--accent-color-rgb, 0, 123, 255), 0.05) 100%
+  );
+  border-radius: 12px;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.style-option__icon img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  filter: brightness(0) saturate(100%) invert(20%);
+  transition: filter 0.3s ease;
+}
+
+.style-option:hover .style-option__icon {
+  background: linear-gradient(135deg, 
+    rgba(var(--accent-color-rgb, 0, 123, 255), 0.15) 0%, 
+    rgba(var(--accent-color-rgb, 0, 123, 255), 0.08) 100%
+  );
+  transform: scale(1.05);
+}
+
+.style-option:hover .style-option__icon img {
+  filter: brightness(0) saturate(100%) 
+    invert(var(--accent-invert, 20%)) 
+    sepia(var(--accent-sepia, 100%)) 
+    saturate(var(--accent-saturate, 200%)) 
+    hue-rotate(var(--accent-hue, 0deg));
+}
+
+.style-option__text {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.style-option__name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.style-option__description {
+  font-size: 0.95rem;
+  color: #666;
+  line-height: 1.5;
+  margin: 0;
+  font-weight: 400;
+}
+
+.style-option__border {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, 
+    var(--accent-color, #007bff) 0%, 
+    rgba(var(--accent-color-rgb, 0, 123, 255), 0.7) 100%
+  );
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Color variables for each style */
+.style-option:nth-child(1) { /* Classic */
+  --accent-color: #C9A961;
+  --accent-color-rgb: 201, 169, 97;
+  --accent-invert: 60%;
+  --accent-sepia: 50%;
+  --accent-saturate: 150%;
+  --accent-hue: 35deg;
+}
+
+.style-option:nth-child(2) { /* Trendy */
+  --accent-color: #00D4FF;
+  --accent-color-rgb: 0, 212, 255;
+  --accent-invert: 70%;
+  --accent-sepia: 100%;
+  --accent-saturate: 200%;
+  --accent-hue: 190deg;
+}
+
+.style-option:nth-child(3) { /* Bold */
+  --accent-color: #DC143C;
+  --accent-color-rgb: 220, 20, 60;
+  --accent-invert: 20%;
+  --accent-sepia: 100%;
+  --accent-saturate: 300%;
+  --accent-hue: 340deg;
+}
+
+.style-option:nth-child(4) { /* Low Maintenance */
+  --accent-color: #87A96B;
+  --accent-color-rgb: 135, 169, 107;
+  --accent-invert: 50%;
+  --accent-sepia: 30%;
+  --accent-saturate: 120%;
+  --accent-hue: 90deg;
+}
+
+.style-option:nth-child(5) { /* Glamorous */
+  --accent-color: #E8B4B8;
+  --accent-color-rgb: 232, 180, 184;
+  --accent-invert: 70%;
+  --accent-sepia: 40%;
+  --accent-saturate: 130%;
+  --accent-hue: 355deg;
+}
+
+.style-option:nth-child(6) { /* Bohemian */
+  --accent-color: #CD853F;
+  --accent-color-rgb: 205, 133, 63;
+  --accent-invert: 40%;
+  --accent-sepia: 60%;
+  --accent-saturate: 150%;
+  --accent-hue: 30deg;
+}
+
+.style-option:nth-child(7) { /* Art Deco */
+  --accent-color: #F7E7CE;
+  --accent-color-rgb: 247, 231, 206;
+  --accent-invert: 80%;
+  --accent-sepia: 20%;
+  --accent-saturate: 110%;
+  --accent-hue: 40deg;
+}
+
+.style-option:nth-child(8) { /* Futuristic */
+  --accent-color: #8A2BE2;
+  --accent-color-rgb: 138, 43, 226;
+  --accent-invert: 40%;
+  --accent-sepia: 100%;
+  --accent-saturate: 200%;
+  --accent-hue: 280deg;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .style-selection {
+    padding: 1.5rem;
+  }
+  
+  .style-selection__title {
+    font-size: 2rem;
+  }
+  
+  .style-selection__grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .style-option {
+    padding: 1.5rem;
+    min-height: 160px;
+  }
+  
+  .style-option__icon {
+    width: 56px;
+    height: 56px;
+  }
+  
+  .style-option__icon img {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .style-selection {
+    padding: 1rem;
+  }
+  
+  .style-selection__title {
+    font-size: 1.75rem;
+  }
+  
+  .style-selection__subtitle {
+    font-size: 1rem;
+  }
+  
+  .style-option {
+    padding: 1.25rem;
+    min-height: 140px;
+  }
+}
+
+/* Focus states for accessibility */
+.style-option:focus {
+  outline: 2px solid var(--accent-color, #007bff);
+  outline-offset: 2px;
+}
+
+.style-option:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .style-option {
+    border-width: 3px;
+  }
+  
+  .style-option__name {
+    color: #000;
+  }
+  
+  .style-option__description {
+    color: #333;
+  }
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .style-option {
+    transition: none;
+  }
+  
+  .style-option:hover {
+    transform: none;
+  }
+  
+  .style-option__icon {
+    transition: none;
+  }
+  
+  .style-option__border {
+    transition: none;
+  }
+}

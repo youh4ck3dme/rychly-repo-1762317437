@@ -1,0 +1,715 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import AnimatedCounter from '../components/AnimatedCounter.astro';
+
+const heroServices = [
+  {
+    title: 'AI Hair Analysis',
+    description: 'Prvé štúdio na Slovensku s AI analýzou vlasov pre personalizované odporúčania',
+    icon: '🤖',
+    highlight: true,
+    badge: 'NEW'
+  },
+  {
+    title: 'Premium Coloring',
+    description: 'L\'Oréal Professional a Redken téchniky s medzinárodnou certifikáciou',
+    icon: '🎨',
+    highlight: false
+  },
+  {
+    title: 'Luxury Experience',
+    description: 'VIP klientsky servis v luxusnom prostredí s kompletným komfortom',
+    icon: '✨',
+    highlight: false
+  }
+];
+
+const services = [
+  {
+    title: 'Precision Hair Cuts',
+    description: 'Autorské strihy od medzinárodne certifikovaných stylistov. Každý strih je jedinečné umelecké dielo.',
+    icon: 'scissors',
+    price: 'od 35€',
+    duration: '60-90 min',
+    difficulty: 'Professional'
+  },
+  {
+    title: 'Advanced Coloring',
+    description: 'Komplexné farbenie s L\'Oréal Professional produktmi. Balayage, ombré a korekcie farieb.',
+    icon: 'palette',
+    price: 'od 65€',
+    duration: '120-180 min',
+    difficulty: 'Expert'
+  },
+  {
+    title: 'Hair Reconstruction',
+    description: 'Keratínové ošetrenia, Olaplex procedúry a hĺbková regenerácia poškodených vlasov.',
+    icon: 'heart',
+    price: 'od 45€',
+    duration: '90-120 min',
+    difficulty: 'Specialist'
+  },
+  {
+    title: 'Bridal Styling',
+    description: 'Svadobné účesy a make-up s možnosťou skúšobného termínu. Perfektný look pre váš veľký deň.',
+    icon: 'star',
+    price: 'od 85€',
+    duration: '150-200 min',
+    difficulty: 'Master'
+  },
+  {
+    title: 'Men\'s Grooming',
+    description: 'Moderné pánske strihy, holenie a beard styling. Kompletný grooming servis pre gentlemanov.',
+    icon: 'scissors',
+    price: 'od 25€',
+    duration: '45-60 min',
+    difficulty: 'Professional'
+  },
+  {
+    title: 'Hair Extensions',
+    description: 'Predĺženie vlasov s európskymi prémiovými vlasmi. Természetes a dlhotrvajúci efekt.',
+    icon: 'sparkles',
+    price: 'od 120€',
+    duration: '180-240 min',
+    difficulty: 'Expert'
+  }
+];
+
+const features = [
+  {
+    title: 'Medzinárodné certifikáty',
+    description: 'Našich špecialistov školili priamo v L\'Oréal akadémii v Paríži a Londýne.',
+    icon: '🎓',
+    color: 'emerald'
+  },
+  {
+    title: 'AI technológie',
+    description: 'Jediné štúdio na východnom Slovensku s AI analýzou vlasov a personalizovanými odporúčaniami.',
+    icon: '🤖',
+    color: 'blue'
+  },
+  {
+    title: 'Prémiové produkty',
+    description: 'Exkluzívne používame produkty L\'Oréal Professional, Redken, Schwarzkopf a Olaplex.',
+    icon: '💎',
+    color: 'purple'
+  },
+  {
+    title: 'Luxusné prostredie',
+    description: 'Moderne zariadené štúdió s klimatizáciou, Wi-Fi a občerstvením pre maximálny komfort.',
+    icon: '🏆',
+    color: 'rose'
+  }
+];
+
+const stats = [
+  { number: 1500, label: 'Spokojných klientov', suffix: '+', icon: '👥' },
+  { number: 16, label: 'Rokov tradície', suffix: '+', icon: '⏰' },
+  { number: 99.2, label: 'Spokojnosť', suffix: '%', icon: '⭐' },
+  { number: 4, label: 'Certifikovaných expertov', suffix: '', icon: '🎓' }
+];
+
+const testimonials = [
+  {
+    name: 'Martina K.',
+    text: 'Úžasný zážitok! PAPI vytvoril presne to, čo som si predstavovala. Profesionalita na najvyššej úrovni.',
+    rating: 5,
+    service: 'Balayage'
+  },
+  {
+    name: 'Peter S.',
+    text: 'Najlepší pánsky strih v Košiciach. Martin má cit pre detail a vie presne, čo k môjmu typu tváre.',
+    rating: 5,
+    service: 'Pánsky strih'
+  },
+  {
+    name: 'Eva M.',
+    text: 'Svadobný účes bol nádherný! Vydržal celú svadbu a všetci sa pýtali, kde som to mala robené.',
+    rating: 5,
+    service: 'Svadobný styling'
+  }
+];
+---
+
+<BaseLayout title="PAPI Hair Design | Luxury Hair Studio Košice | AI Hair Analysis" description="Najmodernejšie hair štúdio v Košiciach s AI analýzou vlasov. Medzinárodne certifikovaní stylisti. L'Oréal Professional partner. Rezervujte si termín online!">
+  <Header />
+
+  <!-- Hero Section with Starry Background -->
+  <section class="relative min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-emerald-900 overflow-hidden">
+    <!-- Starry Background Animation -->
+    <div class="absolute inset-0">
+      <div class="stars"></div>
+      <div class="twinkling"></div>
+      <div class="clouds"></div>
+    </div>
+    
+    <!-- Background Image with Overlay -->
+    <div class="absolute inset-0">
+      <img 
+        src="/assets/6af2e6b989a158cee5230ee1698e84b3.jpg" 
+        alt="PAPI Hair Design Studio"
+        class="w-full h-full object-cover opacity-20"
+      />
+      <div class="absolute inset-0 bg-gradient-to-br from-gray-900/90 via-purple-900/80 to-emerald-900/90"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <!-- Left Column - Content -->
+        <div class="text-center lg:text-left">
+          <div class="mb-8">
+            <span class="inline-flex items-center px-4 py-2 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-sm font-semibold mb-4">
+              🏆 Hair Awards Slovakia Winner 2024
+            </span>
+          </div>
+          
+          <h1 class="text-5xl md:text-7xl font-bold text-white leading-tight mb-8">
+            PAPI <span class="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent glow-text">Hair Design</span>
+          </h1>
+          
+          <h2 class="text-2xl md:text-3xl text-gray-200 font-light mb-8 leading-relaxed">
+            Luxury Hair Studio s <span class="text-emerald-400 font-semibold">AI technológiou</span><br/>
+            Kde sa kaderníctvo stretáva s <span class="text-purple-400 font-semibold">umením</span>
+          </h2>
+          
+          <p class="text-xl text-gray-300 mb-12 leading-relaxed max-w-2xl">
+            Jediné hair štúdio na východnom Slovensku s AI analýzou vlasov. 
+            <strong class="text-white">16 rokov</strong> tradície, <strong class="text-emerald-400">medzinárodné certifikáty</strong> 
+            a <strong class="text-purple-400">99.2% spokojnosť</strong> klientov.
+          </p>
+
+          <!-- CTA Buttons -->
+          <div class="flex flex-col sm:flex-row gap-6 mb-12">
+            <a
+              href="/kontakty"
+              class="group bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white px-10 py-5 rounded-full text-xl font-bold transition-all duration-300 transform hover:scale-105 shadow-2xl glow-button"
+            >
+              <span class="flex items-center justify-center">
+                Rezervovať termín
+                <svg class="w-6 h-6 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                </svg>
+              </span>
+            </a>
+            <a
+              href="#ai-analysis"
+              class="border-2 border-emerald-400/50 text-emerald-300 hover:bg-emerald-400/10 hover:border-emerald-400 px-10 py-5 rounded-full text-xl font-bold transition-all duration-300 backdrop-blur-lg"
+            >
+              🤖 Vyskúšať AI analýzu
+            </a>
+          </div>
+
+          <!-- Bubble Animation Section - 100vh Perfect Pixel Layout -->
+          <div class="mb-8 relative w-full" style="height: 100vh; min-height: 100vh; max-height: 100vh;">
+            <div class="particle-container absolute inset-0 overflow-hidden">
+              <!-- Bubbles Animation -->
+              <div class="particle" style="width: 1.4411px; height: 1.4411px; left: 55.696%; bottom: -1.4411px; animation-delay: 4.87302s; animation-duration: 16.3585s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 4.45672px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 1.00618px; height: 1.00618px; left: 30.6716%; bottom: -1.00618px; animation-delay: 7.94045s; animation-duration: 15.6655s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 5.8544px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 1.40246px; height: 1.40246px; left: 79.7176%; bottom: -1.40246px; animation-delay: 6.41396s; animation-duration: 15.6236s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 4.64207px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 2.67844px; height: 2.67844px; left: 39.3028%; bottom: -2.67844px; animation-delay: 19.3593s; animation-duration: 19.7794s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 4.66079px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 2.01683px; height: 2.01683px; left: 34.7059%; bottom: -2.01683px; animation-delay: 18.2779s; animation-duration: 18.3046s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 6.4054px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 1.26259px; height: 1.26259px; left: 62.5666%; bottom: -1.26259px; animation-delay: 15.8382s; animation-duration: 23.8159s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 3.49376px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 1.09356px; height: 1.09356px; left: 48.4927%; bottom: -1.09356px; animation-delay: 18.8333s; animation-duration: 11.5658s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 3.71212px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 1.93112px; height: 1.93112px; left: 45.161%; bottom: -1.93112px; animation-delay: 12.6014s; animation-duration: 17.3539s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 7.32307px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 2.79305px; height: 2.79305px; left: 43.4878%; bottom: -2.79305px; animation-delay: 17.2137s; animation-duration: 24.9689s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 5.95457px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 1.07054px; height: 1.07054px; left: 77.2107%; bottom: -1.07054px; animation-delay: 18.9801s; animation-duration: 21.0319s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 7.9124px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 2.50583px; height: 2.50583px; left: 10.0898%; bottom: -2.50583px; animation-delay: 13.2843s; animation-duration: 18.0235s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 7.93643px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 2.66059px; height: 2.66059px; left: 78.7357%; bottom: -2.66059px; animation-delay: 8.53112s; animation-duration: 20.8284s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 6.34022px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 2.21545px; height: 2.21545px; left: 70.2673%; bottom: -2.21545px; animation-delay: 11.9201s; animation-duration: 16.3265s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 6.77055px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 1.49063px; height: 1.49063px; left: 32.8471%; bottom: -1.49063px; animation-delay: 17.0417s; animation-duration: 10.5907s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 4.48067px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 2.6217px; height: 2.6217px; left: 86.5001%; bottom: -2.6217px; animation-delay: 17.8425s; animation-duration: 22.4835s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 4.56501px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 1.855px; height: 1.855px; left: 26.7196%; bottom: -1.855px; animation-delay: 18.3783s; animation-duration: 11.6091s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 6.05644px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 2.9691px; height: 2.9691px; left: 93.5529%; bottom: -2.9691px; animation-delay: 12.2591s; animation-duration: 11.2408s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 3.39036px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 2.18694px; height: 2.18694px; left: 34.5382%; bottom: -2.18694px; animation-delay: 13.1618s; animation-duration: 20.6855s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 3.85437px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 2.51827px; height: 2.51827px; left: 1.1314%; bottom: -2.51827px; animation-delay: 9.20226s; animation-duration: 14.4697s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 4.47884px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 1.1922px; height: 1.1922px; left: 52.4631%; bottom: -1.1922px; animation-delay: 3.57253s; animation-duration: 17.5268s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 4.52408px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 2.87057px; height: 2.87057px; left: 41.5193%; bottom: -2.87057px; animation-delay: 17.4094s; animation-duration: 12.461s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 3.88907px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 1.28746px; height: 1.28746px; left: 2.7467%; bottom: -1.28746px; animation-delay: 17.485s; animation-duration: 13.3701s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 4.16759px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 1.08636px; height: 1.08636px; left: 66.7949%; bottom: -1.08636px; animation-delay: 11.0062s; animation-duration: 24.7764s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 4.43443px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 2.00541px; height: 2.00541px; left: 11.9905%; bottom: -2.00541px; animation-delay: 19.1564s; animation-duration: 14.7547s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 3.31569px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 2.11297px; height: 2.11297px; left: 21.56%; bottom: -2.11297px; animation-delay: 14.1811s; animation-duration: 10.3626s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 5.69451px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 2.95496px; height: 2.95496px; left: 88.1147%; bottom: -2.95496px; animation-delay: 8.28292s; animation-duration: 16.4431s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 7.23556px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 2.53642px; height: 2.53642px; left: 2.70544%; bottom: -2.53642px; animation-delay: 10.0518s; animation-duration: 22.1854s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 5.93622px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 2.33357px; height: 2.33357px; left: 80.8909%; bottom: -2.33357px; animation-delay: 10.6647s; animation-duration: 19.6048s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 4.05942px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 1.57547px; height: 1.57547px; left: 80.4819%; bottom: -1.57547px; animation-delay: 13.4985s; animation-duration: 11.7035s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 5.4616px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 1.49509px; height: 1.49509px; left: 89.8522%; bottom: -1.49509px; animation-delay: 7.88183s; animation-duration: 19.519s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 4.6795px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 2.16262px; height: 2.16262px; left: 85.9196%; bottom: -2.16262px; animation-delay: 2.02687s; animation-duration: 19.1983s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 7.80739px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 1.9129px; height: 1.9129px; left: 55.6693%; bottom: -1.9129px; animation-delay: 5.19154s; animation-duration: 14.2529s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 4.31036px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 2.46591px; height: 2.46591px; left: 42.7192%; bottom: -2.46591px; animation-delay: 15.4445s; animation-duration: 22.9396s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 5.41208px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 1.99833px; height: 1.99833px; left: 34.1456%; bottom: -1.99833px; animation-delay: 13.8728s; animation-duration: 17.9244s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 6.34202px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 2.6487px; height: 2.6487px; left: 28.105%; bottom: -2.6487px; animation-delay: 6.80137s; animation-duration: 14.63s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 7.95364px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 1.17427px; height: 1.17427px; left: 23.157%; bottom: -1.17427px; animation-delay: 18.2882s; animation-duration: 19.2116s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 6.98575px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 2.13784px; height: 2.13784px; left: 89.1504%; bottom: -2.13784px; animation-delay: 0.797971s; animation-duration: 23.8762s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 6.55672px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 1.46662px; height: 1.46662px; left: 83.2479%; bottom: -1.46662px; animation-delay: 19.028s; animation-duration: 21.9234s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 3.25348px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 1.58765px; height: 1.58765px; left: 45.0239%; bottom: -1.58765px; animation-delay: 18.5985s; animation-duration: 15.6102s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 6.74708px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 1.52923px; height: 1.52923px; left: 34.6176%; bottom: -1.52923px; animation-delay: 0.97842s; animation-duration: 16.9671s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 3.70015px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 2.69487px; height: 2.69487px; left: 51.1333%; bottom: -2.69487px; animation-delay: 11.5394s; animation-duration: 15.7994s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 3.68239px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 2.73975px; height: 2.73975px; left: 21.1592%; bottom: -2.73975px; animation-delay: 14.6914s; animation-duration: 18.6073s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 7.2395px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 1.34827px; height: 1.34827px; left: 78.2367%; bottom: -1.34827px; animation-delay: 3.70944s; animation-duration: 13.019s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 4.81775px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 2.67549px; height: 2.67549px; left: 39.7206%; bottom: -2.67549px; animation-delay: 15.817s; animation-duration: 20.7113s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 4.24296px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 1.1894px; height: 1.1894px; left: 26.5544%; bottom: -1.1894px; animation-delay: 18.1043s; animation-duration: 20.5447s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 5.11268px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 1.91363px; height: 1.91363px; left: 57.4144%; bottom: -1.91363px; animation-delay: 0.470211s; animation-duration: 16.5482s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 4.32367px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 2.26773px; height: 2.26773px; left: 14.5307%; bottom: -2.26773px; animation-delay: 13.5842s; animation-duration: 21.9967s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 6.87483px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 2.74256px; height: 2.74256px; left: 43.0196%; bottom: -2.74256px; animation-delay: 2.7514s; animation-duration: 16.4761s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 5.5852px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 2.40484px; height: 2.40484px; left: 76.2673%; bottom: -2.40484px; animation-delay: 15.3806s; animation-duration: 10.0187s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 7.45693px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+              <div class="particle" style="width: 1.89612px; height: 1.89612px; left: 18.6435%; bottom: -1.89612px; animation-delay: 3.9738s; animation-duration: 23.3666s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 4.35533px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
+            </div>
+
+            <!-- Animation Text Overlay -->
+            <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-transparent via-black/20 to-transparent">
+              <div class="text-center text-white">
+                <h3 class="text-4xl md:text-6xl font-bold mb-4 glow-text">✨ PAPI Magic ✨</h3>
+                <p class="text-xl md:text-2xl text-yellow-300 animate-pulse">Bublinky kreativity a krásy</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hero Stats -->
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+            {stats.map((stat) => (
+              <div class="text-center bg-white/5 backdrop-blur-lg rounded-xl p-4 border border-white/10 hover:bg-white/10 transition-all">
+                <div class="text-2xl mb-1">{stat.icon}</div>
+                <div class="text-2xl font-bold text-white glow-text">
+                  <AnimatedCounter value={stat.number} suffix={stat.suffix} client:visible />
+                </div>
+                <div class="text-xs text-gray-300">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Right Column - Hero Services -->
+        <div class="space-y-6">
+          {heroServices.map((service, index) => (
+            <div class={`group relative bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-6 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-2 ${service.highlight ? 'ring-2 ring-emerald-400/50' : ''}`}>
+              {service.badge && (
+                <div class="absolute -top-2 -right-2 bg-gradient-to-r from-emerald-400 to-teal-500 text-white px-3 py-1 rounded-full text-xs font-bold">
+                  {service.badge}
+                </div>
+              )}
+              <div class="flex items-start space-x-4">
+                <div class="text-4xl flex-shrink-0">
+                  {service.icon}
+                </div>
+                <div>
+                  <h3 class="text-xl font-bold text-white mb-2 group-hover:text-emerald-300 transition-colors">
+                    {service.title}
+                  </h3>
+                  <p class="text-gray-300 group-hover:text-gray-200 transition-colors">
+                    {service.description}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating Elements -->
+    <div class="absolute top-20 left-10 animate-float">
+      <div class="w-4 h-4 bg-emerald-400 rounded-full glow-dot"></div>
+    </div>
+    <div class="absolute top-40 right-20 animate-float-delayed">
+      <div class="w-6 h-6 bg-purple-400 rounded-full glow-dot"></div>
+    </div>
+    <div class="absolute bottom-32 left-20 animate-float">
+      <div class="w-3 h-3 bg-teal-400 rounded-full glow-dot"></div>
+    </div>
+    <div class="absolute bottom-40 right-10 animate-float-delayed">
+      <div class="w-5 h-5 bg-pink-400 rounded-full glow-dot"></div>
+    </div>
+  </section>
+
+  <!-- AI Hair Analysis Section -->
+  <section id="ai-analysis" class="py-24 bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-600">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div class="text-white">
+          <div class="flex items-center mb-6">
+            <span class="text-5xl mr-4">🤖</span>
+            <div>
+              <h2 class="text-4xl font-bold mb-2">AI Hair Analysis</h2>
+              <p class="text-emerald-100 text-lg">Prvé štúdio na Slovensku</p>
+            </div>
+          </div>
+          
+          <p class="text-xl text-emerald-100 mb-8 leading-relaxed">
+            Revolučná technológia, ktorá analyzuje váš typ vlasov, tvár a štýl pre 
+            <strong class="text-white">personalizované odporúčania</strong>. 
+            Zistite, ktorý strih a farba vám bude sedieť ešte pred návštevou štúdia!
+          </p>
+
+          <div class="space-y-4 mb-8">
+            <div class="flex items-center">
+              <svg class="w-6 h-6 text-emerald-300 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+              <span class="text-emerald-100">Analýza typu vlasov a pokožky hlavy</span>
+            </div>
+            <div class="flex items-center">
+              <svg class="w-6 h-6 text-emerald-300 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+              <span class="text-emerald-100">Odporúčania na mieru pre váš typ tváre</span>
+            </div>
+            <div class="flex items-center">
+              <svg class="w-6 h-6 text-emerald-300 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+              <span class="text-emerald-100">Virtuálny náhľad budúceho vzhľadu</span>
+            </div>
+          </div>
+
+          <a
+            href="/analyze"
+            class="inline-flex items-center bg-white text-emerald-600 hover:bg-gray-100 px-8 py-4 rounded-full text-lg font-bold transition-all duration-300 transform hover:scale-105 shadow-2xl"
+          >
+            Spustiť AI analýzu
+            <svg class="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </a>
+        </div>
+
+        <div class="relative">
+          <div class="bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-8">
+            <div class="aspect-square bg-gradient-to-br from-white/20 to-white/5 rounded-2xl flex items-center justify-center">
+              <div class="text-center text-white">
+                <div class="text-6xl mb-4">📱</div>
+                <h3 class="text-2xl font-bold mb-2">Nahrajte fotku</h3>
+                <p class="text-emerald-200">AI analyzuje za 30 sekúnd</p>
+              </div>
+            </div>
+          </div>
+          <div class="absolute -top-6 -right-6 bg-white/20 backdrop-blur-lg rounded-xl p-4 border border-white/30">
+            <span class="text-2xl">🎯</span>
+          </div>
+          <div class="absolute -bottom-4 -left-4 bg-white/20 backdrop-blur-lg rounded-xl p-4 border border-white/30">
+            <span class="text-2xl">✨</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Premium Services Section -->
+  <section class="py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-20">
+        <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          Naše <span class="text-emerald-600">premium služby</span>
+        </h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          Každá služba je výsledkom <strong>rokov skúseností</strong> a <strong>medzinárodného školenia</strong>. 
+          Používame len najkvalitnejšie produkty a najmodernejšie techniky.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {services.map((service, index) => (
+          <div class="group relative bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+            <div class="absolute -top-3 -right-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold text-sm">
+              {index + 1}
+            </div>
+
+            <div class="w-16 h-16 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+              <span class="text-2xl text-emerald-600">{service.icon === 'scissors' ? '✂️' : service.icon === 'palette' ? '🎨' : service.icon === 'heart' ? '💆‍♀️' : service.icon === 'star' ? '👰' : service.icon === 'sparkles' ? '✨' : '🔧'}</span>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-emerald-600 transition-colors">
+              {service.title}
+            </h3>
+            <p class="text-gray-600 mb-6 leading-relaxed">
+              {service.description}
+            </p>
+
+            <div class="space-y-3 mb-6">
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-gray-500">Cena:</span>
+                <span class="font-semibold text-emerald-600">{service.price}</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-gray-500">Trvanie:</span>
+                <span class="font-semibold text-gray-800">{service.duration}</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-gray-500">Úroveň:</span>
+                <span class={`font-semibold ${service.difficulty === 'Master' ? 'text-purple-600' : service.difficulty === 'Expert' ? 'text-blue-600' : service.difficulty === 'Specialist' ? 'text-orange-600' : 'text-green-600'}`}>
+                  {service.difficulty}
+                </span>
+              </div>
+            </div>
+
+            <button class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white py-3 rounded-xl font-semibold transition-all duration-300 transform group-hover:scale-105">
+              Rezervovať
+            </button>
+
+            <div class="absolute top-4 right-4 w-8 h-8 bg-emerald-200 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-0 group-hover:scale-100"></div>
+          </div>
+        ))}
+      </div>
+
+      <div class="text-center mt-16">
+        <a
+          href="/sluzby"
+          class="inline-flex items-center bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white px-10 py-5 rounded-full text-xl font-bold transition-all duration-300 transform hover:scale-105 shadow-2xl"
+        >
+          Zobraziť všetky služby
+          <svg class="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us Section -->
+  <section class="py-24 bg-gradient-to-br from-gray-50 to-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-20">
+        <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          Prečo si vybrať <span class="text-emerald-600">PAPI Hair Design</span>?
+        </h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          16 rokov tradície, medzinárodné certifikáty a stovky spokojných klientov. 
+          Sme viac ako len kadernícky salón - sme váš partner pre dokonalý vzhľad.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {features.map((feature, index) => (
+          <div class="group relative bg-white rounded-2xl p-8 shadow-lg border-2 border-emerald-100 hover:border-emerald-300 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl">
+            <div class="absolute inset-0 bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            
+            <div class="relative z-10">
+              <div class="w-20 h-20 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                <span class="text-3xl">{feature.icon}</span>
+              </div>
+              
+              <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-emerald-700 transition-colors text-center">
+                {feature.title}
+              </h3>
+              
+              <p class="text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors text-center">
+                {feature.description}
+              </p>
+            </div>
+
+            <div class="absolute top-4 right-4 w-8 h-8 bg-emerald-200 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-0 group-hover:scale-100"></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="py-24 bg-gradient-to-r from-gray-900 via-purple-900 to-emerald-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
+          Čo hovoria naši <span class="text-emerald-400">klienti</span>
+        </h2>
+        <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+          Najlepším dôkazom našej kvality sú spokojní klienti, ktorí sa k nám radi vracia
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {testimonials.map((testimonial, index) => (
+          <div class="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-8 text-center hover:bg-white/10 transition-all duration-300">
+            <div class="flex justify-center mb-4">
+              {[...Array(testimonial.rating)].map((_, i) => (
+                <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+              ))}
+            </div>
+
+            <blockquote class="text-white text-lg mb-6 italic leading-relaxed">
+              "{testimonial.text}"
+            </blockquote>
+
+            <div class="border-t border-white/20 pt-6">
+              <p class="text-emerald-400 font-bold text-lg">{testimonial.name}</p>
+              <p class="text-teal-400 text-sm font-medium">{testimonial.service}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA Section -->
+  <section class="py-24 bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-600 relative overflow-hidden">
+    <div class="absolute inset-0">
+      <div class="stars"></div>
+    </div>
+    
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-4xl md:text-5xl font-bold text-white mb-6 glow-text">
+        Pripravení na <span class="text-yellow-300">transformáciu</span>?
+      </h2>
+      <p class="text-xl text-emerald-100 mb-8 leading-relaxed">
+        Pridajte sa k tisíckam spokojných klientov a zažite kaderníctvo na najvyššej úrovni. 
+        Vaša cesta k dokonalému vzhľadu začína jediným kliknutím.
+      </p>
+
+      <div class="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-8 mb-8">
+        <h3 class="text-2xl font-bold text-white mb-4">🎉 Špeciálna ponuka pre nových klientov</h3>
+        <p class="text-emerald-100 mb-4">
+          Prvá konzultácia + AI analýza vlasov <span class="text-yellow-300 font-bold">ZADARMO</span>
+        </p>
+        <p class="text-sm text-emerald-200">
+          * Platné do konca tohto mesiaca. Nezlučiteľné s inými akciami.
+        </p>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-6 justify-center">
+        <a
+          href="/kontakty"
+          class="bg-white text-emerald-600 hover:bg-yellow-50 hover:text-emerald-700 px-10 py-5 rounded-full text-xl font-bold transition-all duration-300 transform hover:scale-105 shadow-2xl glow-button"
+        >
+          Rezervovať termín
+        </a>
+        <a
+          href="/sluzby"
+          class="border-2 border-white text-white hover:bg-white hover:text-emerald-600 px-10 py-5 rounded-full text-xl font-bold transition-all duration-300 backdrop-blur-lg"
+        >
+          Pozrieť služby
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  /* Starry background animation */
+  .stars {
+    background: transparent url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><g fill="white" opacity="0.8"><circle cx="150" cy="200" r="1.5"/><circle cx="300" cy="100" r="1"/><circle cx="500" cy="300" r="2"/><circle cx="750" cy="150" r="1"/><circle cx="900" cy="400" r="1.5"/><circle cx="200" cy="600" r="1"/><circle cx="600" cy="500" r="1.5"/><circle cx="100" cy="800" r="1"/><circle cx="800" cy="700" r="2"/><circle cx="400" cy="900" r="1"/></g></svg>') left top;
+    background-size: 1000px 1000px;
+    animation: stars-move 100s linear infinite;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .twinkling {
+    background: transparent url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"><g fill="white"><circle cx="50" cy="75" r="1" opacity="0.8"><animate attributeName="opacity" values="0.8;0.3;0.8" dur="3s" repeatCount="indefinite"/></circle><circle cx="150" cy="125" r="1.5" opacity="0.6"><animate attributeName="opacity" values="0.6;0.9;0.6" dur="2s" repeatCount="indefinite"/></circle><circle cx="250" cy="200" r="1" opacity="0.7"><animate attributeName="opacity" values="0.7;0.2;0.7" dur="4s" repeatCount="indefinite"/></circle></g></svg>') left top;
+    background-size: 500px 500px;
+    animation: stars-move 50s linear infinite;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  @keyframes stars-move {
+    from { transform: translateX(0px); }
+    to { transform: translateX(-1000px); }
+  }
+
+  .glow-text {
+    text-shadow: 0 0 10px rgba(52, 211, 153, 0.5), 0 0 20px rgba(52, 211, 153, 0.3), 0 0 30px rgba(52, 211, 153, 0.2);
+  }
+
+  .glow-button {
+    box-shadow: 0 0 20px rgba(52, 211, 153, 0.4), 0 10px 40px rgba(0, 0, 0, 0.2);
+  }
+
+  .glow-button:hover {
+    box-shadow: 0 0 30px rgba(52, 211, 153, 0.6), 0 15px 50px rgba(0, 0, 0, 0.3);
+  }
+
+  .glow-dot {
+    box-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-float-delayed {
+    animation: float 6s ease-in-out infinite 2s;
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .stars, .twinkling {
+      background-size: 500px 500px;
+    }
+  }
+
+  /* Bubble Animation Styles */
+  .particle-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    animation: bubble-float linear infinite;
+    background: rgba(255, 215, 0, 0.8);
+  }
+
+  @keyframes bubble-float {
+    0% {
+      transform: translateY(100vh) scale(0);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+      transform: translateY(90vh) scale(0.1);
+    }
+    90% {
+      opacity: 1;
+      transform: translateY(10vh) scale(1);
+    }
+    100% {
+      transform: translateY(-10vh) scale(0.8);
+      opacity: 0;
+    }
+  }
+
+  /* Perfect pixel layout for mobile */
+  @media (max-width: 768px) {
+    .particle-container {
+      height: 100vh !important;
+      min-height: 100vh !important;
+      max-height: 100vh !important;
+    }
+
+    .particle {
+      animation-duration: 20s;
+    }
+  }
+
+  @media (min-width: 769px) {
+    .particle-container {
+      height: 100vh !important;
+      min-height: 100vh !important;
+      max-height: 100vh !important;
+    }
+  }
+</style>

@@ -1,0 +1,304 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const pricingTiers = [
+  {
+    name: 'Základný',
+    price: 'od 25€',
+    description: 'Základné strihanie a úprava',
+    features: [
+      'Dámske/pánske strihanie',
+      'Umytie vlasov',
+      'Fénovanie',
+      'Základné poradenstvo',
+      'Kontrola za 2 týždne zdarma'
+    ]
+  },
+  {
+    name: 'Premium',
+    price: 'od 80€',
+    description: 'Najobľúbenejšia voľba pre kompletnú úpravu',
+    features: [
+      'Dámske/pánske strihanie',
+      'Umytie a ošetrenie vlasov',
+      'Profesionálny styling',
+      'Farbenie alebo melír',
+      'Hĺbkové ošetrenie',
+      'Poradenstvo a odporúčania'
+    ],
+    popular: true
+  },
+  {
+    name: 'Luxury',
+    price: 'od 150€',
+    description: 'Kompletný servis pre náročných klientov',
+    features: [
+      'Konzultácia s kaderníkom',
+      'Kompletná premena vzhľadu',
+      'Viaceré farbiace techniky',
+      'Hĺbkové regeneračné kúry',
+      'Profesionálny makeup',
+      'Fotografovanie výsledku'
+    ]
+  }
+];
+
+const additionalServices = [
+  { service: 'Farbenie vlasov', price: 'od 45€' },
+  { service: 'Balayage technika', price: 'od 80€' },
+  { service: 'Keratínové ošetrenie', price: 'od 60€' },
+  { service: 'Olplex regenerácia', price: 'od 35€' },
+  { service: 'Svadobný účes', price: 'od 50€' },
+  { service: 'Večerné líčenie', price: 'od 30€' }
+];
+---
+
+<BaseLayout title="Cenník - Papi Hair Design | Transparentné ceny kaderníckych služieb" description="Transparentný cenník kaderníckych služieb v Košiciach. Žiadne skryté poplatky, profesionálne služby a výhodné balíčky.">
+  <Header />
+
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-br from-primary-50 to-white py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          Transparentný <span class="text-primary-600">cenník</span>
+        </h1>
+        <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+          Žiadne skryté poplatky ani nepríjemné prekvapenia. Všetky ceny sú stanovené vopred a konečné.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Cards -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        {pricingTiers.map((tier) => (
+          <div class={`relative bg-white rounded-2xl shadow-lg border-2 p-8 ${tier.popular ? 'border-primary-500 transform scale-105' : 'border-gray-200 hover:border-primary-300'} transition-all duration-300`}>
+            {tier.popular && (
+              <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                <span class="bg-primary-500 text-white px-4 py-1 rounded-full text-sm font-medium">Najobľúbenejšie</span>
+              </div>
+            )}
+
+            <div class="text-center mb-8">
+              <h3 class="text-2xl font-bold text-gray-900 mb-2">{tier.name}</h3>
+              <div class="text-4xl font-bold text-primary-600 mb-2">{tier.price}</div>
+              <p class="text-gray-600">{tier.description}</p>
+            </div>
+
+            <ul class="space-y-3 mb-8">
+              {tier.features.map((feature) => (
+                <li class="flex items-center space-x-3">
+                  <svg class="w-5 h-5 text-primary-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span class="text-gray-700">{feature}</span>
+                </li>
+              ))}
+            </ul>
+
+            <a
+              href="/kontakty"
+              class={`w-full block text-center py-3 px-6 rounded-lg font-semibold transition-all ${
+                tier.popular
+                  ? 'bg-primary-600 hover:bg-primary-700 text-white shadow-lg hover:shadow-xl transform hover:scale-105'
+                  : 'bg-gray-100 hover:bg-gray-200 text-gray-900'
+              }`}
+            >
+              Vybrať balíček
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Additional Services -->
+  <section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Doplnkové služby
+        </h2>
+        <p class="text-xl text-gray-600">
+          Voliteľné služby, ktoré si môžete pridať k základnému balíčku
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {additionalServices.map((service) => (
+          <div class="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
+            <div class="flex justify-between items-center">
+              <h3 class="font-semibold text-gray-900">{service.service}</h3>
+              <span class="text-primary-600 font-bold">{service.price}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Price Calculator Section -->
+  <section class="py-20 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Orientačná kalkulácia
+        </h2>
+        <p class="text-xl text-gray-600">
+          Získajte orientačnú cenu pre požadované služby
+        </p>
+      </div>
+
+      <div class="bg-gray-50 rounded-2xl p-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- Calculator Form -->
+          <div class="space-y-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-4">Zadajte požadované služby</h3>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">
+                Typ služby
+              </label>
+              <select id="service-type" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                <option value="haircut">Strihanie</option>
+                <option value="coloring">Farbenie</option>
+                <option value="balayage">Balayage</option>
+                <option value="treatment">Ošetrenie</option>
+                <option value="styling">Styling</option>
+                <option value="wedding">Svadobný účes</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">
+                Dĺžka vlasov
+              </label>
+              <select id="hair-length" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                <option value="short">Krátke</option>
+                <option value="medium">Stredné</option>
+                <option value="long">Dlhé</option>
+                <option value="verylong">Veľmi dlhé</option>
+              </select>
+            </div>
+
+            <div class="space-y-3">
+              <label class="flex items-center">
+                <input type="checkbox" id="wash" class="rounded border-gray-300 text-primary-600 focus:ring-primary-500">
+                <span class="ml-2 text-gray-700">Umytie vlasov</span>
+              </label>
+              <label class="flex items-center">
+                <input type="checkbox" id="treatment" class="rounded border-gray-300 text-primary-600 focus:ring-primary-500">
+                <span class="ml-2 text-gray-700">Ošetrenie vlasov</span>
+              </label>
+              <label class="flex items-center">
+                <input type="checkbox" id="makeup" class="rounded border-gray-300 text-primary-600 focus:ring-primary-500">
+                <span class="ml-2 text-gray-700">Líčenie</span>
+              </label>
+            </div>
+
+            <button
+              id="calculate-btn"
+              class="w-full bg-primary-600 hover:bg-primary-700 text-white py-3 px-6 rounded-lg font-semibold transition-all transform hover:scale-105"
+            >
+              Vypočítať orientačnú cenu
+            </button>
+          </div>
+
+          <!-- Result -->
+          <div class="bg-white rounded-lg p-6 border-2 border-dashed border-gray-300 flex items-center justify-center">
+            <div id="result" class="text-center">
+              <div class="text-3xl font-bold text-primary-600 mb-2">0€</div>
+              <p class="text-gray-600">Orientačná cena</p>
+              <p class="text-sm text-gray-500 mt-2">*Konečná cena sa stanoví po obhliadke</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-20 bg-primary-600">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+        Chcete presnejšiu cenovú ponuku?
+      </h2>
+      <p class="text-xl text-primary-100 mb-8">
+        Kontaktujte nás pre osobnú konzultáciu a cenovú ponuku šitú na mieru vašim potrebám.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href="/kontakty"
+          class="bg-white text-primary-600 hover:bg-gray-100 px-8 py-4 rounded-lg text-lg font-semibold transition-all transform hover:scale-105 shadow-lg"
+        >
+          Rezervovať konzultáciu
+        </a>
+        <a
+          href="tel:+421949459624"
+          class="border-2 border-white text-white hover:bg-white hover:text-primary-600 px-8 py-4 rounded-lg text-lg font-semibold transition-all"
+        >
+          +421 949 459 624
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>
+
+<script>
+  function calculatePrice() {
+    const serviceType = document.getElementById('service-type') as HTMLSelectElement;
+    const hairLength = document.getElementById('hair-length') as HTMLSelectElement;
+    const wash = document.getElementById('wash') as HTMLInputElement;
+    const treatment = document.getElementById('treatment') as HTMLInputElement;
+    const makeup = document.getElementById('makeup') as HTMLInputElement;
+    const result = document.getElementById('result');
+
+    if (!result) return;
+
+    let basePrice = 0;
+    switch(serviceType.value) {
+      case 'haircut': basePrice = 25; break;
+      case 'coloring': basePrice = 60; break;
+      case 'balayage': basePrice = 80; break;
+      case 'treatment': basePrice = 40; break;
+      case 'styling': basePrice = 35; break;
+      case 'wedding': basePrice = 70; break;
+      default: basePrice = 25;
+    }
+
+    const lengthMultiplier = hairLength.value === 'short' ? 1 : hairLength.value === 'medium' ? 1.2 : hairLength.value === 'long' ? 1.5 : 2;
+    const washPrice = wash.checked ? 10 : 0;
+    const treatmentPrice = treatment.checked ? 25 : 0;
+    const makeupPrice = makeup.checked ? 30 : 0;
+
+    const totalPrice = Math.round((basePrice * lengthMultiplier + washPrice + treatmentPrice + makeupPrice));
+
+    if (totalPrice > 0) {
+      result.innerHTML = `
+        <div class="text-3xl font-bold text-primary-600 mb-2">${totalPrice}€</div>
+        <p class="text-gray-600">Orientačná cena</p>
+        <p class="text-sm text-gray-500 mt-2">*Konečná cena sa stanoví pri rezervácii</p>
+      `;
+    } else {
+      result.innerHTML = `
+        <div class="text-3xl font-bold text-primary-600 mb-2">0€</div>
+        <p class="text-gray-600">Orientačná cena</p>
+        <p class="text-sm text-gray-500 mt-2">*Konečná cena sa stanoví pri rezervácii</p>
+      `;
+    }
+  }
+
+  document.getElementById('calculate-btn')?.addEventListener('click', calculatePrice);
+  document.getElementById('service-type')?.addEventListener('change', calculatePrice);
+  document.getElementById('hair-length')?.addEventListener('change', calculatePrice);
+  document.getElementById('wash')?.addEventListener('change', calculatePrice);
+  document.getElementById('treatment')?.addEventListener('change', calculatePrice);
+  document.getElementById('makeup')?.addEventListener('change', calculatePrice);
+</script>

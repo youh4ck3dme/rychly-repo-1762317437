@@ -1,0 +1,554 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import AnimatedCounter from '../components/AnimatedCounter.astro';
+
+const featuredPost = {
+  id: 1,
+  title: 'AI Analýza Vlasov: Revolúcia v Kaderníctve 2025',
+  excerpt: 'Objavte, ako umelá inteligencia mení svet kaderníctva. Prvé štúdio na Slovensku s AI technológiou pre personalizované riešenia vlasov.',
+  content: 'Kompletný prehľad najnovších AI technológií v beauty priemysle...',
+  imageUrl: '/assets/images/blog/ai-hair-analysis.jpg',
+  author: 'Pavol "PAPI" Mikuš',
+  authorRole: 'CEO & Master Stylist',
+  authorImage: '/assets/images/team/papi.jpg',
+  publishDate: '2025-01-15',
+  readTime: '8 min čítania',
+  category: 'Technológie',
+  tags: ['AI', 'technológie', 'inovácie', 'analýza vlasov', 'budúcnosť'],
+  featured: true,
+  trending: true,
+  views: 2847,
+  shares: 156,
+  comments: 23,
+  slug: 'ai-analyza-vlasov-revolucia'
+};
+
+const blogPosts = [
+  {
+    id: 2,
+    title: 'Top 10 Vlasových Trendov Zima 2025',
+    excerpt: 'Najnovšie trendy priamo z medzinárodných fashion weekov. Aktuálne farby, strihy a styling techniky pre nadchádzajúcu sezónu.',
+    imageUrl: '/assets/images/blog/winter-trends-2025.jpg',
+    author: 'Anna Kováčová',
+    authorRole: 'Senior Color Specialist', 
+    publishDate: '2025-01-10',
+    readTime: '6 min čítania',
+    category: 'Trendy',
+    tags: ['trendy', 'zima 2025', 'farby', 'strihy'],
+    popular: true,
+    views: 1923,
+    slug: 'vlasove-trendy-zima-2025'
+  },
+  {
+    id: 3,
+    title: 'Olaplex vs Keratín: Kompletný Sprievodca',
+    excerpt: 'Detailné porovnanie najúčinnejších ošetrení pre poškodené vlasy. Ktoré je lepšie pre váš typ vlasov?',
+    imageUrl: '/assets/images/blog/olaplex-vs-keratin.jpg',
+    author: 'Lucia Veselá',
+    authorRole: 'Hair Treatment Specialist',
+    publishDate: '2025-01-08',
+    readTime: '10 min čítania',
+    category: 'Ošetrenia',
+    tags: ['olaplex', 'keratín', 'ošetrenia', 'poškodené vlasy'],
+    expert: true,
+    views: 1654,
+    slug: 'olaplex-vs-keratin-sprievodca'
+  },
+  {
+    id: 4,
+    title: 'Svadobné Účesy 2025: Najkrajšie Inšpirácie',
+    excerpt: 'Romantické, elegantné a moderné svadobné účesy. Fotogaléria najkrajších kreatívnych riešení pre váš veľký deň.',
+    imageUrl: '/assets/images/blog/wedding-hairstyles-2025.jpg',
+    author: 'Eva Novotná',
+    authorRole: 'Bridal Styling Expert',
+    publishDate: '2025-01-05',
+    readTime: '7 min čítania',
+    category: 'Svadobné',
+    tags: ['svadobné', 'účesy', 'inšpirácie', 'romantika'],
+    seasonal: true,
+    views: 2156,
+    slug: 'svadobne-ucesy-2025-inspiracie'
+  },
+  {
+    id: 5,
+    title: 'Men\'s Grooming: Moderný Gentleman Guide',
+    excerpt: 'Kompletný sprievodca moderným pánskym groomingom. Od basic starostlivosti až po executive styling pre business mužov.',
+    imageUrl: '/assets/images/blog/mens-grooming-guide.jpg',
+    author: 'Martin Novák',
+    authorRole: 'Men\'s Grooming Specialist',
+    publishDate: '2025-01-03',
+    readTime: '9 min čítania',
+    category: 'Pánske',
+    tags: ['mens grooming', 'pánske', 'business', 'starostlivosť'],
+    professional: true,
+    views: 1434,
+    slug: 'mens-grooming-gentleman-guide'
+  },
+  {
+    id: 6,
+    title: 'Domáca Starostlivosť: Profesionálne Tipy',
+    excerpt: 'Ako udržať salon look doma? Produkty, techniky a triky od našich špecialistov pre každodennú starostlivosť.',
+    imageUrl: '/assets/images/blog/home-hair-care.jpg',
+    author: 'Dr. Mária Svobodová',
+    authorRole: 'Hair Health Consultant',
+    publishDate: '2025-01-01',
+    readTime: '5 min čítania',
+    category: 'Starostlivosť',
+    tags: ['domáca starostlivosť', 'produkty', 'tipy', 'DIY'],
+    practical: true,
+    views: 1789,
+    slug: 'domaca-starostlivost-tipy'
+  }
+];
+
+const categories = [
+  { name: 'Všetky', count: 25, color: 'gray', active: true },
+  { name: 'Trendy', count: 8, color: 'emerald', icon: '🔥' },
+  { name: 'Technológie', count: 4, color: 'blue', icon: '🤖' },
+  { name: 'Ošetrenia', count: 6, color: 'purple', icon: '💆' },
+  { name: 'Svadobné', count: 3, color: 'rose', icon: '👰' },
+  { name: 'Pánske', count: 2, color: 'slate', icon: '💼' },
+  { name: 'Starostlivosť', count: 2, color: 'teal', icon: '🌿' }
+];
+
+const popularTags = [
+  'trendy', 'AI technológie', 'olaplex', 'balayage', 'svadobné účesy', 
+  'mens grooming', 'keratín', 'color correction', 'domáca starostlivosť', 
+  'celebrity styling', 'hair health', 'salon tips'
+];
+
+const blogStats = [
+  { number: 25, label: 'Odborných článkov', icon: '📝' },
+  { number: 15, label: 'Expert autorov', icon: '👨‍💼' },
+  { number: 50000, label: 'Mesačných čitateľov', icon: '👁️', suffix: '+' },
+  { number: 98, label: '% Užitočnosť obsahu', icon: '⭐', suffix: '%' }
+];
+
+const newsletter = {
+  title: 'PAPI Hair Insider',
+  description: 'Exkluzívne tipy, trendy a špeciálne ponuky priamo do vášho emailu',
+  benefits: [
+    'Týždenné beauty tipy od expertov',
+    'Prvé informácie o nových trendoch',
+    'Exkluzívne zľavy a akcie',
+    'Bezplatné e-knihy a sprievodcovia'
+  ]
+};
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "PAPI Hair Design Blog",
+  "description": "Odborný blog o kaderníctve, beauty trendoch a starostlivosti o vlasy od expertov z Košíc.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "PAPI Hair Design",
+    "url": "https://papihairdesign.sk"
+  }
+};
+---
+
+<BaseLayout 
+  title="Blog - PAPI Hair Design | Odborné Články o Kaderníctve"
+  description="Odborný blog s najnovšími trendmi, technológiami a tipmi pre starostlivosť o vlasy. Články od certified expertov z Košíc."
+>
+  <Header />
+
+  <!-- Hero Section with Starry Background -->
+  <section class="relative min-h-[70vh] bg-gradient-to-br from-gray-900 via-emerald-900 to-blue-900 overflow-hidden">
+    <!-- Animated Stars Background -->
+    <div class="absolute inset-0">
+      <div class="stars"></div>
+      <div class="twinkling"></div>
+    </div>
+    
+    <!-- Content -->
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
+      <div class="animate-fade-in">
+        <!-- Blog Badge -->
+        <div class="inline-flex items-center bg-white/10 backdrop-blur-lg border border-white/20 rounded-full px-6 py-3 text-emerald-300 font-semibold mb-8">
+          <span class="text-yellow-400 mr-2">📚</span>
+          Expert Hair Knowledge Hub
+        </div>
+
+        <h1 class="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
+          PAPI Hair <span class="bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent glow-text">Blog</span>
+        </h1>
+        
+        <p class="text-xl md:text-2xl text-gray-200 mb-8 max-w-3xl mx-auto leading-relaxed">
+          Odborné články, trendy a tipy od <span class="text-emerald-400 font-semibold">certified expertov</span>.
+          <br>Váš sprievodca svetom <span class="text-blue-400 font-semibold">profesionálneho kaderníctva</span>.
+        </p>
+
+        <!-- Blog Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+          {blogStats.map((stat) => (
+            <div class="bg-white/5 backdrop-blur-lg rounded-xl p-4 border border-white/10">
+              <div class="text-2xl mb-2">{stat.icon}</div>
+              <div class="text-2xl font-bold text-white glow-text">
+                <AnimatedCounter value={stat.number} suffix={stat.suffix || ''} client:visible />
+              </div>
+              <div class="text-gray-300 text-sm">{stat.label}</div>
+            </div>
+          ))}
+        </div>
+
+        <a
+          href="#featured-post"
+          class="bg-gradient-to-r from-emerald-500 to-blue-600 hover:from-emerald-600 hover:to-blue-700 text-white px-8 py-4 rounded-full text-lg font-bold transition-all duration-300 transform hover:scale-105 shadow-2xl glow-button inline-block"
+        >
+          Čítať najnovšie články
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Post Section -->
+  <section id="featured-post" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">
+          Hlavný <span class="text-emerald-600">článok</span>
+        </h2>
+        <p class="text-xl text-gray-600">Najnovší a najpopulárnejší obsah od našich expertov</p>
+      </div>
+
+      <div class="bg-gradient-to-br from-emerald-50 to-blue-50 rounded-3xl overflow-hidden shadow-2xl">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-0">
+          <!-- Featured Image -->
+          <div class="relative h-80 lg:h-full">
+            <!-- Placeholder -->
+            <div class="absolute inset-0 bg-gradient-to-br from-emerald-400 to-blue-500 flex items-center justify-center">
+              <div class="text-center text-white">
+                <span class="text-6xl mb-4 block">🤖</span>
+                <span class="text-xl font-semibold">AI Hair Analysis</span>
+              </div>
+            </div>
+            
+            <!-- Badges -->
+            <div class="absolute top-4 left-4 flex gap-2">
+              <span class="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">
+                🔥 TRENDING
+              </span>
+              <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-bold">
+                ⭐ FEATURED
+              </span>
+            </div>
+
+            <!-- Reading Stats -->
+            <div class="absolute bottom-4 left-4 bg-black/50 backdrop-blur-sm text-white rounded-lg p-3">
+              <div class="flex items-center gap-4 text-sm">
+                <span>👁️ {featuredPost.views.toLocaleString()}</span>
+                <span>💬 {featuredPost.comments}</span>
+                <span>📤 {featuredPost.shares}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Featured Content -->
+          <div class="p-12">
+            <!-- Category & Date -->
+            <div class="flex items-center gap-4 mb-6">
+              <span class="bg-emerald-500 text-white px-4 py-2 rounded-full font-semibold">
+                {featuredPost.category}
+              </span>
+              <span class="text-gray-500">{featuredPost.readTime}</span>
+              <span class="text-gray-500">
+                {new Date(featuredPost.publishDate).toLocaleDateString('sk-SK')}
+              </span>
+            </div>
+
+            <h3 class="text-3xl font-bold text-gray-900 mb-6 leading-tight hover:text-emerald-600 transition-colors">
+              {featuredPost.title}
+            </h3>
+
+            <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+              {featuredPost.excerpt}
+            </p>
+
+            <!-- Author Info -->
+            <div class="flex items-center mb-8">
+              <div class="w-12 h-12 bg-gradient-to-r from-emerald-400 to-blue-500 rounded-full flex items-center justify-center text-white font-bold mr-4">
+                {featuredPost.author.split(' ').map(n => n[0]).join('')}
+              </div>
+              <div>
+                <p class="font-semibold text-gray-900">{featuredPost.author}</p>
+                <p class="text-sm text-gray-500">{featuredPost.authorRole}</p>
+              </div>
+            </div>
+
+            <!-- Tags -->
+            <div class="flex flex-wrap gap-2 mb-8">
+              {featuredPost.tags.map(tag => (
+                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-lg text-sm hover:bg-gray-200 transition-colors cursor-pointer">
+                  #{tag}
+                </span>
+              ))}
+            </div>
+
+            <a 
+              href={`/blog/${featuredPost.slug}`}
+              class="bg-gradient-to-r from-emerald-500 to-blue-600 hover:from-emerald-600 hover:to-blue-700 text-white px-8 py-4 rounded-full font-bold transition-all duration-300 transform hover:scale-105 shadow-lg inline-block"
+            >
+              Čítať celý článok →
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories Filter -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h3 class="text-2xl font-bold text-center text-gray-900 mb-8">Kategórie článkov</h3>
+      
+      <div class="flex flex-wrap justify-center gap-4">
+        {categories.map((category) => (
+          <button class={`group flex items-center px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 ${
+            category.active 
+              ? 'bg-emerald-500 text-white shadow-lg' 
+              : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+          }`}>
+            {category.icon && <span class="mr-2">{category.icon}</span>}
+            <span>{category.name}</span>
+            <span class={`ml-2 px-2 py-1 rounded-full text-xs ${
+              category.active 
+                ? 'bg-white/20 text-white' 
+                : 'bg-gray-100 text-gray-600 group-hover:bg-gray-200'
+            }`}>
+              {category.count}
+            </span>
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog Posts Grid -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {blogPosts.map((post) => (
+          <article class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 overflow-hidden">
+            <!-- Post Image -->
+            <div class="relative h-48 overflow-hidden">
+              <!-- Placeholder -->
+              <div class="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center">
+                <div class="text-center text-gray-600">
+                  <span class="text-4xl mb-2 block">📝</span>
+                  <span class="text-sm font-semibold">{post.category}</span>
+                </div>
+              </div>
+
+              <!-- Category Badge -->
+              <div class="absolute top-4 left-4">
+                <span class="bg-emerald-500 text-white px-3 py-1 rounded-full text-sm font-bold">
+                  {post.category}
+                </span>
+              </div>
+
+              <!-- Special Badges -->
+              {post.popular && (
+                <div class="absolute top-4 right-4 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold">
+                  🔥 POPULAR
+                </div>
+              )}
+              {post.expert && (
+                <div class="absolute top-4 right-4 bg-purple-500 text-white px-2 py-1 rounded-full text-xs font-bold">
+                  👨‍⚕️ EXPERT
+                </div>
+              )}
+            </div>
+
+            <!-- Post Content -->
+            <div class="p-6">
+              <!-- Meta Info -->
+              <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
+                <span>{post.readTime}</span>
+                <span>{new Date(post.publishDate).toLocaleDateString('sk-SK')}</span>
+              </div>
+
+              <h3 class="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-emerald-600 transition-colors">
+                <a href={`/blog/${post.slug}`}>{post.title}</a>
+              </h3>
+
+              <p class="text-gray-600 mb-4 line-clamp-3 leading-relaxed">
+                {post.excerpt}
+              </p>
+
+              <!-- Author -->
+              <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                  <div class="w-8 h-8 bg-gradient-to-r from-emerald-400 to-blue-500 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">
+                    {post.author.split(' ').map(n => n[0]).join('')}
+                  </div>
+                  <div>
+                    <p class="font-semibold text-gray-900 text-sm">{post.author}</p>
+                    <p class="text-xs text-gray-500">{post.authorRole}</p>
+                  </div>
+                </div>
+
+                <!-- Views -->
+                <div class="text-xs text-gray-500 flex items-center">
+                  <span>👁️ {post.views.toLocaleString()}</span>
+                </div>
+              </div>
+
+              <!-- Tags -->
+              <div class="flex flex-wrap gap-1 mt-4">
+                {post.tags.slice(0, 3).map(tag => (
+                  <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs hover:bg-gray-200 transition-colors cursor-pointer">
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <!-- Load More Button -->
+      <div class="text-center mt-12">
+        <button class="bg-gradient-to-r from-gray-800 to-gray-900 hover:from-gray-900 hover:to-black text-white px-8 py-4 rounded-full font-bold transition-all duration-300 transform hover:scale-105 shadow-lg">
+          Načítať viac článkov →
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter Section -->
+  <section class="py-20 bg-gradient-to-r from-emerald-600 to-blue-600">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-12">
+        <h2 class="text-3xl font-bold text-white mb-4">
+          📧 {newsletter.title}
+        </h2>
+        <p class="text-xl text-emerald-100 mb-8">
+          {newsletter.description}
+        </p>
+
+        <!-- Benefits -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+          {newsletter.benefits.map(benefit => (
+            <div class="flex items-center text-white">
+              <svg class="w-5 h-5 text-yellow-300 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+              {benefit}
+            </div>
+          ))}
+        </div>
+
+        <!-- Subscription Form -->
+        <div class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+          <input 
+            type="email" 
+            placeholder="Váš email address"
+            class="flex-1 px-6 py-4 rounded-full border-0 focus:ring-2 focus:ring-yellow-300 focus:outline-none text-gray-900"
+          />
+          <button class="bg-yellow-400 hover:bg-yellow-500 text-gray-900 px-8 py-4 rounded-full font-bold transition-all duration-300 transform hover:scale-105">
+            Prihlásiť sa
+          </button>
+        </div>
+
+        <p class="text-emerald-200 text-sm mt-4">
+          * Žiadny spam, len kvalitný obsah. Odhlásenie kedykoľvek.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Popular Tags -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h3 class="text-2xl font-bold text-center text-gray-900 mb-8">Populárne témy</h3>
+      
+      <div class="flex flex-wrap justify-center gap-3">
+        {popularTags.map((tag, index) => (
+          <a 
+            href={`/blog/tag/${tag}`}
+            class="bg-white hover:bg-emerald-50 border border-gray-200 hover:border-emerald-300 text-gray-700 hover:text-emerald-700 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 transform hover:scale-105"
+          >
+            #{tag}
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+
+  <!-- Structured Data -->
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
+</BaseLayout>
+
+<style>
+  /* Starry background animations */
+  .stars {
+    background: transparent url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><g fill="white" opacity="0.8"><circle cx="150" cy="200" r="1.5"/><circle cx="300" cy="100" r="1"/><circle cx="500" cy="300" r="2"/><circle cx="750" cy="150" r="1"/><circle cx="900" cy="400" r="1.5"/><circle cx="200" cy="600" r="1"/><circle cx="600" cy="500" r="1.5"/><circle cx="100" cy="800" r="1"/><circle cx="800" cy="700" r="2"/><circle cx="400" cy="900" r="1"/></g></svg>') left top;
+    background-size: 1000px 1000px;
+    animation: stars-move 100s linear infinite;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .twinkling {
+    background: transparent url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"><g fill="white"><circle cx="50" cy="75" r="1" opacity="0.8"><animate attributeName="opacity" values="0.8;0.3;0.8" dur="3s" repeatCount="indefinite"/></circle><circle cx="150" cy="125" r="1.5" opacity="0.6"><animate attributeName="opacity" values="0.6;0.9;0.6" dur="2s" repeatCount="indefinite"/></circle></g></svg>') left top;
+    background-size: 500px 500px;
+    animation: stars-move 50s linear infinite;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  @keyframes stars-move {
+    from { transform: translateX(0px); }
+    to { transform: translateX(-1000px); }
+  }
+
+  .glow-text {
+    text-shadow: 0 0 10px rgba(52, 211, 153, 0.5), 0 0 20px rgba(52, 211, 153, 0.3);
+  }
+
+  .glow-button {
+    box-shadow: 0 0 20px rgba(52, 211, 153, 0.4), 0 10px 40px rgba(0, 0, 0, 0.2);
+  }
+
+  .glow-button:hover {
+    box-shadow: 0 0 30px rgba(52, 211, 153, 0.6), 0 15px 50px rgba(0, 0, 0, 0.3);
+  }
+
+  .animate-fade-in { animation: fadeIn 1s ease-out; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .stars, .twinkling { background-size: 500px 500px; }
+  }
+</style>

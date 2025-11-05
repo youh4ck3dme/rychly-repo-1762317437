@@ -1,0 +1,550 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const postData = {
+  title: 'AI Analýza Vlasov: Revolúcia v Kaderníctve 2025',
+  excerpt: 'Objavte, ako umelá inteligencia mení svet kaderníctva. Prvé štúdio na Slovensku s AI technológiou pre personalizované riešenia vlasov.',
+  author: 'Pavol "PAPI" Mikuš',
+  authorRole: 'CEO & Master Stylist',
+  authorBio: 'PAPI je zakladateľom štúdia s 15-ročnými skúsenosťami. Prvý na Slovensku implementoval AI technológie do kaderníckych služieb. Mentor mladých stylistov a inovačný líder v beauty priemysle.',
+  publishDate: '2025-01-15',
+  readTime: '8 min čítania',
+  category: 'Technológie',
+  tags: ['AI', 'technológie', 'inovácie', 'analýza vlasov', 'budúcnosť', 'personalizácia'],
+  views: 2847,
+  slug: 'ai-analyza-vlasov-revolucia',
+  featured: true,
+  trending: true
+};
+
+const relatedPosts = [
+  {
+    title: 'Top 10 Vlasových Trendov Zima 2025',
+    slug: 'vlasove-trendy-zima-2025',
+    category: 'Trendy',
+    readTime: '6 min',
+    image: '❄️'
+  },
+  {
+    title: 'Olaplex vs Keratín: Kompletný Sprievodca',
+    slug: 'olaplex-vs-keratin-sprievodca',
+    category: 'Ošetrenia',
+    readTime: '10 min',
+    image: '💆'
+  },
+  {
+    title: 'Domáca Starostlivosť: Profesionálne Tipy',
+    slug: 'domaca-starostlivost-tipy',
+    category: 'Starostlivosť',
+    readTime: '5 min',
+    image: '🌿'
+  }
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": postData.title,
+  "description": postData.excerpt,
+  "author": {
+    "@type": "Person",
+    "name": postData.author
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "PAPI Hair Design",
+    "url": "https://papihairdesign.sk"
+  },
+  "datePublished": postData.publishDate,
+  "dateModified": postData.publishDate
+};
+---
+
+<BaseLayout 
+  title={`${postData.title} | PAPI Hair Design Blog`}
+  description={postData.excerpt}
+>
+  <Header />
+
+  <!-- Hero Section -->
+  <section class="relative bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 py-20 overflow-hidden">
+    <!-- Tech Background Effect -->
+    <div class="absolute inset-0 opacity-20">
+      <div class="tech-grid"></div>
+    </div>
+    
+    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <!-- Featured Badges -->
+      <div class="flex justify-center gap-3 mb-6">
+        <div class="inline-flex items-center bg-red-500/90 backdrop-blur-lg border border-red-400/30 rounded-full px-4 py-2 text-white font-semibold text-sm">
+          <span class="text-yellow-300 mr-2">🔥</span>
+          TRENDING
+        </div>
+        <div class="inline-flex items-center bg-blue-500/90 backdrop-blur-lg border border-blue-400/30 rounded-full px-4 py-2 text-white font-semibold text-sm">
+          <span class="text-yellow-300 mr-2">⭐</span>
+          FEATURED
+        </div>
+        <div class="inline-flex items-center bg-purple-500/90 backdrop-blur-lg border border-purple-400/30 rounded-full px-4 py-2 text-white font-semibold text-sm">
+          <span class="text-yellow-300 mr-2">🤖</span>
+          {postData.category}
+        </div>
+      </div>
+
+      <h1 class="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+        {postData.title}
+      </h1>
+      
+      <p class="text-xl text-blue-100 mb-8 leading-relaxed max-w-3xl mx-auto">
+        {postData.excerpt}
+      </p>
+
+      <!-- Meta Info -->
+      <div class="flex items-center justify-center gap-6 text-blue-100 flex-wrap">
+        <div class="flex items-center">
+          <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center text-white font-bold mr-3 text-lg">
+            🤖
+          </div>
+          <div class="text-left">
+            <p class="font-semibold text-white">{postData.author}</p>
+            <p class="text-sm opacity-80">{postData.authorRole}</p>
+          </div>
+        </div>
+        <div class="w-px h-12 bg-white/20 hidden sm:block"></div>
+        <div class="text-center">
+          <p class="font-semibold text-white">{new Date(postData.publishDate).toLocaleDateString('sk-SK')}</p>
+          <p class="text-sm opacity-80">{postData.readTime}</p>
+        </div>
+        <div class="w-px h-12 bg-white/20 hidden sm:block"></div>
+        <div class="text-center">
+          <p class="font-semibold text-white">👁️ {postData.views.toLocaleString()}</p>
+          <p class="text-sm opacity-80">zobrazení</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Article Content -->
+  <article class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- Featured Image -->
+      <div class="mb-12">
+        <div class="relative h-96 bg-gradient-to-br from-blue-400 via-purple-500 to-indigo-600 rounded-3xl overflow-hidden flex items-center justify-center">
+          <div class="text-center text-white">
+            <div class="relative">
+              <span class="text-8xl mb-4 block animate-pulse">🤖</span>
+              <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer"></div>
+            </div>
+            <span class="text-2xl font-semibold">AI Hair Technology</span>
+            <p class="text-blue-100 mt-2">Budúcnosť kaderníctva je tu</p>
+          </div>
+          <!-- Tech Elements -->
+          <div class="absolute top-4 left-4 w-8 h-8 border-2 border-white/30 rounded-lg animate-spin-slow"></div>
+          <div class="absolute bottom-4 right-4 w-12 h-12 border-2 border-white/20 rounded-full animate-pulse"></div>
+          <div class="absolute top-1/2 right-8 w-6 h-6 bg-yellow-400 rounded-full animate-bounce"></div>
+        </div>
+      </div>
+
+      <!-- Article Body -->
+      <div class="prose prose-lg max-w-none">
+        
+        <p class="text-xl text-gray-600 leading-relaxed mb-8 font-medium">
+          Sme svedkami technologickej revolúcie, ktorá mení náš pohľad na kaderníctvo. V PAPI Hair Design sme prvými na Slovensku, ktorí implementovali pokročilé AI technológie do našich služieb, čím posúvame hranice personalizovanej starostlivosti o vlasy.
+        </p>
+
+        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-500 p-8 my-8 rounded-r-2xl">
+          <div class="flex items-start gap-4">
+            <div class="text-4xl">🎯</div>
+            <div>
+              <p class="text-blue-900 font-bold text-lg mb-2">Revolučná presnosť</p>
+              <p class="text-blue-800">Naša AI dokáže analyzovать viac ako 150 parametrov vašich vlasov a odporučiť ideálne riešenie s 94% presnosťou. To je budúcnosť kaderníctva!</p>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="text-3xl font-bold text-gray-900 mt-12 mb-6">Ako funguje AI analýza vlasov?</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-12">
+          <div class="bg-gradient-to-br from-emerald-50 to-green-100 rounded-2xl p-8">
+            <h3 class="text-xl font-bold text-emerald-800 mb-4">📱 1. Snímanie obrazu</h3>
+            <p class="text-emerald-700 mb-4">Pokročilé kamery zachytávajú vysokorozlíšené snímky vašich vlasov z rôznych uhlov. Systém analyzuje štruktúru, farbu, hustotu a poškodenie.</p>
+            <ul class="text-emerald-600 text-sm space-y-1">
+              <li>• 4K rozlíšenie snímkov</li>
+              <li>• Multi-spektrálna analýza</li>
+              <li>• 360° zachytenie</li>
+            </ul>
+          </div>
+
+          <div class="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl p-8">
+            <h3 class="text-xl font-bold text-blue-800 mb-4">🧠 2. Strojové učenie</h3>
+            <p class="text-blue-700 mb-4">AI porovnáva vaše vlasy s databázou 50,000+ prípadov a identifikuje optimálne riešenia založené na vedeckých dátach.</p>
+            <ul class="text-blue-600 text-sm space-y-1">
+              <li>• Databáza 50k+ analýz</li>
+              <li>• Pattern recognition</li>
+              <li>• Prediktívne modelovanie</li>
+            </ul>
+          </div>
+
+          <div class="bg-gradient-to-br from-purple-50 to-violet-100 rounded-2xl p-8">
+            <h3 class="text-xl font-bold text-purple-800 mb-4">⚡ 3. Okamžité výsledky</h3>
+            <p class="text-purple-700 mb-4">Kompletná analýza prebieha za 30 sekúnd. Dostávate detailný report s odporúčaniami na mieru vašich potrieb.</p>
+            <ul class="text-purple-600 text-sm space-y-1">
+              <li>• 30-sekundová analýza</li>
+              <li>• Personalizované report</li>
+              <li>• Reálne vizualizácie</li>
+            </ul>
+          </div>
+
+          <div class="bg-gradient-to-br from-rose-50 to-pink-100 rounded-2xl p-8">
+            <h3 class="text-xl font-bold text-rose-800 mb-4">🎨 4. Virtuálny styling</h3>
+            <p class="text-rose-700 mb-4">Vyskúšajte si nový look virtuálne pred skutočnou zmenou. Vidíte presne, ako budete vyzerať s novým strihom alebo farbou.</p>
+            <ul class="text-rose-600 text-sm space-y-1">
+              <li>• Real-time preview</li>
+              <li>• Multiple varianty</li>
+              <li>• Before/After porovnanie</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="bg-gradient-to-r from-yellow-100 to-orange-100 rounded-2xl p-8 my-12">
+          <h3 class="text-2xl font-bold text-orange-800 mb-6">🔬 Čo presne AI analyzuje?</h3>
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="text-center">
+              <div class="text-4xl mb-2">🔍</div>
+              <h4 class="font-bold text-orange-700 mb-2">Štruktúra vlasov</h4>
+              <ul class="text-orange-600 text-sm text-left">
+                <li>• Hustota porastu</li>
+                <li>• Hrúbka vlasového vlákna</li>
+                <li>• Porozita vlasov</li>
+                <li>• Elasticita a pevnosť</li>
+              </ul>
+            </div>
+
+            <div class="text-center">
+              <div class="text-4xl mb-2">🎨</div>
+              <h4 class="font-bold text-orange-700 mb-2">Farba a pigmentácia</h4>
+              <ul class="text-orange-600 text-sm text-left">
+                <li>• Prirodzený pigment</li>
+                <li>• Úroveň svetlosti</li>
+                <li>• Podtón farby</li>
+                <li>• Rovnomernosť sfarbenia</li>
+              </ul>
+            </div>
+
+            <div class="text-center">
+              <div class="text-4xl mb-2">⚕️</div>
+              <h4 class="font-bold text-orange-700 mb-2">Zdravotný stav</h4>
+              <ul class="text-orange-600 text-sm text-left">
+                <li>• Poškodenie vlasov</li>
+                <li>• Stav vlasovej pokožky</li>
+                <li>• Suchosť/mastnota</li>
+                <li>• Potreba regenerácie</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="text-3xl font-bold text-gray-900 mt-12 mb-6">Výhody AI technológie v kaderníctve</h2>
+
+        <div class="space-y-8 my-12">
+          <div class="flex gap-6 items-start">
+            <div class="w-16 h-16 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center text-white text-2xl flex-shrink-0">
+              🎯
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-gray-900 mb-2">100% Personalizácia</h3>
+              <p class="text-gray-700">Každé odporúčanie je vytvorené špeciálne pre vás na základe komplexnej analýzy vašich jedinečných charakteristík vlasov.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-6 items-start">
+            <div class="w-16 h-16 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-full flex items-center justify-center text-white text-2xl flex-shrink-0">
+              ⚡
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-gray-900 mb-2">Okamžité výsledky</h3>
+              <p class="text-gray-700">Žiadne čakanie na rozhodnutie. Kompletná analýza a odporúčania sú k dispozícii za menej ako minútu.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-6 items-start">
+            <div class="w-16 h-16 bg-gradient-to-r from-purple-400 to-violet-500 rounded-full flex items-center justify-center text-white text-2xl flex-shrink-0">
+              🔮
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-gray-900 mb-2">Predikcia výsledkov</h3>
+              <p class="text-gray-700">Vidíte presne, ako budete vyzerať pred akoukoľvek zmenou. Žiadne nepríjemné prekvapenia.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-6 items-start">
+            <div class="w-16 h-16 bg-gradient-to-r from-rose-400 to-pink-500 rounded-full flex items-center justify-center text-white text-2xl flex-shrink-0">
+              💡
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-gray-900 mb-2">Odborné poradenstvo</h3>
+              <p class="text-gray-700">AI kombinuje poznatky tisícov odborníkov a poskytuje rady, ktoré by ste inak dostali len od top svetových stylistov.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-8 text-white my-12">
+          <h3 class="text-2xl font-bold mb-6 text-center">📊 AI Analýza v číslach</h3>
+          
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="text-center">
+              <div class="text-3xl font-bold mb-2">94%</div>
+              <div class="text-indigo-200 text-sm">Presnosť odporúčaní</div>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl font-bold mb-2">30s</div>
+              <div class="text-indigo-200 text-sm">Čas analýzy</div>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl font-bold mb-2">150+</div>
+              <div class="text-indigo-200 text-sm">Analyzovaných parametrov</div>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl font-bold mb-2">50k+</div>
+              <div class="text-indigo-200 text-sm">Databáza prípadov</div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="text-3xl font-bold text-gray-900 mt-12 mb-6">Praktické využitie AI v našom štúdiu</h2>
+
+        <div class="bg-gray-50 rounded-2xl p-8 mb-8">
+          <h3 class="text-xl font-bold text-gray-900 mb-6">🏢 Ako prebieha návštěva s AI analýzou?</h3>
+          
+          <div class="space-y-6">
+            <div class="flex items-start gap-4">
+              <div class="w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center font-bold text-sm">1</div>
+              <div>
+                <h4 class="font-bold text-gray-900 mb-1">Príchod a konzultácia (10 min)</h4>
+                <p class="text-gray-600">Diskutujeme vaše želania, životný štýl a očakávania od novej zmeny.</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold text-sm">2</div>
+              <div>
+                <h4 class="font-bold text-gray-900 mb-1">AI analýza vlasov (5 min)</h4>
+                <p class="text-gray-600">Profesionálne snímanie a okamžitá analýza stavu vašich vlasov.</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center font-bold text-sm">3</div>
+              <div>
+                <h4 class="font-bold text-gray-900 mb-1">Vyhodnotenie a odporúčania (10 min)</h4>
+                <p class="text-gray-600">Spoločne prezeráme výsledky a vyberáme najlepšie riešenie.</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="w-8 h-8 bg-rose-500 text-white rounded-full flex items-center justify-center font-bold text-sm">4</div>
+              <div>
+                <h4 class="font-bold text-gray-900 mb-1">Virtuálne vyskúšanie (10 min)</h4>
+                <p class="text-gray-600">Vidíte výsledok ešte pred začatím práce - 100% istota.</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="w-8 h-8 bg-yellow-500 text-white rounded-full flex items-center justify-center font-bold text-sm">5</div>
+              <div>
+                <h4 class="font-bold text-gray-900 mb-1">Realizácia a dokonalý výsledok</h4>
+                <p class="text-gray-600">Presná implementácia AI odporúčaní našimi expertmi.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 rounded-2xl p-8 my-12">
+          <h3 class="text-2xl font-bold text-emerald-800 mb-4">🎁 Špeciálna AI ponuka</h3>
+          <p class="text-emerald-700 text-lg mb-6">Ako prvé štúdio na Slovensku s AI technológiou ponúkame exkluzívne balíčky:</p>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-white rounded-xl p-6 border border-emerald-200">
+              <h4 class="font-bold text-emerald-800 mb-2">🤖 AI BASIC</h4>
+              <p class="text-emerald-600 mb-4">Kompletná AI analýza + konzultácia</p>
+              <div class="text-2xl font-bold text-emerald-600">€35</div>
+              <p class="text-emerald-500 text-sm">Pôvodne €50</p>
+            </div>
+            
+            <div class="bg-gradient-to-r from-emerald-500 to-teal-500 rounded-xl p-6 text-white">
+              <h4 class="font-bold mb-2">🌟 AI PREMIUM</h4>
+              <p class="text-emerald-100 mb-4">AI analýza + virtuálne vyskúšanie + styling</p>
+              <div class="text-2xl font-bold">€85</div>
+              <p class="text-emerald-200 text-sm">Pôvodne €120</p>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="text-3xl font-bold text-gray-900 mt-12 mb-6">Budúcnosť kaderníctva je už tu</h2>
+        
+        <p class="text-lg text-gray-700 leading-relaxed mb-6">
+          Implementácia AI technológií v kaderníctve nie je len trendom - je to evolúcia směrom k personalizovanej, precíznej a efektívnej starostlivosti o vlasy. V PAPI Hair Design sme hrdí na to, že môžeme našim klientom ponúknuť túto revolučnú službu ako prví na Slovensku.
+        </p>
+
+        <div class="bg-blue-50 border border-blue-200 rounded-2xl p-8 my-8">
+          <h3 class="text-xl font-bold text-blue-800 mb-4">🔮 Čo nás čaká v budúcnosti?</h3>
+          <ul class="text-blue-700 space-y-2">
+            <li><strong>🧬 Genetická analýza:</strong> Určenie optimálnych produktov na základe DNA</li>
+            <li><strong>📱 Mobilná aplikácia:</strong> Domáca AI analýza a sledovanie pokroku</li>
+            <li><strong>🌐 AR zrkadlá:</strong> Rozšírená realita priamo v salóne</li>
+            <li><strong>🤝 AI asistent:</strong> Personálny stylist dostupný 24/7</li>
+          </ul>
+        </div>
+
+        <p class="text-lg text-gray-700 leading-relaxed">
+          Budúcnosť kaderníctva je založená na dátach, personalizácii a technológiách, ktoré rozumejú jedinečným potrebám každého klienta. V <strong>PAPI Hair Design</strong> túto budúcnosť žijeme už dnes.
+        </p>
+
+      </div>
+
+      <!-- CTA Box -->
+      <div class="mt-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white text-center">
+        <h3 class="text-2xl font-bold mb-4">Vyskúšajte AI analýzu vlasov!</h3>
+        <p class="text-blue-100 mb-6 text-lg">Prvých 50 klientov získa AI analýzu za špeciálnu cenu €25 (pôvodne €50)</p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
+          <a href="/kontakty" class="bg-white text-blue-600 px-6 py-3 rounded-full font-bold hover:bg-gray-100 transition-colors flex-1">
+            📞 Objednať analýzu
+          </a>
+          <a href="/analyze" class="bg-blue-500 text-white px-6 py-3 rounded-full font-bold border-2 border-white hover:bg-blue-400 transition-colors flex-1">
+            🤖 Online AI test
+          </a>
+        </div>
+      </div>
+
+      <!-- Tags -->
+      <div class="mt-12 pt-8 border-t border-gray-200">
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">Tagy článku:</h3>
+        <div class="flex flex-wrap gap-3">
+          {postData.tags.map(tag => (
+            <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-200 transition-colors cursor-pointer">
+              #{tag}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <!-- Author Bio -->
+      <div class="mt-12 pt-8 border-t border-gray-200">
+        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8">
+          <div class="flex items-start gap-6">
+            <div class="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-2xl flex-shrink-0">
+              🤖
+            </div>
+            <div>
+              <h3 class="text-2xl font-bold text-gray-900 mb-2">{postData.author}</h3>
+              <p class="text-blue-600 font-semibold mb-4">{postData.authorRole}</p>
+              <p class="text-gray-700 leading-relaxed">{postData.authorBio}</p>
+              <div class="mt-4 flex gap-4">
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">🏆 15+ rokov skúseností</span>
+                <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">🚀 Tech Inovator</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </article>
+
+  <!-- Related Posts -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">
+        Podobné <span class="text-blue-600">články</span>
+      </h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {relatedPosts.map((post) => (
+          <a href={`/blog/${post.slug}`} class="group bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden">
+            <div class="h-48 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+              <span class="text-6xl">{post.image}</span>
+            </div>
+            <div class="p-6">
+              <div class="flex items-center justify-between mb-3">
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold">
+                  {post.category}
+                </span>
+                <span class="text-gray-500 text-sm">{post.readTime}</span>
+              </div>
+              <h3 class="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
+                {post.title}
+              </h3>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+
+  <!-- Structured Data -->
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
+</BaseLayout>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .prose {
+    color: #374151;
+  }
+
+  .prose h2 {
+    color: #111827;
+    border-bottom: 2px solid #3b82f6;
+    padding-bottom: 0.5rem;
+  }
+
+  .prose h3 {
+    color: #1d4ed8;
+  }
+
+  .prose strong {
+    color: #1e40af;
+  }
+
+  /* Tech Grid Background */
+  .tech-grid {
+    background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: tech-move 20s linear infinite;
+  }
+
+  @keyframes tech-move {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(50px, 50px); }
+  }
+
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  .animate-shimmer {
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes spin-slow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .animate-spin-slow {
+    animation: spin-slow 8s linear infinite;
+  }
+</style>

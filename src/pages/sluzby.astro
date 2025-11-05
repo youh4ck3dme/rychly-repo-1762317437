@@ -1,0 +1,852 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import AnimatedCounter from '../components/AnimatedCounter.astro';
+
+const premiumServiceCategories = [
+  {
+    id: 'luxury-transformations',
+    name: 'Luxusné Transformácie',
+    subtitle: 'VIP zážitok pre náročných klientov',
+    icon: '✨',
+    color: 'emerald',
+    description: 'Kompletné makeovers s osobným prístupom a prémiové produkty',
+    featured: true,
+    services: [
+      {
+        name: 'VIP Total Transformation',
+        description: 'Kompletná 6-hodinová transformácia s analýzou AI, návrho​m štýlu, farbou, strihom a profesionálnym fotením',
+        price: '450€',
+        originalPrice: '600€',
+        duration: '6 hodín',
+        difficulty: 'Master Level',
+        includes: ['AI analýza vlasov', 'Personal styling konzultácia', 'Prémiové produkty', 'Olaplex ošetrenie', 'Profesionálne fotenie', '30-dňová záruka'],
+        popular: true,
+        exclusive: true,
+        beforeAfter: true
+      },
+      {
+        name: 'Celebrity Styling Package',
+        description: 'Styling balíček pre celebrity a VIP klientov s diskrétnosťou a vynikajúcimi výsledkami',
+        price: '350€',
+        duration: '4 hodiny',
+        difficulty: 'Expert Level',
+        includes: ['Súkromná miestnosť', 'Master stylist', 'Prémiové produkty', 'Diskrétnosť', 'Maintenance plán'],
+        exclusive: true
+      },
+      {
+        name: 'Bridal Perfection',
+        description: 'Kompletný svadobný balíček s trial runmo​m, wedding day styling a fotografiou',
+        price: '280€',
+        duration: '5 hodín',
+        difficulty: 'Master Level',
+        includes: ['Trial wedding styling', 'Wedding day service', 'Emergency touch-ups', 'Svadobná fotografia', 'Pamätný certifikát'],
+        popular: true
+      }
+    ]
+  },
+  {
+    id: 'color-artistry',
+    name: 'Farebné Umenie',
+    subtitle: 'Medzinárodne certifikované techniky',
+    icon: '🎨',
+    color: 'purple',
+    description: 'Pokročilé farebné techniky od certified color masterov',
+    services: [
+      {
+        name: 'Master Balayage',
+        description: 'Hand-painted balayage od L\'Oréal certifikovaného umelca s 12+ odtieňmi pre prirodzený efekt',
+        price: '200€',
+        duration: '4 hodiny',
+        difficulty: 'Master Level',
+        includes: ['Farebná analýza', 'Custom mixing', 'Hand painting', 'Toning', 'Gloss treatment', 'Home care set'],
+        popular: true,
+        technique: 'Hand-painted'
+      },
+      {
+        name: 'Color Correction Miracle',
+        description: 'Záchrana nepodarených farieb s Olaplex technológiou pre extrémne poškodené vlasy',
+        price: '180€',
+        duration: '5 hodín',
+        difficulty: 'Expert Level',
+        includes: ['Damage assessment', 'Olaplex treatment', 'Gradual correction', 'Reconstruction', 'Maintenance plan'],
+        specialized: true
+      },
+      {
+        name: 'Fantasy Color Creation',
+        description: 'Unikátne farebné kreácie pre módne eventy, festivaly a špeciálne príležitosti',
+        price: '220€',
+        duration: '3 hodiny',
+        difficulty: 'Artist Level',
+        includes: ['Concept design', 'Custom colors', 'Special effects', 'UV reactive colors', 'Photography'],
+        artistic: true
+      },
+      {
+        name: 'Highlights & Lowlights Pro',
+        description: 'Profesionálne melírovanie s foil technikou pre dokonalý kontrast a hĺbku',
+        price: '120€',
+        duration: '3 hodiny',
+        difficulty: 'Professional',
+        includes: ['Téchnique consultation', 'Foil application', 'Toning', 'Conditioning', 'Styling'],
+        classic: true
+      }
+    ]
+  },
+  {
+    id: 'precision-cuts',
+    name: 'Precízne Strihy',
+    subtitle: 'Mathematically perfect cuts',
+    icon: '✂️',
+    color: 'blue',
+    description: 'Geometricky dokonalé strihy s umeleckým cítením',
+    services: [
+      {
+        name: 'Signature PAPI Cut',
+        description: 'Náš charakteristický strih s analýzou tváre, zlatým rezom a personalizovaným dizajnom',
+        price: '80€',
+        duration: '90 min',
+        difficulty: 'Master Level',
+        includes: ['Face analysis', 'Golden ratio design', 'Precision cutting', 'Texture work', 'Styling lesson'],
+        signature: true,
+        popular: true
+      },
+      {
+        name: 'Geometric Precision',
+        description: 'Matematicky dokonalé geometrické strihy pre modernú ženu',
+        price: '65€',
+        duration: '75 min',
+        difficulty: 'Expert Level',
+        includes: ['Geometric design', 'Precision angles', 'Perfect symmetry', 'Edge definition', 'Maintenance guide'],
+        modern: true
+      },
+      {
+        name: 'Layered Artistry',
+        description: 'Umelecké vrstvenie s textúrovaním pre objem a pohyb vlasov',
+        price: '55€',
+        duration: '60 min',
+        difficulty: 'Professional',
+        includes: ['Layer consultation', 'Texture analysis', 'Custom layering', 'Volume creation', 'Movement styling'],
+        versatile: true
+      }
+    ]
+  },
+  {
+    id: 'mens-grooming',
+    name: 'Men\'s Grooming Excellence',
+    subtitle: 'Gentlemen\'s luxury experience',
+    icon: '💼',
+    color: 'slate',
+    description: 'Luxusné pánske grooming služby pre moderného muža',
+    services: [
+      {
+        name: 'Executive Grooming Package',
+        description: 'Kompletné grooming pre business mužov s hot towel shave a beard sculptingo​m',
+        price: '85€',
+        duration: '90 min',
+        difficulty: 'Master Level',
+        includes: ['Executive consultation', 'Precision cut', 'Hot towel shave', 'Beard sculpting', 'Grooming products'],
+        executive: true,
+        popular: true
+      },
+      {
+        name: 'Modern Gentleman',
+        description: 'Klasický pánsky strih s modernými prvkami a styling pre každodenné nosenie',
+        price: '45€',
+        duration: '45 min',
+        difficulty: 'Professional',
+        includes: ['Style consultation', 'Precision cut', 'Wash & style', 'Product recommendation', 'Maintenance tips'],
+        classic: true
+      },
+      {
+        name: 'Fade Master Class',
+        description: 'Dokonalé fade strihy všetkých typov s najnovšími technikami',
+        price: '35€',
+        duration: '40 min',
+        difficulty: 'Expert Level',
+        includes: ['Fade consultation', 'Skin fade technique', 'Texture work', 'Edge cleanup', 'Styling'],
+        trendy: true
+      }
+    ]
+  },
+  {
+    id: 'hair-reconstruction',
+    name: 'Rekonštrukcia Vlasov',
+    subtitle: 'Medical-grade treatments',
+    icon: '🔬',
+    color: 'teal',
+    description: 'Pokročilé ošetrenia pre regeneráciu a obnovu vlasov',
+    medical: true,
+    services: [
+      {
+        name: 'Olaplex Ultimate Recovery',
+        description: 'Najpokročilejšie ošetrenie pre extrémne poškodené vlasy s 5-stupňovo​m systémom',
+        price: '120€',
+        duration: '2.5 hodiny',
+        difficulty: 'Therapeutic',
+        includes: ['Damage analysis', 'Olaplex steps 1-5', 'Deep conditioning', 'Protein treatment', 'Home care protocol'],
+        medical: true,
+        results: '95% improvement'
+      },
+      {
+        name: 'Keratin Smoothing Therapy',
+        description: 'Brazílske keratínové vyrovnávanie pre hladké, zdravé vlasy až 6 mesiacov',
+        price: '150€',
+        duration: '3 hodiny',
+        difficulty: 'Expert Level',
+        includes: ['Hair analysis', 'Keratin application', 'Heat sealing', 'After-care products', '3-month guarantee'],
+        longLasting: true
+      },
+      {
+        name: 'Scalp Regeneration',
+        description: 'Terapeutické ošetrenie pokožky hlavy pre zdravý rast vlasov',
+        price: '80€',
+        duration: '90 min',
+        difficulty: 'Therapeutic',
+        includes: ['Scalp analysis', 'Deep cleansing', 'Micro massage', 'Nutrition serums', 'Growth stimulation'],
+        therapeutic: true
+      }
+    ]
+  },
+  {
+    id: 'special-occasions',
+    name: 'Špeciálne Príležitosti',
+    subtitle: 'Unforgettable moments',
+    icon: '🎭',
+    color: 'rose',
+    description: 'Unikátne styling pre najdôležitejšie chvíle života',
+    services: [
+      {
+        name: 'Red Carpet Ready',
+        description: 'Hollywood styling pre gala večiere, premiéry a významné eventy',
+        price: '200€',
+        duration: '3 hodiny',
+        difficulty: 'Celebrity Level',
+        includes: ['Concept creation', 'Trial styling', 'Event day service', 'Photo touch-ups', 'Emergency kit'],
+        glamorous: true
+      },
+      {
+        name: 'Prom Queen Package',
+        description: 'Dokonalý štýl pre stužkovú s dlhotrvajúcim účesom a makeupom',
+        price: '120€',
+        duration: '2 hodiny',
+        difficulty: 'Professional',
+        includes: ['Style consultation', 'Long-lasting styling', 'Hair accessories', 'Touch-up kit', 'Photo session'],
+        youthful: true
+      },
+      {
+        name: 'Maternity Glow',
+        description: 'Špeciálne ošetrenie a styling pre budúce mamičky s bezpečným​i produktmi',
+        price: '90€',
+        duration: '2 hodiny',
+        difficulty: 'Professional',
+        includes: ['Pregnancy-safe products', 'Comfortable styling', 'Relaxation treatment', 'Gentle techniques', 'Photo memories'],
+        gentle: true
+      }
+    ]
+  }
+];
+
+const addOnServices = [
+  {
+    name: 'AI Hair Analysis',
+    description: 'Hi-tech analýza vlasov s odporúčaniami',
+    price: '25€',
+    icon: '🤖'
+  },
+  {
+    name: 'Scalp Massage Therapy',
+    description: 'Relaxačná masáž pokožky hlavy',
+    price: '20€',
+    icon: '💆'
+  },
+  {
+    name: 'Hair Extensions',
+    description: 'Kvalitné predĺženie vlasov',
+    price: 'od 80€',
+    icon: '💇'
+  },
+  {
+    name: 'Professional Photoshoot',
+    description: 'Fotenie po transformácii',
+    price: '50€',
+    icon: '📸'
+  }
+];
+
+const processSteps = [
+  {
+    step: 1,
+    title: 'Konzultácia & Analýza',
+    description: 'Osobná konzultácia s AI analýzou vlasov a návrho​m štýlu',
+    duration: '15-30 min',
+    icon: '🔍'
+  },
+  {
+    step: 2,
+    title: 'Príprava & Ošetrenie',
+    description: 'Prípravné ošetrenia a ochranné aplikácie',
+    duration: '15-20 min',
+    icon: '🧴'
+  },
+  {
+    step: 3,
+    title: 'Hlavná Služba',
+    description: 'Vykonanie hlavnej služby s najvyššou precíznosťou',
+    duration: 'podľa služby',
+    icon: '✂️'
+  },
+  {
+    step: 4,
+    title: 'Finishing & Styling',
+    description: 'Finálne styling a edukácia o domácej starostlivosti',
+    duration: '20-30 min',
+    icon: '✨'
+  }
+];
+
+const guarantees = [
+  {
+    title: '100% Spokojnosť',
+    description: '14-dňová záruka na všetky služby',
+    icon: '⭐'
+  },
+  {
+    title: 'Prémiové Produkty',
+    description: 'Len najkvalitnejšie svetové značky',
+    icon: '💎'
+  },
+  {
+    title: 'Certifikovaní Špecialist​i',
+    description: 'Medzinárodne uznané certifikáty',
+    icon: '🎓'
+  },
+  {
+    title: 'Hygiena & Bezpečnosť',
+    description: 'Najprísnejšie hygienické štandardy',
+    icon: '🛡️'
+  }
+];
+
+const pricingTiers = [
+  {
+    name: 'Essential',
+    price: '45€',
+    description: 'Základné služby s kvalitou',
+    features: ['Konzultácia', 'Základné produkty', 'Styling', 'Domáce tipy'],
+    color: 'blue',
+    popular: false
+  },
+  {
+    name: 'Premium',
+    price: '95€',
+    description: 'Rozšírené služby s prémiom',
+    features: ['Rozšírená konzultácia', 'Prémiové produkty', 'Advanced styling', 'Follow-up', 'Maintenance guide'],
+    color: 'emerald',
+    popular: true
+  },
+  {
+    name: 'VIP',
+    price: '200€',
+    description: 'Luxusný zážitok bez kompromisov',
+    features: ['VIP priestor', 'Master stylist', 'Top produkty', 'Fotenie', 'Personálny servis', 'Lifetime support'],
+    color: 'purple',
+    popular: false,
+    exclusive: true
+  }
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "PAPI Hair Design - Luxusné Kaderníc​ke Služby",
+  "description": "Prestížne kaderníc​ke služby v Košiciach. VIP transformácie, farebné umenie, precízne strihy a rekonštrukcia vlasov.",
+  "provider": {
+    "@type": "HairSalon",
+    "name": "PAPI Hair Design",
+    "address": "Košice, Slovensko"
+  }
+};
+---
+
+<BaseLayout 
+  title="Služby - PAPI Hair Design | Luxusné Kaderníc​tvo Košice"
+  description="Prestížne kaderníc​ke služby v Košiciach. VIP transformácie, master balayage, precízne strihy, Olaplex ošetrenia a celebrity styling od certifikovaných špecialistov."
+>
+  <Header />
+
+  <!-- Hero Section with Starry Background -->
+  <section class="relative min-h-[90vh] bg-gradient-to-br from-gray-900 via-emerald-900 to-purple-900 overflow-hidden">
+    <!-- Animated Stars Background -->
+    <div class="absolute inset-0">
+      <div class="stars"></div>
+      <div class="twinkling"></div>
+    </div>
+    
+    <!-- Content -->
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 text-center">
+      <div class="animate-fade-in">
+        <!-- Premium Badge -->
+        <div class="inline-flex items-center bg-white/10 backdrop-blur-lg border border-white/20 rounded-full px-6 py-3 text-emerald-300 font-semibold mb-8">
+          <span class="text-yellow-400 mr-2">💎</span>
+          Certifikované Luxusné Služby
+        </div>
+
+        <h1 class="text-5xl md:text-7xl font-bold text-white mb-8 leading-tight">
+          Naše <span class="bg-gradient-to-r from-emerald-400 to-purple-400 bg-clip-text text-transparent glow-text">Služby</span>
+        </h1>
+        
+        <p class="text-xl md:text-2xl text-gray-200 mb-12 max-w-4xl mx-auto leading-relaxed">
+          Luxusné transformácie od <span class="text-emerald-400 font-semibold">medzinárodne certifikovaných</span> špecialistov.
+          <br>Každá služba je <span class="text-purple-400 font-semibold">umeleckým zážitkom</span> na najvyššej úrovni.
+        </p>
+
+        <!-- Service Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+          <div class="bg-white/5 backdrop-blur-lg rounded-2xl p-6 border border-white/10">
+            <div class="text-3xl font-bold text-emerald-400 glow-text">
+              <AnimatedCounter value={25} suffix="+" client:visible />
+            </div>
+            <div class="text-gray-300 text-sm">Premium služieb</div>
+          </div>
+          <div class="bg-white/5 backdrop-blur-lg rounded-2xl p-6 border border-white/10">
+            <div class="text-3xl font-bold text-purple-400 glow-text">
+              <AnimatedCounter value={6} suffix="" client:visible />
+            </div>
+            <div class="text-gray-300 text-sm">Kategórií</div>
+          </div>
+          <div class="bg-white/5 backdrop-blur-lg rounded-2xl p-6 border border-white/10">
+            <div class="text-3xl font-bold text-teal-400 glow-text">
+              <AnimatedCounter value={100} suffix="%" client:visible />
+            </div>
+            <div class="text-gray-300 text-sm">Záruka kvality</div>
+          </div>
+          <div class="bg-white/5 backdrop-blur-lg rounded-2xl p-6 border border-white/10">
+            <div class="text-3xl font-bold text-rose-400 glow-text">
+              <AnimatedCounter value={14} suffix="" client:visible />
+            </div>
+            <div class="text-gray-300 text-sm">Dní záruka</div>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-6 justify-center">
+          <a
+            href="#services"
+            class="bg-gradient-to-r from-emerald-500 to-purple-600 hover:from-emerald-600 hover:to-purple-700 text-white px-10 py-4 rounded-full text-lg font-bold transition-all duration-300 transform hover:scale-105 shadow-2xl glow-button"
+          >
+            Preskúmať služby
+          </a>
+          <a
+            href="/kontakty"
+            class="border-2 border-white/30 text-white hover:bg-white hover:text-gray-900 px-10 py-4 rounded-full text-lg font-bold transition-all duration-300 backdrop-blur-lg"
+          >
+            Rezervovať termín
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Tiers Section -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">
+          Cenové <span class="text-emerald-600">kategórie</span>
+        </h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          Vyberte si úroveň služieb, ktorá najlepšie vyhovuje vašim potrebám
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {pricingTiers.map((tier, index) => (
+          <div class={`relative bg-gradient-to-br from-${tier.color}-50 to-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 ${tier.popular ? 'border-4 border-emerald-400 scale-105' : 'border-2 border-gray-200'}`}>
+            {tier.popular && (
+              <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-emerald-500 text-white px-6 py-2 rounded-full text-sm font-bold">
+                NAJPOPULÁRNEJŠIE
+              </div>
+            )}
+            
+            {tier.exclusive && (
+              <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-purple-500 text-white px-6 py-2 rounded-full text-sm font-bold">
+                VIP EXCLUSIVE
+              </div>
+            )}
+
+            <div class="text-center mb-8">
+              <h3 class={`text-2xl font-bold text-${tier.color}-600 mb-2`}>{tier.name}</h3>
+              <div class={`text-4xl font-bold text-${tier.color}-700 mb-2`}>
+                {tier.price}
+                <span class="text-lg text-gray-500">/služba</span>
+              </div>
+              <p class="text-gray-600">{tier.description}</p>
+            </div>
+
+            <ul class="space-y-3 mb-8">
+              {tier.features.map(feature => (
+                <li class="flex items-center">
+                  <svg class={`w-5 h-5 text-${tier.color}-500 mr-3`} fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                  </svg>
+                  <span class="text-gray-700">{feature}</span>
+                </li>
+              ))}
+            </ul>
+
+            <button class={`w-full bg-gradient-to-r from-${tier.color}-500 to-${tier.color}-600 hover:from-${tier.color}-600 hover:to-${tier.color}-700 text-white py-3 px-6 rounded-full font-semibold transition-all duration-300 transform hover:scale-105`}>
+              Vybrať {tier.name}
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Categories Section -->
+  <section id="services" class="py-24 bg-gradient-to-br from-gray-50 to-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-20">
+        <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          Naše <span class="text-emerald-600">špecializácie</span>
+        </h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          Každá kategória predstavuje vrchol našej expertízy s medzinárodným​i certifikátmi
+        </p>
+      </div>
+
+      {premiumServiceCategories.map((category, categoryIndex) => (
+        <div class="mb-20">
+          <!-- Category Header -->
+          <div class={`bg-gradient-to-r from-${category.color}-600 to-${category.color}-700 rounded-3xl p-12 mb-12 text-white text-center relative overflow-hidden`}>
+            {category.featured && (
+              <div class="absolute top-4 right-4 bg-yellow-400 text-yellow-900 px-4 py-2 rounded-full font-bold text-sm">
+                🏆 FEATURED
+              </div>
+            )}
+            
+            <div class="text-6xl mb-6">{category.icon}</div>
+            <h3 class="text-3xl md:text-4xl font-bold mb-4">{category.name}</h3>
+            <p class="text-xl text-emerald-100 mb-2">{category.subtitle}</p>
+            <p class="text-lg opacity-90 max-w-2xl mx-auto">{category.description}</p>
+            
+            {category.medical && (
+              <div class="mt-6 inline-flex items-center bg-white/20 rounded-full px-6 py-2">
+                <span class="text-red-400 mr-2">🏥</span>
+                <span class="font-semibold">Medical Grade Treatment</span>
+              </div>
+            )}
+          </div>
+
+          <!-- Services Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {category.services.map((service, serviceIndex) => (
+              <div class="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 overflow-hidden">
+                {service.popular && (
+                  <div class="absolute top-4 right-4 bg-emerald-500 text-white px-3 py-1 rounded-full text-xs font-bold z-10">
+                    POPULAR
+                  </div>
+                )}
+                
+                {service.exclusive && (
+                  <div class="absolute top-4 left-4 bg-purple-500 text-white px-3 py-1 rounded-full text-xs font-bold z-10">
+                    VIP ONLY
+                  </div>
+                )}
+
+                <div class="p-8">
+                  <!-- Service Header -->
+                  <div class="mb-6">
+                    <div class="flex items-center justify-between mb-4">
+                      <h4 class="text-xl font-bold text-gray-900 group-hover:text-emerald-600 transition-colors">
+                        {service.name}
+                      </h4>
+                      <div class="text-right">
+                        <div class={`text-2xl font-bold text-${category.color}-600`}>
+                          {service.price}
+                        </div>
+                        {service.originalPrice && (
+                          <div class="text-sm text-gray-500 line-through">
+                            {service.originalPrice}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    
+                    <p class="text-gray-600 leading-relaxed mb-4">
+                      {service.description}
+                    </p>
+
+                    <!-- Service Tags -->
+                    <div class="flex flex-wrap gap-2 mb-4">
+                      {service.difficulty && (
+                        <span class={`bg-${category.color}-100 text-${category.color}-700 px-2 py-1 rounded-full text-xs font-medium`}>
+                          {service.difficulty}
+                        </span>
+                      )}
+                      {service.technique && (
+                        <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium">
+                          {service.technique}
+                        </span>
+                      )}
+                      {service.results && (
+                        <span class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-medium">
+                          {service.results}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  <!-- Duration -->
+                  <div class="flex items-center mb-6 text-gray-600">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span class="font-medium">{service.duration}</span>
+                  </div>
+
+                  <!-- Includes -->
+                  <div class="mb-6">
+                    <h5 class="font-semibold text-gray-800 mb-3">Služba zahŕňa:</h5>
+                    <ul class="space-y-2">
+                      {service.includes.map(include => (
+                        <li class="flex items-start text-sm text-gray-600">
+                          <svg class="w-4 h-4 text-emerald-500 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                          </svg>
+                          {include}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <!-- Action Buttons -->
+                  <div class="flex gap-3">
+                    <button class={`flex-1 bg-gradient-to-r from-${category.color}-500 to-${category.color}-600 hover:from-${category.color}-600 hover:to-${category.color}-700 text-white py-3 px-4 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 text-sm`}>
+                      Rezervovať
+                    </button>
+                    <button class="flex-shrink-0 border-2 border-gray-300 hover:border-gray-400 text-gray-700 hover:text-gray-900 py-3 px-4 rounded-full font-semibold transition-all duration-300 text-sm">
+                      Viac info
+                    </button>
+                  </div>
+                </div>
+
+                {service.beforeAfter && (
+                  <div class="absolute bottom-4 left-4 bg-emerald-500 text-white px-2 py-1 rounded-full text-xs font-bold">
+                    📸 Before/After
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Process Steps Section -->
+  <section class="py-24 bg-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-bold text-white mb-6">
+          Náš <span class="text-emerald-400">proces</span>
+        </h2>
+        <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+          Každá návšteva je pečlivo naplánovaný zážitok s dôrazom na dokonalosť
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {processSteps.map((step, index) => (
+          <div class="text-center group">
+            <div class="relative mb-8">
+              <!-- Step Number -->
+              <div class="w-20 h-20 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform shadow-lg">
+                <span class="text-2xl font-bold text-white">{step.step}</span>
+              </div>
+              
+              <!-- Step Icon -->
+              <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg">
+                <span class="text-2xl">{step.icon}</span>
+              </div>
+
+              {/* Connection Line */}
+              {index < processSteps.length - 1 && (
+                <div class="hidden lg:block absolute top-10 left-full w-full h-0.5 bg-gradient-to-r from-emerald-500 to-teal-600 opacity-30"></div>
+              )}
+            </div>
+
+            <h3 class="text-xl font-bold text-white mb-3 group-hover:text-emerald-400 transition-colors">
+              {step.title}
+            </h3>
+            <p class="text-gray-300 mb-3 leading-relaxed">
+              {step.description}
+            </p>
+            <div class="text-emerald-400 text-sm font-medium">
+              {step.duration}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Add-on Services -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">
+          Doplnkové <span class="text-emerald-600">služby</span>
+        </h2>
+        <p class="text-xl text-gray-600">
+          Rozšírte si zážitok o špeciálne doplnky
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {addOnServices.map((addon, index) => (
+          <div class="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 text-center">
+            <div class="text-4xl mb-4">{addon.icon}</div>
+            <h3 class="text-lg font-bold text-gray-900 mb-2">{addon.name}</h3>
+            <p class="text-gray-600 text-sm mb-4">{addon.description}</p>
+            <div class="text-2xl font-bold text-emerald-600 mb-4">{addon.price}</div>
+            <button class="w-full bg-emerald-500 hover:bg-emerald-600 text-white py-2 px-4 rounded-full font-semibold transition-colors">
+              Pridať
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Guarantees Section -->
+  <section class="py-20 bg-gradient-to-r from-emerald-600 to-teal-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold text-white mb-4">
+          Naše <span class="text-yellow-300">záruky</span>
+        </h2>
+        <p class="text-xl text-emerald-100">
+          Garantujeme najvyššiu kvalitu a spokojnosť
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {guarantees.map((guarantee, index) => (
+          <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 text-center border border-white/20 hover:bg-white/20 transition-all">
+            <div class="text-4xl mb-4">{guarantee.icon}</div>
+            <h3 class="text-xl font-bold text-white mb-3">{guarantee.title}</h3>
+            <p class="text-emerald-100">{guarantee.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-24 bg-gray-900 relative overflow-hidden">
+    <div class="absolute inset-0">
+      <div class="stars"></div>
+    </div>
+    
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-4xl md:text-5xl font-bold text-white mb-6 glow-text">
+        Pripravení na <span class="text-emerald-400">transformáciu</span>?
+      </h2>
+      <p class="text-xl text-gray-300 mb-8 leading-relaxed">
+        Rezervujte si termín a zažite luxus kaderníctva na najvyššej úrovni
+      </p>
+
+      <!-- Special Offer -->
+      <div class="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-8 mb-8">
+        <h3 class="text-2xl font-bold text-white mb-4">🎁 Prvá konzultácia ZADARMO</h3>
+        <p class="text-emerald-100 mb-4">
+          AI analýza vlasov + personalizovaný návrh štýlu v hodnote 50€
+        </p>
+        <p class="text-sm text-emerald-200">
+          * Pre nových klientov • Platné do konca mesiaca
+        </p>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-6 justify-center">
+        <a
+          href="/kontakty"
+          class="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white px-10 py-5 rounded-full text-xl font-bold transition-all duration-300 transform hover:scale-105 shadow-2xl glow-button"
+        >
+          Rezervovať termín
+        </a>
+        <a
+          href="/portfolio"
+          class="border-2 border-white text-white hover:bg-white hover:text-gray-900 px-10 py-5 rounded-full text-xl font-bold transition-all duration-300 backdrop-blur-lg"
+        >
+          Pozrieť práce
+        </a>
+      </div>
+
+      <!-- Contact Quick Info -->
+      <div class="mt-12 text-emerald-200">
+        <p class="mb-2">📞 +421 123 456 789 • 📍 Košice centrum</p>
+        <p class="text-sm">Pondelok - Piatok: 9:00 - 19:00 | Sobota: 9:00 - 15:00</p>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+
+  <!-- Structured Data -->
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
+</BaseLayout>
+
+<style>
+  /* Starry background animations */
+  .stars {
+    background: transparent url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><g fill="white" opacity="0.8"><circle cx="150" cy="200" r="1.5"/><circle cx="300" cy="100" r="1"/><circle cx="500" cy="300" r="2"/><circle cx="750" cy="150" r="1"/><circle cx="900" cy="400" r="1.5"/><circle cx="200" cy="600" r="1"/><circle cx="600" cy="500" r="1.5"/><circle cx="100" cy="800" r="1"/><circle cx="800" cy="700" r="2"/><circle cx="400" cy="900" r="1"/></g></svg>') left top;
+    background-size: 1000px 1000px;
+    animation: stars-move 100s linear infinite;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .twinkling {
+    background: transparent url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"><g fill="white"><circle cx="50" cy="75" r="1" opacity="0.8"><animate attributeName="opacity" values="0.8;0.3;0.8" dur="3s" repeatCount="indefinite"/></circle><circle cx="150" cy="125" r="1.5" opacity="0.6"><animate attributeName="opacity" values="0.6;0.9;0.6" dur="2s" repeatCount="indefinite"/></circle></g></svg>') left top;
+    background-size: 500px 500px;
+    animation: stars-move 50s linear infinite;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  @keyframes stars-move {
+    from { transform: translateX(0px); }
+    to { transform: translateX(-1000px); }
+  }
+
+  .glow-text {
+    text-shadow: 0 0 10px rgba(52, 211, 153, 0.5), 0 0 20px rgba(52, 211, 153, 0.3);
+  }
+
+  .glow-button {
+    box-shadow: 0 0 20px rgba(52, 211, 153, 0.4), 0 10px 40px rgba(0, 0, 0, 0.2);
+  }
+
+  .glow-button:hover {
+    box-shadow: 0 0 30px rgba(52, 211, 153, 0.6), 0 15px 50px rgba(0, 0, 0, 0.3);
+  }
+
+  .animate-fade-in { animation: fadeIn 1s ease-out; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .stars, .twinkling { background-size: 500px 500px; }
+  }
+</style>

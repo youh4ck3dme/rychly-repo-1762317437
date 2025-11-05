@@ -1,0 +1,511 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const portfolioCategories = [
+  {
+    id: 'damske-strihy',
+    name: 'Dámske strihy',
+    description: 'Moderné a klasické strihy pre ženy všetkých vekových kategórií',
+    count: 24
+  },
+  {
+    id: 'panske-strihy',
+    name: 'Pánske strihy',
+    description: 'Štýlové a praktické strihy pre moderných mužov',
+    count: 18
+  },
+  {
+    id: 'farbenie',
+    name: 'Farbenie & Melír',
+    description: 'Kreatívne farebné transformácie a prirodzené tóny',
+    count: 32
+  },
+  {
+    id: 'svadobne',
+    name: 'Svadobné účesy',
+    description: 'Elegantné účesy pre najkrajší deň v živote',
+    count: 16
+  },
+  {
+    id: 'kreativne',
+    name: 'Kreatívne štýly',
+    description: 'Unikátne a odvážne transformácie',
+    count: 12
+  },
+  {
+    id: 'osetrenia',
+    name: 'Ošetrenia vlasov',
+    description: 'Regeneračné a hydratačné procedúry',
+    count: 20
+  }
+];
+
+const featuredWorks = [
+  {
+    id: 1,
+    title: 'Klasický Bob s Balayage',
+    category: 'Dámske strihy',
+    beforeImage: '/assets/images/portfolio/before-1.jpg',
+    afterImage: '/assets/images/portfolio/after-1.jpg',
+    description: 'Transformácia z dlhých vlasov na štýlový bob s jemnými svetlými prameňmi.',
+    techniques: ['Strihanie', 'Balayage', 'Styling'],
+    duration: '3 hodiny',
+    stylist: 'Petra Nováková'
+  },
+  {
+    id: 2,
+    title: 'Moderný Pánsky Fade',
+    category: 'Pánske strihy',
+    beforeImage: '/assets/images/portfolio/before-2.jpg',
+    afterImage: '/assets/images/portfolio/after-2.jpg',
+    description: 'Precízny fade strih s textúrovaným topom pre moderný vzhľad.',
+    techniques: ['Fade Cut', 'Texturizácia', 'Styling'],
+    duration: '1.5 hodiny',
+    stylist: 'Marek Svoboda'
+  },
+  {
+    id: 3,
+    title: 'Svadobný Romantický Účes',
+    category: 'Svadobné účesy',
+    beforeImage: '/assets/images/portfolio/before-3.jpg',
+    afterImage: '/assets/images/portfolio/after-3.jpg',
+    description: 'Elegantný svadobný účes s jemnými kučerami a kvetnými doplnkami.',
+    techniques: ['Styling', 'Kučery', 'Doplnky'],
+    duration: '2 hodiny',
+    stylist: 'Anna Kováčová'
+  },
+  {
+    id: 4,
+    title: 'Farebná Transformácia',
+    category: 'Farbenie & Melír',
+    beforeImage: '/assets/images/portfolio/before-4.jpg',
+    afterImage: '/assets/images/portfolio/after-4.jpg',
+    description: 'Z tmavých vlasov na žiarivé medené tóny s profesionálnym farbením.',
+    techniques: ['Odfarbovanie', 'Farebný melír', 'Tónovanie'],
+    duration: '4 hodiny',
+    stylist: 'Lucia Dvořáková'
+  },
+  {
+    id: 5,
+    title: 'Kreatívny Pixie Cut',
+    category: 'Kreatívne štýly',
+    beforeImage: '/assets/images/portfolio/before-5.jpg',
+    afterImage: '/assets/images/portfolio/after-5.jpg',
+    description: 'Odvážna transformácia na krátky pixie cut s asymetrickými prvkami.',
+    techniques: ['Pixie Cut', 'Asymetria', 'Texturizácia'],
+    duration: '2.5 hodiny',
+    stylist: 'Eva Nová'
+  },
+  {
+    id: 6,
+    title: 'Regeneračné Ošetrenie',
+    category: 'Ošetrenia vlasov',
+    beforeImage: '/assets/images/portfolio/before-6.jpg',
+    afterImage: '/assets/images/portfolio/after-6.jpg',
+    description: 'Hĺbková regenerácia poškodených vlasov keratínovým ošetrením.',
+    techniques: ['Keratínové ošetrenie', 'Hydratácia', 'Regenerácia'],
+    duration: '3 hodiny',
+    stylist: 'Martina Horná'
+  }
+];
+
+const awards = [
+  {
+    year: '2024',
+    title: 'Najlepší kadernícky salón Košíc',
+    organization: 'Košická obchodná komora',
+    icon: '🏆'
+  },
+  {
+    year: '2023',
+    title: 'Cena za inováciu v kaderníctve',
+    organization: 'Slovak Hair Awards',
+    icon: '💡'
+  },
+  {
+    year: '2023',
+    title: 'Certifikát kvality služieb',
+    organization: 'EU Beauty Standards',
+    icon: '⭐'
+  },
+  {
+    year: '2022',
+    title: 'Eco-friendly salon roku',
+    organization: 'Green Beauty Initiative',
+    icon: '🌿'
+  }
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "name": "Portfólio - Papi Hair Design",
+  "description": "Profesionálne portfólio najlepších prác našich kaderníkov v Košiciach. Pred a po transformácie, svadobné účesy, farebné zmeny a moderné strihy.",
+  "creator": {
+    "@type": "HairSalon",
+    "name": "Papi Hair Design"
+  }
+};
+---
+
+<BaseLayout 
+  title="Portfólio - Papi Hair Design | Najlepšie práce našich kaderníkov"
+  description="Pozrite si naše najlepšie práce - pred a po transformácie, svadobné účesy, farebné zmeny a moderné strihy. Profesionálne kaderníctvo v Košiciach."
+  structuredData={structuredData}
+>
+  <Header />
+
+  <!-- Hero Section -->
+  <section class="portfolio-hero relative min-h-[70vh] flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"></div>
+    <div class="absolute inset-0 opacity-20">
+      <div class="portfolio-pattern"></div>
+    </div>
+    
+    <div class="relative z-10 text-center text-white px-4">
+      <h1 class="text-5xl md:text-7xl font-bold mb-6 glow-text">
+        Naše portfólio
+      </h1>
+      <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto opacity-90">
+        Objavte krásu našich transformácií. Každý strih, každá farba, každý štýl je príbehom úspešnej zmeny.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4 mb-8">
+        {awards.map(award => (
+          <div class="award-badge bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20">
+            <span class="text-2xl mr-2">{award.icon}</span>
+            <span class="text-sm font-semibold">{award.title} {award.year}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio Categories -->
+  <section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">
+          Kategórie našich prác
+        </h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          Preskúmajte naše portfólio rozdelené do kategórií podľa typu služby
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {portfolioCategories.map((category, index) => (
+          <div class="category-card group cursor-pointer">
+            <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 hover:border-purple-200">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="text-2xl font-bold text-gray-900 group-hover:text-purple-600 transition-colors">
+                  {category.name}
+                </h3>
+                <span class="bg-purple-100 text-purple-600 px-3 py-1 rounded-full text-sm font-semibold">
+                  {category.count} prác
+                </span>
+              </div>
+              <p class="text-gray-600 mb-6 leading-relaxed">
+                {category.description}
+              </p>
+              <div class="flex items-center text-purple-600 font-semibold group-hover:text-purple-700">
+                <span>Zobraziť práce</span>
+                <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                </svg>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Works -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">
+          Naše najlepšie práce
+        </h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          Pred a po transformácie, ktoré ukažujú náš talent a precíznosť
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        {featuredWorks.map((work, index) => (
+          <div class="work-showcase group">
+            <div class="bg-gray-50 rounded-3xl p-8 hover:shadow-2xl transition-all duration-500">
+              <!-- Before/After Images -->
+              <div class="before-after-container relative mb-6 overflow-hidden rounded-2xl">
+                <div class="grid grid-cols-2 gap-1">
+                  <div class="relative aspect-square">
+                    <div class="absolute top-4 left-4 z-10 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">
+                      PRED
+                    </div>
+                    <img 
+                      src={work.beforeImage} 
+                      alt={`Pred - ${work.title}`}
+                      class="w-full h-full object-cover placeholder-image before-image"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="relative aspect-square">
+                    <div class="absolute top-4 right-4 z-10 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold">
+                      PO
+                    </div>
+                    <img 
+                      src={work.afterImage} 
+                      alt={`Po - ${work.title}`}
+                      class="w-full h-full object-cover placeholder-image after-image"
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+                
+                <!-- Hover overlay -->
+                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
+                  <div class="transform scale-0 group-hover:scale-100 transition-transform duration-300">
+                    <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Work Details -->
+              <div class="work-details">
+                <div class="flex items-center justify-between mb-3">
+                  <span class="category-tag bg-purple-100 text-purple-600 px-3 py-1 rounded-full text-sm font-semibold">
+                    {work.category}
+                  </span>
+                  <span class="text-gray-500 text-sm">{work.duration}</span>
+                </div>
+                
+                <h3 class="text-2xl font-bold text-gray-900 mb-3 group-hover:text-purple-600 transition-colors">
+                  {work.title}
+                </h3>
+                
+                <p class="text-gray-600 mb-4 leading-relaxed">
+                  {work.description}
+                </p>
+
+                <!-- Techniques -->
+                <div class="mb-4">
+                  <p class="text-sm font-semibold text-gray-700 mb-2">Použité techniky:</p>
+                  <div class="flex flex-wrap gap-2">
+                    {work.techniques.map(technique => (
+                      <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">
+                        {technique}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <!-- Stylist -->
+                <div class="flex items-center text-gray-600">
+                  <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                  </svg>
+                  <span class="text-sm">Kaderník: <strong>{work.stylist}</strong></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Statistics -->
+  <section class="py-20 bg-gradient-to-r from-purple-600 to-pink-600">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center text-white mb-16">
+        <h2 class="text-4xl font-bold mb-4">Naše úspechy v číslach</h2>
+        <p class="text-xl opacity-90">Dôvera tisícov spokojných klientov</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="text-center">
+          <div class="text-5xl font-bold mb-2 counter" data-target="2500">0</div>
+          <p class="text-lg opacity-90">Spokojných klientov</p>
+        </div>
+        <div class="text-center">
+          <div class="text-5xl font-bold mb-2 counter" data-target="5000">0</div>
+          <p class="text-lg opacity-90">Dokončených prác</p>
+        </div>
+        <div class="text-center">
+          <div class="text-5xl font-bold mb-2 counter" data-target="15">0</div>
+          <p class="text-lg opacity-90">Rokov skúseností</p>
+        </div>
+        <div class="text-center">
+          <div class="text-5xl font-bold mb-2 counter" data-target="98">0</div>
+          <p class="text-lg opacity-90">% spokojnosť</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-20 bg-gray-900 text-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-4xl font-bold mb-6">
+        Pripravení na svoju transformáciu?
+      </h2>
+      <p class="text-xl mb-8 opacity-90">
+        Staňte sa súčasťou nášho portfólia úspešných transformácií
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href="/kontakty"
+          class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 px-8 py-4 rounded-full text-lg font-semibold transition-all transform hover:scale-105 shadow-lg"
+        >
+          ✨ Rezervovať konzultáciu
+        </a>
+        <a
+          href="/sluzby"
+          class="border-2 border-white/30 hover:bg-white/10 px-8 py-4 rounded-full text-lg font-semibold transition-all"
+        >
+          Pozrieť služby
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  /* Portfolio Hero Styles */
+  .portfolio-hero {
+    background: 
+      radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3), transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3), transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(120, 119, 198, 0.2), transparent 50%);
+  }
+
+  .portfolio-pattern {
+    background-image: 
+      radial-gradient(circle at 25% 25%, white 2px, transparent 0),
+      radial-gradient(circle at 75% 75%, white 1px, transparent 0);
+    background-size: 50px 50px;
+    animation: patternMove 20s linear infinite;
+  }
+
+  @keyframes patternMove {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(50px, 50px); }
+  }
+
+  .glow-text {
+    text-shadow: 
+      0 0 20px rgba(255, 255, 255, 0.5),
+      0 0 40px rgba(255, 255, 255, 0.3),
+      0 0 60px rgba(147, 51, 234, 0.2);
+  }
+
+  .award-badge {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .award-badge:nth-child(2) { animation-delay: 0.5s; }
+  .award-badge:nth-child(3) { animation-delay: 1s; }
+  .award-badge:nth-child(4) { animation-delay: 1.5s; }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  /* Category Cards */
+  .category-card:hover {
+    transform: translateY(-8px);
+  }
+
+  /* Placeholder Images */
+  .placeholder-image {
+    background: linear-gradient(45deg, #f3f4f6, #e5e7eb);
+    position: relative;
+  }
+
+  .placeholder-image::after {
+    content: '📸';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    opacity: 0.3;
+  }
+
+  .before-image::after {
+    content: '📷 PRED';
+    font-size: 1rem;
+  }
+
+  .after-image::after {
+    content: '✨ PO';
+    font-size: 1rem;
+  }
+
+  /* Work Showcase Animations */
+  .work-showcase:nth-child(even) {
+    animation-delay: 0.2s;
+  }
+
+  /* Counter Animation */
+  .counter {
+    color: white;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .portfolio-hero h1 {
+      font-size: 3rem;
+    }
+    
+    .work-showcase {
+      margin-bottom: 2rem;
+    }
+  }
+</style>
+
+<script>
+  // Counter Animation
+  document.addEventListener('DOMContentLoaded', function() {
+    const counters = document.querySelectorAll('.counter');
+    
+    const animateCounters = () => {
+      counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target'));
+        const current = parseInt(counter.textContent);
+        const increment = target / 100;
+        
+        if (current < target) {
+          counter.textContent = Math.ceil(current + increment);
+          setTimeout(animateCounters, 20);
+        } else {
+          counter.textContent = target;
+        }
+      });
+    };
+
+    // Start animation when section is visible
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounters();
+          observer.unobserve(entry.target);
+        }
+      });
+    });
+
+    counters.forEach(counter => {
+      observer.observe(counter);
+    });
+  });
+</script>
+</BaseLayout>

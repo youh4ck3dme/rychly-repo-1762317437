@@ -1,0 +1,174 @@
+---
+title: "Style Selection Demo"
+---
+
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Style Selection Demo</title>
+    <link rel="stylesheet" href="/src/styles/StyleSelection.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .demo-container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 32px 64px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .demo-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .demo-title {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+        
+        .demo-subtitle {
+            font-size: 1.25rem;
+            color: #666;
+            font-weight: 400;
+        }
+        
+        .selected-style-info {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 16px;
+            text-align: center;
+        }
+        
+        .selected-style-info h3 {
+            color: #1a1a1a;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .selected-style-info p {
+            color: #666;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1 class="demo-title">PAPI Hair Design</h1>
+            <p class="demo-subtitle">Profesionálne kaderníctvo a styling</p>
+        </div>
+        
+        <div id="style-selection-root"></div>
+        
+        <div id="selected-info" class="selected-style-info" style="display: none;">
+            <h3>Vybraný štýl: <span id="selected-name"></span></h3>
+            <p id="selected-description"></p>
+        </div>
+    </div>
+
+    <script type="module">
+        import { STYLE_OPTIONS } from '/src/data/styleOptions.js';
+        
+        let selectedStyle = null;
+        
+        function renderStyleSelection() {
+            const container = document.getElementById('style-selection-root');
+            
+            const html = `
+                <div class="style-selection">
+                    <div class="style-selection__header">
+                        <h2 class="style-selection__title">Vyberte si svoj štýl</h2>
+                        <p class="style-selection__subtitle">
+                            Zvoľte esenciu vzhľadu, ktorý chcete dosiahnuť.
+                        </p>
+                    </div>
+                    
+                    <div class="style-selection__grid">
+                        ${STYLE_OPTIONS.map(option => `
+                            <button 
+                                class="style-option ${selectedStyle === option.id ? 'style-option--selected' : ''}"
+                                data-style="${option.id}"
+                                aria-label="Vybrať ${option.name} štýl"
+                            >
+                                <div class="style-option__content">
+                                    <div class="style-option__icon" style="--accent-color: ${option.accentColor}">
+                                        <img 
+                                            src="${option.icon}" 
+                                            alt="${option.name} icon"
+                                            loading="lazy"
+                                            decoding="async"
+                                        />
+                                    </div>
+                                    
+                                    <div class="style-option__text">
+                                        <h3 class="style-option__name">${option.name}</h3>
+                                        <p class="style-option__description">${option.description}</p>
+                                    </div>
+                                </div>
+                                
+                                <div 
+                                    class="style-option__border"
+                                    style="--accent-color: ${option.accentColor}"
+                                ></div>
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+            
+            // Add event listeners
+            container.querySelectorAll('.style-option').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const styleId = button.dataset.style;
+                    selectStyle(styleId);
+                });
+            });
+        }
+        
+        function selectStyle(styleId) {
+            selectedStyle = styleId;
+            const option = STYLE_OPTIONS.find(opt => opt.id === styleId);
+            
+            // Update selection visual state
+            document.querySelectorAll('.style-option').forEach(btn => {
+                btn.classList.toggle('style-option--selected', btn.dataset.style === styleId);
+            });
+            
+            // Show selected info
+            if (option) {
+                document.getElementById('selected-name').textContent = option.name;
+                document.getElementById('selected-description').textContent = option.description;
+                document.getElementById('selected-info').style.display = 'block';
+            }
+        }
+        
+        // Initialize
+        renderStyleSelection();
+    </script>
+</body>
+</html>

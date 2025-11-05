@@ -1,0 +1,30 @@
+*** Begin Patch
+*** Update File: src/pages/index.astro
+@@
+--- import BaseLayout from '../layouts/BaseLayout.astro';
++---
++import clsx from 'clsx';
++import BaseLayout from '../layouts/BaseLayout.astro';
++import Header from '../components/Header.astro';
++import Footer from '../components/Footer.astro';
++import ServiceCard from '../components/ServiceCard.astro';
+@@
+ const testimonials = [
+   { name: 'Jana Nováková', text: '…', rating: 5 },
+   { name: 'Peter Svoboda', text: '…', rating: 5 },
+   { name: 'Mária Kováčová', text: '…', rating: 5 },
+-];
+---- const structuredData = {
++];
++
++const structuredData = {
++  "@context":"https://schema.org",
++  "@type":"HairSalon",
++  "...": "…",
++  "serviceType": [ /* … */ ],
++  "priceRange":"€€"
++};
++
++const { title, description } = Astro.props;
++---
+*** End Patch

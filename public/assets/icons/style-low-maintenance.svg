@@ -1,0 +1,8 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Low Maintenance Style Icon - Simple, clean lines -->
+  <circle cx="32" cy="32" r="16" stroke="#2C2C2C" stroke-width="2" fill="none"/>
+  <path d="M20 32 Q32 24 44 32" stroke="#87A96B" stroke-width="2" fill="none"/>
+  <path d="M20 32 Q32 40 44 32" stroke="#87A96B" stroke-width="2" fill="none"/>
+  <circle cx="32" cy="32" r="4" fill="#87A96B"/>
+  <line x1="16" y1="48" x2="48" y2="48" stroke="#2C2C2C" stroke-width="2"/>
+</svg>

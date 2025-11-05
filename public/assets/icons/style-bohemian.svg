@@ -1,0 +1,11 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Bohemian Style Icon - Organic, flowing designs with feathers -->
+  <path d="M32 8 Q24 16 20 24 Q24 32 32 32 Q40 32 44 24 Q40 16 32 8" stroke="#2C2C2C" stroke-width="2" fill="none"/>
+  <path d="M32 12 Q28 18 26 22 Q28 26 32 26 Q36 26 38 22 Q36 18 32 12" fill="#CD853F"/>
+  <path d="M16 36 Q24 32 32 36 Q40 32 48 36" stroke="#2C2C2C" stroke-width="2" fill="none"/>
+  <path d="M20 44 Q28 40 32 44 Q36 40 44 44" stroke="#CD853F" stroke-width="2" fill="none"/>
+  <circle cx="24" cy="50" r="1.5" fill="#CD853F"/>
+  <circle cx="32" cy="52" r="1.5" fill="#CD853F"/>
+  <circle cx="40" cy="50" r="1.5" fill="#CD853F"/>
+  <path d="M18 56 Q32 54 46 56" stroke="#2C2C2C" stroke-width="2" fill="none"/>
+</svg>

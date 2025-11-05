@@ -1,0 +1,947 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import AnimatedCounter from '../components/AnimatedCounter.astro';
+
+const values = [
+  {
+    title: 'Profesionalita',
+    description: 'Náš tím tvoria certifikovaní kaderníci s medzinárodnou kvalifikáciou a pravidelnými školeniami u renomovaných značiek.',
+    icon: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z',
+    color: 'emerald'
+  },
+  {
+    title: 'Prémiové produkty',
+    description: 'Používame exkluzívne produkty L\'Oréal Professionnel, Redken, Schwarzkopf a Olaplex pre maximálny efekt.',
+    icon: 'M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
+    color: 'blue'
+  },
+  {
+    title: 'Individuálny prístup',
+    description: 'Každý klient dostane personalizovanú konzultáciu, analýzu typu vlasov a návrh štýlu na mieru.',
+    icon: 'M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z',
+    color: 'purple'
+  },
+  {
+    title: 'Luxusné prostredie',
+    description: 'Moderne zariadený salón s klimatizáciou, relaxačnou hudbou a občerstvením pre maximálny komfort.',
+    icon: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z',
+    color: 'rose'
+  },
+  {
+    title: 'Hygienické štandardy',
+    description: 'Dodržiavame najprísnejšie hygienické normy s dezinfekciou nástrojov po každom klientovi.',
+    icon: 'M9 12l2 2 4-4m5 2a9 9 0 11-18 0 9 9 0 0118 0z',
+    color: 'teal'
+  },
+  {
+    title: 'Záručná politika',
+    description: 'Poskytujeme 14-dňovú záruku na všetky naše služby s možnosťou bezplatnej úpravy.',
+    icon: 'M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z',
+    color: 'amber'
+  }
+];
+
+const team = [
+  {
+    name: 'Pavol "PAPI" Mikuš',
+    position: 'Majiteľ & Hlavný Styling Director',
+    description: 'Medzinárodne certifikovaný kaderník s 15+ rokmi skúseností. Absolvent L\'Oréal Professional Academy v Paríži.',
+    image: '/assets/images/papi.webp',
+    specialties: ['Creative Director', 'Color Specialist', 'Trend Forecaster'],
+    certifications: ['L\'Oréal Professional Master', 'Redken Certified Artist', 'Olaplex Ambassador'],
+    experience: '15+ rokov',
+    languages: ['Slovenčina', 'Angličtina', 'Francúzština'],
+    achievements: ['Víťaz Hair Awards Slovakia 2023', 'Top 10 Kaderníkov Košíc 2024']
+  },
+  {
+    name: 'Anna Kováčová',
+    position: 'Senior Color & Style Specialist',
+    description: 'Špecializuje sa na komplexné farbenia, melírovania a korekcie. Expertka na najnovšie techniky balayage a ombré.',
+    image: '/assets/images/anna.webp',
+    specialties: ['Balayage Expert', 'Color Correction', 'Bridal Styling'],
+    certifications: ['Schwarzkopf Professional', 'Wella Master Colorist', 'Kerastase Specialist'],
+    experience: '12 rokov',
+    languages: ['Slovenčina', 'Angličtina'],
+    achievements: ['Best Colorist Award 2022', 'Certified Bridal Specialist']
+  },
+  {
+    name: 'Martin Novák',
+    position: 'Men\'s Grooming & Precision Cut Specialist',
+    description: 'Špecialista na pánske strihanie, holenie a moderné účesy. Experimentuje s najnovšími trendmi v men\'s grooming.',
+    image: '/assets/images/martin.webp',
+    specialties: ['Men\'s Precision Cuts', 'Beard Styling', 'Modern Classics'],
+    certifications: ['Wahl Professional Certified', 'American Crew Ambassador'],
+    experience: '10 rokov',
+    languages: ['Slovenčina', 'Nemčina'],
+    achievements: ['Men\'s Style Expert 2023', 'Precision Cut Champion']
+  },
+  {
+    name: 'Lucia Veselá',
+    position: 'Hair Treatment & Wellness Specialist',
+    description: 'Odborníčka na regeneračné ošetrenia vlasov, keratínové procedúry a wellness služby pre vlasy a pokožku hlavy.',
+    image: '/assets/images/lucia.webp',
+    specialties: ['Keratin Treatments', 'Scalp Wellness', 'Hair Reconstruction'],
+    certifications: ['Olaplex Certified Professional', 'Brazilian Blowout Specialist'],
+    experience: '8 rokov',
+    languages: ['Slovenčina', 'Angličtina'],
+    achievements: ['Hair Health Specialist 2024', 'Wellness Expert Certificate']
+  }
+];
+
+const milestones = [
+  { year: '2009', title: 'Založenie salónu', description: 'Otvorenie prvého štúdia v centre Košíc' },
+  { year: '2012', title: 'Rozšírenie tímu', description: 'Pridanie špecializovaných stylistov' },
+  { year: '2015', title: 'Modernizácia', description: 'Kompletná rekonštrukcia a nové vybavenie' },
+  { year: '2018', title: 'Certifikácie', description: 'Získanie medzinárodných certifikátov' },
+  { year: '2021', title: 'Digitalizácia', description: 'Spustenie online rezervačného systému' },
+  { year: '2024', title: 'AI Hair Analysis', description: 'Implementácia AI technológie pre analýzu vlasov' }
+];
+
+const awards = [
+  {
+    title: 'Hair Awards Slovakia 2023',
+    category: 'Najlepší salón roku',
+    description: 'Ocenenie za vynikajúce služby a inovatívny prístup'
+  },
+  {
+    title: 'Košice Business Excellence',
+    category: 'Top Kaderníctvo 2024',
+    description: 'Uznanie za kvalitu služieb a zákaznícku spokojnosť'
+  },
+  {
+    title: 'L\'Oréal Professional',
+    category: 'Partner of the Year',
+    description: 'Ocenenie za partnerstvo a propagáciu značky'
+  }
+];
+
+const testimonials = [
+  {
+    name: 'Martina Slobodová',
+    role: 'Pravidelná klientka',
+    text: 'Chodím k PAPI už 5 rokov a vždy odchádzam spokojná. Profesionalita na najvyššej úrovni!',
+    rating: 5,
+    service: 'Farbenie a strih'
+  },
+  {
+    name: 'Peter Kovalčík',
+    role: 'Business klient',
+    text: 'Fantastický prístup k pánskym strihom. Martin presne vie, čo potrebujem pre business look.',
+    rating: 5,
+    service: 'Pánsky strih'
+  },
+  {
+    name: 'Eva Jančeková',
+    role: 'Nevesta 2024',
+    text: 'Anna vytvorila úžasný svadobný účes. Všetci hostia sa pýtali, kde som to mala robené!',
+    rating: 5,
+    service: 'Svadobný styling'
+  }
+];
+
+const stats = [
+  { number: '1500+', label: 'Spokojných klientov', icon: '👥' },
+  { number: '16+', label: 'Rokov tradície', icon: '⏰' },
+  { number: '99.2%', label: 'Spokojnosť klientov', icon: '⭐' },
+  { number: '3500+', label: 'Účesov ročne', icon: '✂️' },
+  { number: '25+', label: 'Prestížnych ocenení', icon: '🏆' },
+  { number: '4', label: 'Certifikovaných špecialistov', icon: '🎓' }
+];
+---
+
+<BaseLayout title="O nás - Papi Hair Design | Naša firma a tím" description="Spoznajte náš kadernícky salón v Košiciach. 15 rokov skúseností, profesionálny tím a záväzok ku kvalite a spokojnosti klientov.">
+  <Header />
+
+  <!-- Hero Section with Starry Background -->
+  <section class="relative min-h-[80vh] bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 overflow-hidden">
+    <!-- Animated Stars Background -->
+    <div class="absolute inset-0">
+      <div class="stars"></div>
+      <div class="twinkling"></div>
+      <div class="clouds"></div>
+    </div>
+    
+    <!-- Content -->
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 text-center">
+      <div class="animate-fade-in">
+        <h1 class="text-5xl md:text-7xl font-bold text-white mb-8 leading-tight">
+          O <span class="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent glow-text">PAPI Hair Design</span>
+        </h1>
+        <p class="text-xl md:text-2xl text-gray-200 mb-12 max-w-4xl mx-auto leading-relaxed">
+          <span class="text-emerald-400 font-semibold">16 rokov</span> neustálej inovácie v kaderníctve. 
+          <span class="text-teal-400 font-semibold">Prestížne ocenenia</span> a tisíce spokojných klientov.
+          <br>Váš <span class="text-purple-400 font-semibold">luxusný zážitok</span> je naša priorita.
+        </p>
+        
+        <!-- Featured Badges -->
+        <div class="flex flex-wrap justify-center gap-4 mb-12">
+          <div class="bg-white/10 backdrop-blur-lg border border-white/20 rounded-full px-6 py-3 text-white">
+            <span class="text-emerald-400 font-bold">🏆</span> Hair Awards Slovakia Winner
+          </div>
+          <div class="bg-white/10 backdrop-blur-lg border border-white/20 rounded-full px-6 py-3 text-white">
+            <span class="text-teal-400 font-bold">⭐</span> 99.2% Spokojnosť klientov
+          </div>
+          <div class="bg-white/10 backdrop-blur-lg border border-white/20 rounded-full px-6 py-3 text-white">
+            <span class="text-purple-400 font-bold">🎓</span> L'Oréal Professional Partner
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-6 justify-center">
+          <a
+            href="#team"
+            class="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white px-8 py-4 rounded-full text-lg font-bold transition-all duration-300 transform hover:scale-105 shadow-2xl glow-button"
+          >
+            Spoznajte náš tím
+          </a>
+          <a
+            href="/kontakty"
+            class="border-2 border-white/30 text-white hover:bg-white hover:text-gray-900 px-8 py-4 rounded-full text-lg font-bold transition-all duration-300 backdrop-blur-lg"
+          >
+            Rezervovať termín
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating elements -->
+    <div class="absolute top-20 left-10 animate-float">
+      <div class="w-4 h-4 bg-emerald-400 rounded-full glow-dot"></div>
+    </div>
+    <div class="absolute top-40 right-20 animate-float-delayed">
+      <div class="w-6 h-6 bg-teal-400 rounded-full glow-dot"></div>
+    </div>
+    <div class="absolute bottom-32 left-20 animate-float">
+      <div class="w-3 h-3 bg-purple-400 rounded-full glow-dot"></div>
+    </div>
+  </section>
+
+  <!-- Company Story & Timeline -->
+  <section class="py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20">
+        <div>
+          <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-8">
+            Naša <span class="text-emerald-600">história</span>
+          </h2>
+          <div class="space-y-6 text-lg text-gray-600 leading-relaxed">
+            <p class="text-xl font-medium text-gray-800">
+              Od malého salónu k prestížnemu hair štúdiu - naša cesta k dokonalosti.
+            </p>
+            <p>
+              Náš príbeh začal v roku 2009, keď Pavol "PAPI" Mikuš otvoril svoj prvý salón v srdci Košíc. 
+              S vášňou pre kaderníctvo a víziou vytvoriť miesto, kde sa každý klient bude cítiť ako hviezda, 
+              položil základy toho, čo sa dnes stalo jedným z najúspešnejších hair štúdií na východnom Slovensku.
+            </p>
+            <p>
+              Počas 16 rokov sme prešli neuveriteľnou transformáciou. Od skromných začiatkov s dvoma kresiel 
+              sme sa rozrástli na luxusné štúdio s kompletným tímom medzinárodne certifikovaných špecialistov. 
+              Naše služby využilo už viac ako <strong class="text-emerald-600">1500 spokojných klientov</strong>.
+            </p>
+            <p>
+              Dnes sme hrdí partneri prestížnych značiek ako L'Oréal Professional, Redken a Olaplex. 
+              Naše inovácie v oblasti AI analýzy vlasov a personalizovaného prístupu nás posunuli 
+              na čelo slovenského kaderníctva.
+            </p>
+          </div>
+          
+          <!-- Story Highlights -->
+          <div class="grid grid-cols-2 gap-6 mt-8">
+            <div class="bg-emerald-50 rounded-xl p-6 border border-emerald-200">
+              <div class="text-2xl font-bold text-emerald-600 mb-2">2009</div>
+              <div class="text-sm font-semibold text-gray-800">Rok založenia</div>
+              <div class="text-xs text-gray-600">Začiatok cesty</div>
+            </div>
+            <div class="bg-teal-50 rounded-xl p-6 border border-teal-200">
+              <div class="text-2xl font-bold text-teal-600 mb-2">1500+</div>
+              <div class="text-sm font-semibold text-gray-800">Spokojných klientov</div>
+              <div class="text-xs text-gray-600">A stále pribúdajú</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Salon Gallery -->
+        <div class="relative">
+          <div class="grid grid-cols-2 gap-4">
+            <div class="space-y-4">
+              <div class="aspect-w-4 aspect-h-5 bg-gradient-to-br from-emerald-100 to-emerald-200 rounded-2xl overflow-hidden salon-image">
+                <div class="w-full h-80 flex items-center justify-center">
+                  <span class="text-4xl">💺</span>
+                  <div class="absolute inset-0 bg-black/20 flex items-center justify-center">
+                    <span class="text-white font-semibold">Luxusné kresla</span>
+                  </div>
+                </div>
+              </div>
+              <div class="aspect-w-4 aspect-h-3 bg-gradient-to-br from-teal-100 to-teal-200 rounded-2xl overflow-hidden salon-image">
+                <div class="w-full h-48 flex items-center justify-center">
+                  <span class="text-3xl">✨</span>
+                  <div class="absolute inset-0 bg-black/20 flex items-center justify-center">
+                    <span class="text-white font-semibold">Styling zóna</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="space-y-4 pt-8">
+              <div class="aspect-w-4 aspect-h-3 bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl overflow-hidden salon-image">
+                <div class="w-full h-48 flex items-center justify-center">
+                  <span class="text-3xl">🏆</span>
+                  <div class="absolute inset-0 bg-black/20 flex items-center justify-center">
+                    <span class="text-white font-semibold">Ocenenia</span>
+                  </div>
+                </div>
+              </div>
+              <div class="aspect-w-4 aspect-h-5 bg-gradient-to-br from-rose-100 to-rose-200 rounded-2xl overflow-hidden salon-image">
+                <div class="w-full h-80 flex items-center justify-center">
+                  <span class="text-4xl">🎨</span>
+                  <div class="absolute inset-0 bg-black/20 flex items-center justify-center">
+                    <span class="text-white font-semibold">Farebná stanica</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Timeline -->
+      <div class="relative">
+        <h3 class="text-3xl font-bold text-center text-gray-900 mb-16">Míľniky nášho rastu</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {milestones.map((milestone, index) => (
+            <div class="relative bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+              <div class="absolute -top-4 left-8">
+                <div class="bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold text-lg">
+                  {index + 1}
+                </div>
+              </div>
+              <div class="pt-4">
+                <div class="text-2xl font-bold text-emerald-600 mb-2">{milestone.year}</div>
+                <h4 class="text-lg font-semibold text-gray-900 mb-3">{milestone.title}</h4>
+                <p class="text-gray-600">{milestone.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values Section -->
+  <section class="py-24 bg-gradient-to-br from-gray-50 to-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-20">
+        <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          Naše <span class="text-emerald-600">hodnoty</span>
+        </h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          Fundamentálne princípy, ktoré definujú našu filozofiu a kvalitu služieb. 
+          Tieto hodnoty sú základom každého projektu a interakcie s klientmi.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {values.map((value) => (
+          <div class={`group relative bg-white rounded-2xl p-8 shadow-lg border-2 border-${value.color}-100 hover:border-${value.color}-300 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl`}>
+            <!-- Decorative gradient background -->
+            <div class={`absolute inset-0 bg-gradient-to-br from-${value.color}-50 to-${value.color}-100 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300`}></div>
+            
+            <div class="relative z-10">
+              <div class={`w-20 h-20 bg-gradient-to-br from-${value.color}-400 to-${value.color}-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={value.icon} />
+                </svg>
+              </div>
+              
+              <h3 class={`text-xl font-bold text-gray-900 mb-4 group-hover:text-${value.color}-700 transition-colors`}>
+                {value.title}
+              </h3>
+              
+              <p class="text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors">
+                {value.description}
+              </p>
+            </div>
+
+            <!-- Hover effect decoration -->
+            <div class={`absolute top-4 right-4 w-8 h-8 bg-${value.color}-200 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-0 group-hover:scale-100`}></div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Premium Features Highlight -->
+      <div class="mt-16 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-3xl p-12 text-center text-white">
+        <h3 class="text-3xl font-bold mb-6">Prečo si vybrať PAPI Hair Design?</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="text-center">
+            <div class="text-4xl mb-4">🏆</div>
+            <h4 class="text-xl font-semibold mb-2">Prestížne ocenenia</h4>
+            <p class="text-emerald-100">Víťazi Hair Awards Slovakia a ďalších súťaží</p>
+          </div>
+          <div class="text-center">
+            <div class="text-4xl mb-4">🎓</div>
+            <h4 class="text-xl font-semibold mb-2">Medzinárodné certifikáty</h4>
+            <p class="text-emerald-100">Absolventi prestížnych akadémií v Paríži a Londýne</p>
+          </div>
+          <div class="text-center">
+            <div class="text-4xl mb-4">🤖</div>
+            <h4 class="text-xl font-semibold mb-2">AI technológie</div>
+            <p class="text-emerald-100">Prvé štúdio s AI analýzou vlasov na Slovensku</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="py-24 bg-gradient-to-r from-gray-900 via-emerald-900 to-teal-900 relative overflow-hidden">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 opacity-10">
+      <div class="absolute inset-0" style="background-image: radial-gradient(circle at 25px 25px, white 2px, transparent 0), radial-gradient(circle at 75px 75px, white 2px, transparent 0); background-size: 100px 100px;"></div>
+    </div>
+    
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-bold text-white mb-4">Naše úspechy v číslach</h2>
+        <p class="text-xl text-gray-300">Fakty, ktoré hovoria za nás</p>
+      </div>
+      
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
+        {stats.map((stat, index) => (
+          <div class="text-center group transform hover:scale-105 transition-all duration-300">
+            <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all">
+              <div class="text-4xl mb-3">{stat.icon}</div>
+              <div class="text-3xl md:text-4xl font-bold text-white mb-2 glow-text">
+                {stat.number.includes('+') ? (
+                  <>
+                    <AnimatedCounter value={parseInt(stat.number)} suffix="+" client:visible />
+                  </>
+                ) : stat.number.includes('%') ? (
+                  <>
+                    <AnimatedCounter value={parseFloat(stat.number)} suffix="%" client:visible />
+                  </>
+                ) : (
+                  stat.number
+                )}
+              </div>
+              <div class="text-gray-300 text-sm font-medium">{stat.label}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Achievement Badges -->
+      <div class="mt-16 flex flex-wrap justify-center gap-6">
+        <div class="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full px-6 py-3 text-white font-bold shadow-lg">
+          🥇 Hair Awards Slovakia Winner
+        </div>
+        <div class="bg-gradient-to-r from-blue-500 to-purple-600 rounded-full px-6 py-3 text-white font-bold shadow-lg">
+          🎓 L'Oréal Professional Partner
+        </div>
+        <div class="bg-gradient-to-r from-green-500 to-emerald-600 rounded-full px-6 py-3 text-white font-bold shadow-lg">
+          ⭐ Top Rated Salon 2024
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section id="team" class="py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-20">
+        <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          Náš <span class="text-emerald-600">dream team</span>
+        </h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          Tím medzinárodne certifikovaných expertov s vášňou pre kaderníctvo. 
+          Každý člen nášho tímu prináša jedinečné skúsenosti a kreativitu.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+        {team.map((member, index) => (
+          <div class="group relative bg-gradient-to-br from-gray-50 to-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100">
+            <!-- Profile Card -->
+            <div class="flex flex-col lg:flex-row items-center lg:items-start gap-8">
+              <!-- Avatar -->
+              <div class="relative">
+                <div class="w-40 h-40 bg-gradient-to-br from-emerald-100 to-teal-200 rounded-2xl overflow-hidden flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                  <img src={member.image} alt={member.name} class="w-full h-full object-cover" />
+                  <!-- Fallback avatar -->
+                  <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-emerald-400 to-teal-500">
+                    <span class="text-white text-4xl font-bold">
+                      {member.name.split(' ').map(n => n[0]).join('')}
+                    </span>
+                  </div>
+                </div>
+                
+                <!-- Experience Badge -->
+                <div class="absolute -bottom-3 -right-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-full px-4 py-2 text-sm font-bold shadow-lg">
+                  {member.experience}
+                </div>
+              </div>
+
+              <!-- Profile Info -->
+              <div class="flex-1 text-center lg:text-left">
+                <h3 class="text-2xl font-bold text-gray-900 mb-2 group-hover:text-emerald-600 transition-colors">
+                  {member.name}
+                </h3>
+                <p class="text-lg font-semibold text-emerald-600 mb-4">{member.position}</p>
+                <p class="text-gray-600 leading-relaxed mb-6">{member.description}</p>
+
+                <!-- Specialties -->
+                <div class="mb-6">
+                  <h4 class="text-sm font-semibold text-gray-800 mb-3">Špecializácie:</h4>
+                  <div class="flex flex-wrap gap-2 justify-center lg:justify-start">
+                    {member.specialties.map(specialty => (
+                      <span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-medium">
+                        {specialty}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <!-- Certifications -->
+                <div class="mb-6">
+                  <h4 class="text-sm font-semibold text-gray-800 mb-3">Certifikáty:</h4>
+                  <div class="space-y-1">
+                    {member.certifications.map(cert => (
+                      <div class="flex items-center justify-center lg:justify-start text-sm text-gray-600">
+                        <svg class="w-4 h-4 text-emerald-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        {cert}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <!-- Languages & Achievements -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                  <div>
+                    <h5 class="font-semibold text-gray-700 mb-2">Jazyky:</h5>
+                    <div class="space-y-1">
+                      {member.languages.map(lang => (
+                        <div class="text-gray-600">{lang}</div>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <h5 class="font-semibold text-gray-700 mb-2">Ocenenia:</h5>
+                    <div class="space-y-1">
+                      {member.achievements.map(achievement => (
+                        <div class="text-gray-600 flex items-center">
+                          <span class="text-yellow-500 mr-1">🏆</span>
+                          {achievement}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Hover decoration -->
+            <div class="absolute top-4 right-4 w-8 h-8 bg-emerald-200 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-0 group-hover:scale-100"></div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Team Philosophy -->
+      <div class="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-3xl p-12 text-center text-white">
+        <h3 class="text-3xl font-bold mb-6">Filozofia nášho tímu</h3>
+        <p class="text-xl leading-relaxed max-w-4xl mx-auto mb-8">
+          "Každý klient je pre nás jedinečný umelecký projekt. Kombinujeme technickú excelentnosť 
+          s kreatívnou vášňou, aby sme vytvorili nielen krásny vzhľad, ale aj nezabudnuteľný zážitok."
+        </p>
+        <div class="flex justify-center space-x-8 text-center">
+          <div>
+            <div class="text-3xl font-bold">100%</div>
+            <div class="text-emerald-100">Personalizované služby</div>
+          </div>
+          <div>
+            <div class="text-3xl font-bold">24/7</div>
+            <div class="text-emerald-100">Kontinuálne vzdelávanie</div>
+          </div>
+          <div>
+            <div class="text-3xl font-bold">∞</div>
+            <div class="text-emerald-100">Kreatívne možnosti</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Awards & Recognition Section -->
+  <section class="py-24 bg-gradient-to-br from-gray-50 to-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          Prestížne <span class="text-emerald-600">ocenenia</span>
+        </h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          Naše odborné schopnosti a záväzok ku kvalite boli ocenené významnými organizáciami v kaderníctve.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        {awards.map((award, index) => (
+          <div class="group relative bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+            <div class="text-center">
+              <div class="w-20 h-20 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                <span class="text-3xl">🏆</span>
+              </div>
+              <h3 class="text-xl font-bold text-gray-900 mb-2">{award.title}</h3>
+              <p class="text-emerald-600 font-semibold mb-4">{award.category}</p>
+              <p class="text-gray-600">{award.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Client Testimonials -->
+  <section class="py-24 bg-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
+          Čo hovoria naši <span class="text-emerald-400">klienti</span>
+        </h2>
+        <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+          Najlepším dôkazom našej kvality sú spokojní klienti, ktorí sa k nám radi vracia
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {testimonials.map((testimonial, index) => (
+          <div class="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-8 text-center hover:bg-white/10 transition-all duration-300">
+            <!-- Stars Rating -->
+            <div class="flex justify-center mb-4">
+              {[...Array(testimonial.rating)].map((_, i) => (
+                <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+              ))}
+            </div>
+
+            <blockquote class="text-white text-lg mb-6 italic leading-relaxed">
+              "{testimonial.text}"
+            </blockquote>
+
+            <div class="border-t border-white/20 pt-6">
+              <p class="text-emerald-400 font-bold text-lg">{testimonial.name}</p>
+              <p class="text-gray-300 text-sm mb-2">{testimonial.role}</p>
+              <p class="text-teal-400 text-xs font-medium">{testimonial.service}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Google Reviews CTA -->
+      <div class="mt-16 text-center">
+        <div class="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-8 inline-block">
+          <h3 class="text-2xl font-bold text-white mb-4">Ďakujeme za dôveru!</h3>
+          <div class="flex items-center justify-center gap-4 mb-4">
+            <span class="text-4xl">⭐</span>
+            <div>
+              <p class="text-3xl font-bold text-emerald-400">4.9/5</p>
+              <p class="text-gray-300">Google Reviews</p>
+            </div>
+          </div>
+          <a 
+            href="#" 
+            class="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105"
+          >
+            Pridať recenziu
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission & Vision Section -->
+  <section class="py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          Naša <span class="text-emerald-600">misia & vízia</span>
+        </h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          Definujeme budúcnosť kaderníctva na východnom Slovensku prostredníctvom inovácií, 
+          profesionality a nekonečnej vášne pre krásu.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <!-- Mission -->
+        <div class="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-3xl p-12">
+          <div class="text-center mb-8">
+            <div class="w-20 h-20 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-full flex items-center justify-center mx-auto mb-6">
+              <span class="text-3xl text-white">🎯</span>
+            </div>
+            <h3 class="text-3xl font-bold text-gray-900 mb-4">Misia</h3>
+          </div>
+          <div class="space-y-4 text-gray-700">
+            <p class="text-lg leading-relaxed">
+              <strong class="text-emerald-600">Transformovať životy</strong> prostredníctvom kaderníckych služieb najvyššej kvality, 
+              ktoré prekračujú očakávania klientov a inšpirujú sebavedomie.
+            </p>
+            <ul class="space-y-2 text-gray-600">
+              <li class="flex items-start">
+                <span class="text-emerald-500 mr-2">✨</span>
+                Personalizované služby pre každého klienta
+              </li>
+              <li class="flex items-start">
+                <span class="text-emerald-500 mr-2">✨</span>
+                Kontinuálne vzdelávanie a inovácie
+              </li>
+              <li class="flex items-start">
+                <span class="text-emerald-500 mr-2">✨</span>
+                Budovanie dlhodobých vzťahov s klientmi
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Vision -->
+        <div class="bg-gradient-to-br from-purple-50 to-blue-50 rounded-3xl p-12">
+          <div class="text-center mb-8">
+            <div class="w-20 h-20 bg-gradient-to-r from-purple-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+              <span class="text-3xl text-white">🚀</span>
+            </div>
+            <h3 class="text-3xl font-bold text-gray-900 mb-4">Vízia</h3>
+          </div>
+          <div class="space-y-4 text-gray-700">
+            <p class="text-lg leading-relaxed">
+              <strong class="text-purple-600">Stať sa najinnovatívnejším</strong> a najrespektovanejším kaderníckym štúdiom 
+              na východnom Slovensku, ktoré určuje trendy a štandardy v odvetví.
+            </p>
+            <ul class="space-y-2 text-gray-600">
+              <li class="flex items-start">
+                <span class="text-purple-500 mr-2">🌟</span>
+                Lídrovstvo v AI technológiách pre kaderníctvo
+              </li>
+              <li class="flex items-start">
+                <span class="text-purple-500 mr-2">🌟</span>
+                Rozšírenie do ďalších slovenských miest
+              </li>
+              <li class="flex items-start">
+                <span class="text-purple-500 mr-2">🌟</span>
+                Medzinárodné uznanie a partnerstvá
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Core Values Grid -->
+      <div class="mt-20">
+        <h3 class="text-3xl font-bold text-center text-gray-900 mb-12">Naše základné hodnoty</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="text-center bg-gray-50 rounded-2xl p-8 hover:shadow-lg transition-shadow">
+            <div class="text-4xl mb-4">💎</div>
+            <h4 class="text-xl font-bold text-gray-900 mb-2">Excelentnosť</h4>
+            <p class="text-gray-600">Neustále sa snažíme o dokonalosť v každom detaile</p>
+          </div>
+          <div class="text-center bg-gray-50 rounded-2xl p-8 hover:shadow-lg transition-shadow">
+            <div class="text-4xl mb-4">🤝</div>
+            <h4 class="text-xl font-bold text-gray-900 mb-2">Dôvera</h4>
+            <p class="text-gray-600">Budujeme trvalé vzťahy založené na úprimnosti</p>
+          </div>
+          <div class="text-center bg-gray-50 rounded-2xl p-8 hover:shadow-lg transition-shadow">
+            <div class="text-4xl mb-4">🎨</div>
+            <h4 class="text-xl font-bold text-gray-900 mb-2">Kreativita</h4>
+            <p class="text-gray-600">Inovatívne prístupy a umelecká vášeň</p>
+          </div>
+          <div class="text-center bg-gray-50 rounded-2xl p-8 hover:shadow-lg transition-shadow">
+            <div class="text-4xl mb-4">❤️</div>
+            <h4 class="text-xl font-bold text-gray-900 mb-2">Starostlivosť</h4>
+            <p class="text-gray-600">Každý klient je pre nás prioritou</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA Section -->
+  <section class="py-24 bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-600 relative overflow-hidden">
+    <!-- Background Animation -->
+    <div class="absolute inset-0">
+      <div class="absolute inset-0 bg-gradient-to-r from-emerald-600/80 to-teal-600/80"></div>
+      <div class="stars"></div>
+    </div>
+    
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-4xl md:text-5xl font-bold text-white mb-6 glow-text">
+        Pripravení na <span class="text-yellow-300">transformáciu</span>?
+      </h2>
+      <p class="text-xl text-emerald-100 mb-8 leading-relaxed">
+        Pridajte sa k tisíckam spokojných klientov a zažite kaderníctvo na najvyššej úrovni. 
+        Vaša cesta k dokonalému vzhľadu začína jediným kliknutím.
+      </p>
+
+      <!-- Special Offer Banner -->
+      <div class="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-8 mb-8">
+        <h3 class="text-2xl font-bold text-white mb-4">🎉 Špeciálna ponuka pre nových klientov</h3>
+        <p class="text-emerald-100 mb-4">
+          Prvá konzultácia + AI analýza vlasov <span class="text-yellow-300 font-bold">ZADARMO</span>
+        </p>
+        <p class="text-sm text-emerald-200">
+          * Platné do konca tohto mesiaca. Nezlučiteľné s inými akciami.
+        </p>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-6 justify-center mb-8">
+        <a
+          href="/kontakty"
+          class="bg-white text-emerald-600 hover:bg-yellow-50 hover:text-emerald-700 px-10 py-5 rounded-full text-xl font-bold transition-all duration-300 transform hover:scale-105 shadow-2xl glow-button"
+        >
+          Rezervovať termín
+        </a>
+        <a
+          href="/sluzby"
+          class="border-2 border-white text-white hover:bg-white hover:text-emerald-600 px-10 py-5 rounded-full text-xl font-bold transition-all duration-300 backdrop-blur-lg"
+        >
+          Pozrieť služby
+        </a>
+        <a
+          href="/portfolio"
+          class="border-2 border-yellow-300 text-yellow-300 hover:bg-yellow-300 hover:text-emerald-900 px-10 py-5 rounded-full text-xl font-bold transition-all duration-300"
+        >
+          Naše práce
+        </a>
+      </div>
+
+      <!-- Contact Info Quick Access -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+        <div class="bg-white/5 backdrop-blur-lg rounded-xl p-4 border border-white/10">
+          <div class="text-2xl mb-2">📞</div>
+          <p class="text-white font-semibold">+421 123 456 789</p>
+          <p class="text-emerald-200 text-sm">Telefonické rezervácie</p>
+        </div>
+        <div class="bg-white/5 backdrop-blur-lg rounded-xl p-4 border border-white/10">
+          <div class="text-2xl mb-2">📍</div>
+          <p class="text-white font-semibold">Košice centrum</p>
+          <p class="text-emerald-200 text-sm">Hlavná ulica 123</p>
+        </div>
+        <div class="bg-white/5 backdrop-blur-lg rounded-xl p-4 border border-white/10">
+          <div class="text-2xl mb-2">⏰</div>
+          <p class="text-white font-semibold">Po-Pia 9:00-19:00</p>
+          <p class="text-emerald-200 text-sm">So 9:00-15:00</p>
+        </div>
+      </div>
+
+      <!-- Social Proof -->
+      <div class="mt-12 text-center">
+        <p class="text-emerald-200 mb-4">Sledujte nás na sociálnych sieťach</p>
+        <div class="flex justify-center gap-4">
+          <a href="#" class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors">
+            <span class="text-white text-xl">📘</span>
+          </a>
+          <a href="#" class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors">
+            <span class="text-white text-xl">📷</span>
+          </a>
+          <a href="#" class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors">
+            <span class="text-white text-xl">🎵</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  /* Starry background animation */
+  .stars {
+    background: transparent url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><g fill="white" opacity="0.8"><circle cx="150" cy="200" r="1.5"/><circle cx="300" cy="100" r="1"/><circle cx="500" cy="300" r="2"/><circle cx="750" cy="150" r="1"/><circle cx="900" cy="400" r="1.5"/><circle cx="200" cy="600" r="1"/><circle cx="600" cy="500" r="1.5"/><circle cx="100" cy="800" r="1"/><circle cx="800" cy="700" r="2"/><circle cx="400" cy="900" r="1"/></g></svg>') left top;
+    background-size: 1000px 1000px;
+    animation: stars-move 100s linear infinite;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .twinkling {
+    background: transparent url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"><g fill="white"><circle cx="50" cy="75" r="1" opacity="0.8"><animate attributeName="opacity" values="0.8;0.3;0.8" dur="3s" repeatCount="indefinite"/></circle><circle cx="150" cy="125" r="1.5" opacity="0.6"><animate attributeName="opacity" values="0.6;0.9;0.6" dur="2s" repeatCount="indefinite"/></circle><circle cx="250" cy="200" r="1" opacity="0.7"><animate attributeName="opacity" values="0.7;0.2;0.7" dur="4s" repeatCount="indefinite"/></circle></g></svg>') left top;
+    background-size: 500px 500px;
+    animation: stars-move 50s linear infinite;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  @keyframes stars-move {
+    from { transform: translateX(0px); }
+    to { transform: translateX(-1000px); }
+  }
+
+  .glow-text {
+    text-shadow: 0 0 10px rgba(52, 211, 153, 0.5), 0 0 20px rgba(52, 211, 153, 0.3), 0 0 30px rgba(52, 211, 153, 0.2);
+  }
+
+  .glow-button {
+    box-shadow: 0 0 20px rgba(52, 211, 153, 0.4), 0 10px 40px rgba(0, 0, 0, 0.2);
+  }
+
+  .glow-button:hover {
+    box-shadow: 0 0 30px rgba(52, 211, 153, 0.6), 0 15px 50px rgba(0, 0, 0, 0.3);
+  }
+
+  .glow-dot {
+    box-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 1s ease-out;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-float-delayed {
+    animation: float 6s ease-in-out infinite 2s;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  .salon-image {
+    position: relative;
+    transition: transform 0.3s ease;
+  }
+
+  .salon-image:hover {
+    transform: scale(1.05);
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .stars, .twinkling {
+      background-size: 500px 500px;
+    }
+  }
+</style>

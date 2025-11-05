@@ -1,0 +1,388 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+
+const serviceCategories = [
+  {
+    id: 'dámske-služby',
+    name: 'Dámske služby',
+    icon: '👩‍🦰',
+    description: 'Kompletné kadernícke služby pre dámy',
+    services: [
+      {
+        name: 'Dámsky strih + fúkaná',
+        description: 'Profesionálny strih s konzultáciou a styling',
+        price: 'od 25€',
+        duration: '60-90 min',
+        includes: ['Konzultácia', 'Umytie', 'Strih', 'Fúkaná', 'Styling'],
+        popular: true
+      },
+      {
+        name: 'Dámsky strih + farba',
+        description: 'Komplexná služba strihania s farbením',
+        price: 'od 45€',
+        duration: '120-150 min',
+        includes: ['Konzultácia', 'Farba', 'Strih', 'Styling', 'Ošetrenie']
+      },
+      {
+        name: 'Dlhé vlasy - úprava',
+        description: 'Strih a styling pre dlhé vlasy',
+        price: 'od 30€',
+        duration: '90-120 min',
+        includes: ['Konzultácia', 'Umytie', 'Strih', 'Ošetrenie', 'Styling']
+      },
+      {
+        name: 'Kratké vlasy - restyle',
+        description: 'Moderné krátke strihy a styling',
+        price: 'od 35€',
+        duration: '75-100 min',
+        includes: ['Analýza tváre', 'Dizajn strihu', 'Presný strih', 'Styling']
+      }
+    ]
+  },
+  {
+    id: 'pánske-služby',
+    name: 'Pánske služby',
+    icon: '👨‍🦰',
+    description: 'Moderné pánske strihanie a styling',
+    services: [
+      {
+        name: 'Klasický pánsky strih',
+        description: 'Tradičný pánsky strih s moderným twist',
+        price: 'od 18€',
+        duration: '45-60 min',
+        includes: ['Konzultácia', 'Umytie', 'Strih', 'Styling', 'Finalizácia'],
+        popular: true
+      },
+      {
+        name: 'Fade strih',
+        description: 'Moderný fade s textúrovaným vrchom',
+        price: 'od 22€',
+        duration: '60-75 min',
+        includes: ['Dizajn fade', 'Precízny strih', 'Texturizácia', 'Styling']
+      },
+      {
+        name: 'Strih + úprava brady',
+        description: 'Kompletný pánsky styling vrátane brady',
+        price: 'od 28€',
+        duration: '75-90 min',
+        includes: ['Strih vlasov', 'Formovanie brady', 'Ošetrenie', 'Styling']
+      },
+      {
+        name: 'Business look',
+        description: 'Profesionálny vzhľad pre biznis',
+        price: 'od 25€',
+        duration: '60-75 min',
+        includes: ['Konzultácia', 'Elegantný strih', 'Profesionálny styling']
+      }
+    ]
+  },
+  {
+    id: 'farbenie',
+    name: 'Farbenie & Melír',
+    icon: '🎨',
+    description: 'Profesionálne farebné transformácie',
+    services: [
+      {
+        name: 'Balayage',
+        description: 'Prirodzené melírovanie pre moderný look',
+        price: 'od 65€',
+        duration: '180-240 min',
+        includes: ['Konzultácia', 'Balayage technika', 'Tónovanie', 'Ošetrenie', 'Styling'],
+        popular: true
+      },
+      {
+        name: 'Celkové farbenie',
+        description: 'Zmena farby celých vlasov',
+        price: 'od 40€',
+        duration: '120-180 min',
+        includes: ['Farebná analýza', 'Aplikácia farby', 'Ošetrenie', 'Styling']
+      },
+      {
+        name: 'Melír + tónovanie',
+        description: 'Klasické melírovanie s tónovaním',
+        price: 'od 55€',
+        duration: '150-210 min',
+        includes: ['Melír', 'Tónovanie', 'Hydratačné ošetrenie', 'Styling']
+      },
+      {
+        name: 'Korekcia farby',
+        description: 'Oprava nepodarených farieb',
+        price: 'od 80€',
+        duration: '240-300 min',
+        includes: ['Analýza', 'Korekčný proces', 'Regenerácia', 'Nová farba']
+      },
+      {
+        name: 'AirTouch melír',
+        description: 'Najmodernejšia technika melírovania',
+        price: 'od 85€',
+        duration: '240-300 min',
+        includes: ['AirTouch technika', 'Prémiové produkty', 'Luxusné ošetrenie']
+      }
+    ]
+  },
+  {
+    id: 'ošetrenia',
+    name: 'Ošetrenia vlasov',
+    icon: '💆‍♀️',
+    description: 'Regenerácia a starostlivosť o vlasy',
+    services: [
+      {
+        name: 'Keratínové ošetrenie',
+        description: 'Hĺbková regenerácia poškodených vlasov',
+        price: 'od 60€',
+        duration: '180-240 min',
+        includes: ['Analýza vlasov', 'Keratínová kúra', 'Zapečatenie', 'Styling'],
+        popular: true
+      },
+      {
+        name: 'Olaplex ošetrenie',
+        description: 'Obnovenie zlomených väzieb vo vlasoch',
+        price: 'od 45€',
+        duration: '90-120 min',
+        includes: ['Olaplex aplikácia', 'Hĺbková hydratácia', 'Regenerácia']
+      },
+      {
+        name: 'Brazílsky keratín',
+        description: 'Vyrovnanie a regenerácia vlasov',
+        price: 'od 120€',
+        duration: '300-360 min',
+        includes: ['Príprava', 'Aplikácia', 'Zapečatenie', 'Finálny styling']
+      },
+      {
+        name: 'Hydratačná kúra',
+        description: 'Intenzívna hydratácia suchých vlasov',
+        price: 'od 35€',
+        duration: '60-90 min',
+        includes: ['Špeciálna maska', 'Masáž hlavy', 'Hĺbková hydratácia']
+      }
+    ]
+  },
+  {
+    id: 'špeciálne',
+    name: 'Špeciálne služby',
+    icon: '✨',
+    description: 'Svadobné a spoločenské účesy',
+    services: [
+      {
+        name: 'Svadobný účes',
+        description: 'Elegantný účes pre najkrajší deň',
+        price: 'od 80€',
+        duration: '120-180 min',
+        includes: ['Skúška účesu', 'Svadobný styling', 'Fixácia', 'Doplnky'],
+        popular: true
+      },
+      {
+        name: 'Spoločenský účes',
+        description: 'Účes pre špeciálne príležitosti',
+        price: 'od 45€',
+        duration: '90-120 min',
+        includes: ['Konzultácia', 'Elegantný styling', 'Fixácia']
+      },
+      {
+        name: 'Účes pre družičky',
+        description: 'Krásne účesy pre svadobné družičky',
+        price: 'od 35€',
+        duration: '60-90 min',
+        includes: ['Koordinovaný styling', 'Profesionálna fixácia']
+      },
+      {
+        name: 'Fotoshooting styling',
+        description: 'Špeciálny styling pre fotenie',
+        price: 'od 55€',
+        duration: '90-120 min',
+        includes: ['Kreatívny styling', 'Fotogénne úpravy', 'Fixácia']
+      },
+      {
+        name: 'Extenzie vlasov',
+        description: 'Predĺženie a zhutnenie vlasov',
+        price: 'od 200€',
+        duration: '240-360 min',
+        includes: ['Výber farieb', 'Aplikácia', 'Strih', 'Styling']
+      }
+    ]
+  }
+];
+
+const premiumProducts = [
+  {
+    brand: 'L\'Oréal Professionnel',
+    description: 'Prémiové francúzske produkty pre profesionálnu starostlivosť',
+    specialties: ['Farby', 'Ošetrenia', 'Styling']
+  },
+  {
+    brand: 'Schwarzkopf Professional',
+    description: 'Nemecká kvalita a inovácie v kaderníctve',
+    specialties: ['Blondíranie', 'Keratín', 'Regenerácia']
+  },
+  {
+    brand: 'Olaplex',
+    description: 'Revolučná technológia obnovy vlasov',
+    specialties: ['Regenerácia', 'Ochrana', 'Posilnenie']
+  },
+  {
+    brand: 'Matrix Professional',
+    description: 'Americká značka pre kreatívne riešenia',
+    specialties: ['Farby', 'Styling', 'Texturizácia']
+  }
+];
+
+const processSteps = [
+  {
+    step: '1',
+    title: 'Konzultácia a analýza',
+    description: 'Osobná konzultácia, analýza typu vlasov a určenie najvhodnejších služieb'
+  },
+  {
+    step: '2',
+    title: 'Príprava vlasov',
+    description: 'Profesionálne umytie a príprava vlasov pred samotným ošetrením'
+  },
+  {
+    step: '3',
+    title: 'Hlavné ošetrenie',
+    description: 'Realizácia požadovaných služieb s maximálnou precíznosťou'
+  },
+  {
+    step: '4',
+    title: 'Finálny styling',
+    description: 'Dokončenie účesu s profesionálnymi produktami a stylingom'
+  },
+  {
+    step: '5',
+    title: 'Poradenstvo a starostlivosť',
+    description: 'Odporúčania pre domácu starostlivosť a následné návštevy'
+  }
+];
+---
+
+<BaseLayout title="Služby - Papi Hair Design | Profesionálny kadernícky salón Košice" description="Komplexný prehľad našich kaderníckych služieb v Košiciach. Dámske a pánske strihanie, farbenie, balayage, ošetrenie vlasov a svadobné účesy.">
+  <Header />
+
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-br from-primary-50 to-white py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          Naše <span class="text-primary-600">služby</span>
+        </h1>
+        <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+          Ponúkame komplexný servis pre všetky typy kaderníckych služieb s profesionálnym prístupom a zárukou kvality.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Grid -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        {services.map((service, index) => (
+          <div class={`bg-gray-50 rounded-xl p-8 hover:shadow-lg transition-all duration-300 ${index % 2 === 0 ? 'lg:mr-6' : 'lg:ml-6'}`}>
+            <div class="flex items-start space-x-6">
+              <div class="flex-shrink-0">
+                <div class="w-16 h-16 bg-primary-100 rounded-xl flex items-center justify-center">
+                  <svg class="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    {service.icon === 'home' && (
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    )}
+                    {service.icon === 'building' && (
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                    )}
+                    {service.icon === 'package' && (
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.618 5.984A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016zM12 10v1m0 0v1m0-1v-1m0 1h1m-1 0H11" />
+                    )}
+                    {service.icon === 'wrench' && (
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                    )}
+                    {service.icon === 'broom' && (
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m10 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h8a3 3 0 013 3v1" />
+                    )}
+                  </svg>
+                </div>
+              </div>
+              <div class="flex-1">
+                <h3 class="text-2xl font-bold text-gray-900 mb-3">{service.title}</h3>
+                <p class="text-gray-600 mb-6 leading-relaxed">{service.description}</p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {service.features.map((feature) => (
+                    <div class="flex items-center space-x-2">
+                      <svg class="w-4 h-4 text-primary-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span class="text-sm text-gray-700">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Process Section -->
+  <section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Ako prebieha návšteva salónu?
+        </h2>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+          Náš proces je navrhnutý tak, aby bol čo najpríjemnejší a najefektívnejší pre vašu spokojnosť.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8">
+        {processSteps.map((step, index) => (
+          <div class="text-center relative">
+            <!-- Step Circle -->
+            <div class="w-16 h-16 bg-primary-600 rounded-full flex items-center justify-center mx-auto mb-4 relative z-10">
+              <span class="text-white font-bold text-lg">{step.step}</span>
+            </div>
+
+            <!-- Connector Line (hidden on last item) -->
+            {index < processSteps.length - 1 && (
+              <div class="hidden lg:block absolute top-8 left-1/2 w-full h-0.5 bg-primary-200 transform -translate-x-1/2 z-0"></div>
+            )}
+
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">{step.title}</h3>
+            <p class="text-gray-600 text-sm">{step.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-20 bg-primary-600">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+        Máte otázky o našich službách?
+      </h2>
+      <p class="text-xl text-primary-100 mb-8">
+        Kontaktujte nás a radi vám poskytneme všetky potrebné informácie alebo rezervujeme termín.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href="/kontakty"
+          class="bg-white text-primary-600 hover:bg-gray-100 px-8 py-4 rounded-lg text-lg font-semibold transition-all transform hover:scale-105 shadow-lg"
+        >
+          Rezervovať termín
+        </a>
+        <a
+          href="tel:+421949459624"
+          class="border-2 border-white text-white hover:bg-white hover:text-primary-600 px-8 py-4 rounded-lg text-lg font-semibold transition-all"
+        >
+          +421 949 459 624
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>

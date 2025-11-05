@@ -1,0 +1,1236 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import AnimatedCounter from '../components/AnimatedCounter.astro';
+
+const heroServices = [
+  {
+    title: 'AI Hair Analysis',
+    description: 'Prvé štúdio na Slovensku s AI analýzou vlasov pre personalizované odporúčania',
+    icon: '🤖',
+    highlight: true,
+    badge: 'NEW'
+  },
+  {
+    title: 'Premium Coloring',
+    description: 'L\'Oréal Professional a Redken téchniky s medzinárodnou certifikáciou',
+    icon: '🎨',
+    highlight: false
+  },
+  {
+    title: 'Luxury Experience',
+    description: 'VIP klientsky servis v luxusnom prostredí s kompletným komfortom',
+    icon: '✨',
+    highlight: false
+  }
+];
+
+const services = [
+  {
+    title: 'Precision Hair Cuts',
+    description: 'Autorské strihy od medzinárodne certifikovaných stylistov. Každý strih je jedinečné umelecké dielo.',
+    icon: 'scissors',
+    price: 'od 35€',
+    duration: '60-90 min',
+    difficulty: 'Professional'
+  },
+  {
+    title: 'Advanced Coloring',
+    description: 'Komplexné farbenie s L\'Oréal Professional produktmi. Balayage, ombré a korekcie farieb.',
+    icon: 'palette',
+    price: 'od 65€',
+    duration: '120-180 min',
+    difficulty: 'Expert'
+  },
+  {
+    title: 'Hair Reconstruction',
+    description: 'Keratínové ošetrenia, Olaplex procedúry a hĺbková regenerácia poškodených vlasov.',
+    icon: 'heart',
+    price: 'od 45€',
+    duration: '90-120 min',
+    difficulty: 'Specialist'
+  },
+  {
+    title: 'Bridal Styling',
+    description: 'Svadobné účesy a make-up s možnosťou skúšobného termínu. Perfektný look pre váš veľký deň.',
+    icon: 'star',
+    price: 'od 85€',
+    duration: '150-200 min',
+    difficulty: 'Master'
+  },
+  {
+    title: 'Men\'s Grooming',
+    description: 'Moderné pánske strihy, holenie a beard styling. Kompletný grooming servis pre gentlemanov.',
+    icon: 'scissors',
+    price: 'od 25€',
+    duration: '45-60 min',
+    difficulty: 'Professional'
+  },
+  {
+    title: 'Hair Extensions',
+    description: 'Predĺženie vlasov s európskymi prémiovými vlasmi. Természetes a dlhotrvajúci efekt.',
+    icon: 'sparkles',
+    price: 'od 120€',
+    duration: '180-240 min',
+    difficulty: 'Expert'
+  }
+];
+
+const features = [
+  {
+    title: 'Medzinárodné certifikáty',
+    description: 'Našich špecialistov školili priamo v L\'Oréal akadémii v Paríži a Londýne.',
+    icon: '🎓',
+    color: 'emerald'
+  },
+  {
+    title: 'AI technológie',
+    description: 'Jediné štúdio na východnom Slovensku s AI analýzou vlasov a personalizovanými odporúčaniami.',
+    icon: '🤖',
+    color: 'blue'
+  },
+  {
+    title: 'Prémiové produkty',
+    description: 'Exkluzívne používame produkty L\'Oréal Professional, Redken, Schwarzkopf a Olaplex.',
+    icon: '💎',
+    color: 'purple'
+  },
+  {
+    title: 'Luxusné prostredie',
+    description: 'Moderne zariadené štúdió s klimatizáciou, Wi-Fi a občerstvením pre maximálny komfort.',
+    icon: '🏆',
+    color: 'rose'
+  }
+];
+
+const stats = [
+  { number: 1500, label: 'Spokojných klientov', suffix: '+', icon: '👥' },
+  { number: 16, label: 'Rokov tradície', suffix: '+', icon: '⏰' },
+  { number: 99.2, label: 'Spokojnosť', suffix: '%', icon: '⭐' },
+  { number: 4, label: 'Certifikovaných expertov', suffix: '', icon: '🎓' }
+];
+
+const testimonials = [
+  {
+    name: 'Martina K.',
+    text: 'Úžasný zážitok! PAPI vytvoril presne to, čo som si predstavovala. Profesionalita na najvyššej úrovni.',
+    rating: 5,
+    service: 'Balayage'
+  },
+  {
+    name: 'Peter S.',
+    text: 'Najlepší pánsky strih v Košiciach. Martin má cit pre detail a vie presne, čo k môjmu typu tváre.',
+    rating: 5,
+    service: 'Pánsky strih'
+  },
+  {
+    name: 'Eva M.',
+    text: 'Svadobný účes bol nádherný! Vydržal celú svadbu a všetci sa pýtali, kde som to mala robené.',
+    rating: 5,
+    service: 'Svadobný styling'
+  }
+];
+    ];
+---
+
+<BaseLayout title="PAPI Hair Design | Luxury Hair Studio Košice | AI Hair Analysis" description="Najmodernejšie hair štúdio v Košiciach s AI analýzou vlasov. Medzinárodne certifikovaní stylisti. L'Oréal Professional partner. Rezervujte si termín online!">
+  <Header />
+
+  <!-- Hero Section with Starry Background -->
+  <section class="relative min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-emerald-900 overflow-hidden">
+    <!-- Starry Background Animation -->
+    <div class="absolute inset-0">
+      <div class="stars"></div>
+      <div class="twinkling"></div>
+      <div class="clouds"></div>
+    </div>
+    
+    <!-- Background Image with Overlay -->
+    <div class="absolute inset-0">
+      <img 
+        src="/home/kali/Dokumenty/phd-ai-hair-studio/public/assets/6af2e6b989a158cee5230ee1698e84b3.jpg" 
+        alt="PAPI Hair Design Studio"
+        class="w-full h-full object-cover opacity-20"
+      />
+      <div class="absolute inset-0 bg-gradient-to-br from-gray-900/90 via-purple-900/80 to-emerald-900/90"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <!-- Left Column - Content -->
+        <div class="text-center lg:text-left">
+          <div class="mb-8">
+            <span class="inline-flex items-center px-4 py-2 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-sm font-semibold mb-4">
+              🏆 Hair Awards Slovakia Winner 2024
+            </span>
+          </div>
+          
+          <h1 class="text-5xl md:text-7xl font-bold text-white leading-tight mb-8">
+            PAPI <span class="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent glow-text">Hair Design</span>
+          </h1>
+          
+          <h2 class="text-2xl md:text-3xl text-gray-200 font-light mb-8 leading-relaxed">
+            Luxury Hair Studio s <span class="text-emerald-400 font-semibold">AI technológiou</span><br/>
+            Kde sa kaderníctvo stretáva s <span class="text-purple-400 font-semibold">umením</span>
+          </h2>
+          
+          <p class="text-xl text-gray-300 mb-12 leading-relaxed max-w-2xl">
+            Jediné hair štúdio na východnom Slovensku s AI analýzou vlasov. 
+            <strong class="text-white">16 rokov</strong> tradície, <strong class="text-emerald-400">medzinárodné certifikáty</strong> 
+            a <strong class="text-purple-400">99.2% spokojnosť</strong> klientov.
+          </p>
+
+          <!-- CTA Buttons -->
+          <div class="flex flex-col sm:flex-row gap-6 mb-12">
+            <a
+              href="/kontakty"
+              class="group bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white px-10 py-5 rounded-full text-xl font-bold transition-all duration-300 transform hover:scale-105 shadow-2xl glow-button"
+            >
+              <span class="flex items-center justify-center">
+                Rezervovať termín
+                <svg class="w-6 h-6 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                </svg>
+              </span>
+            </a>
+            <a
+              href="#ai-analysis"
+              class="border-2 border-emerald-400/50 text-emerald-300 hover:bg-emerald-400/10 hover:border-emerald-400 px-10 py-5 rounded-full text-xl font-bold transition-all duration-300 backdrop-blur-lg"
+            >
+              🤖 Vyskúšať AI analýzu
+            </a>
+          </div>
+
+          <!-- Hero Stats -->
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+            {stats.map((stat) => (
+              <div class="text-center bg-white/5 backdrop-blur-lg rounded-xl p-4 border border-white/10 hover:bg-white/10 transition-all">
+                <div class="text-2xl mb-1">{stat.icon}</div>
+                <div class="text-2xl font-bold text-white glow-text">
+                  <AnimatedCounter value={stat.number} suffix={stat.suffix} client:visible />
+                </div>
+                <div class="text-xs text-gray-300">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Right Column - Hero Services -->
+        <div class="space-y-6">
+          {heroServices.map((service, index) => (
+            <div class={`group relative bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-6 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-2 ${service.highlight ? 'ring-2 ring-emerald-400/50' : ''}`}>
+              {service.badge && (
+                <div class="absolute -top-2 -right-2 bg-gradient-to-r from-emerald-400 to-teal-500 text-white px-3 py-1 rounded-full text-xs font-bold">
+                  {service.badge}
+                </div>
+              )}
+              <div class="flex items-start space-x-4">
+                <div class="text-4xl flex-shrink-0">
+                  {service.icon}
+                </div>
+                <div>
+                  <h3 class="text-xl font-bold text-white mb-2 group-hover:text-emerald-300 transition-colors">
+                    {service.title}
+                  </h3>
+                  <p class="text-gray-300 group-hover:text-gray-200 transition-colors">
+                    {service.description}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating Elements -->
+    <div class="absolute top-20 left-10 animate-float">
+      <div class="w-4 h-4 bg-emerald-400 rounded-full glow-dot"></div>
+    </div>
+    <div class="absolute top-40 right-20 animate-float-delayed">
+      <div class="w-6 h-6 bg-purple-400 rounded-full glow-dot"></div>
+    </div>
+    <div class="absolute bottom-32 left-20 animate-float">
+      <div class="w-3 h-3 bg-teal-400 rounded-full glow-dot"></div>
+    </div>
+    <div class="absolute bottom-40 right-10 animate-float-delayed">
+      <div class="w-5 h-5 bg-pink-400 rounded-full glow-dot"></div>
+    </div>
+  </section>
+];
+
+const testimonials = [
+  {
+    name: 'Jana Nováková',
+    text: 'Výborný salón! Profesionálny prístup a krásny výsledok. Určite sa vrátim znovu.',
+    rating: 5
+  },
+  {
+    name: 'Peter Svoboda',
+    text: 'Skvelé strihanie a príjemná atmosféra. Kaderník má skutočný talent a cit pre detail.',
+    rating: 5
+  },
+  {
+    name: 'Mária Kováčová',
+    text: 'Balayage vyšiel presne podľa mojich predstáv. Personál je veľmi milý a ochotný.',
+    rating: 5
+  }
+];
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "HairSalon",
+  "name": "Papi Hair Design",
+  "description": "Profesionálny kadernícky salón v Košiciach poskytujúci komplexné služby strihania, farbenia a ošetrenia vlasov pre dámy a pánov.",
+  "url": "https://papihairdesign.sk",
+  "telephone": "+421 949 459 624",
+  "email": "papihairdesign@gmail.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Trieda SNP 61",
+    "addressLocality": "Košice",
+    "addressCountry": "SK",
+    "postalCode": "040 01"
+    },
+    "serviceType": [
+    "Dámske strihanie",
+    "Pánske strihanie",
+    "Farbenie vlasov",
+    "Balayage a melír",
+    "Ošetrenie vlasov",
+    "Svadobné účesy"
+  ],
+  "priceRange": "€€"
+};
+---
+
+<BaseLayout title="Papi Hair Design - Profesionálny kadernícky salón Košice" description="Profesionálny kadernícky salón v Košiciach poskytujúci komplexné služby strihania, farbenia a ošetrenia vlasov pre dámy a pánov." structuredData={structuredData}>
+  <Header />
+
+  <!-- Premium Hero Section with Advanced Effects -->
+  <section class="hero-section relative min-h-screen flex items-center justify-center overflow-hidden">
+    <!-- Multi-layered Background -->
+    <div class="absolute inset-0 hero-bg">
+      <img
+        src="/assets/6af2e6b989a158cee5230ee1698e84b3.jpg"
+        alt="Hair salon background"
+        class="w-full h-full object-cover"
+      />
+      <div class="absolute inset-0 bg-gradient-to-br from-black/70 via-amber-900/30 to-black/70"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-amber-900/20"></div>
+
+      <!-- Animated gradient overlay -->
+      <div class="absolute inset-0 bg-gradient-to-r from-amber-600/10 via-transparent to-amber-400/10 animate-pulse"></div>
+    </div>
+
+    <!-- Enhanced Animated Elements -->
+    <div class="stars-container absolute inset-0 pointer-events-none">
+      <div class="star star-1"></div>
+      <div class="star star-2"></div>
+      <div class="star star-3"></div>
+      <div class="star star-4"></div>
+      <div class="star star-5"></div>
+      <div class="star star-6"></div>
+      <div class="star star-7"></div>
+      <div class="star star-8"></div>
+      <div class="star star-9"></div>
+      <div class="star star-10"></div>
+      <div class="star star-11"></div>
+      <div class="star star-12"></div>
+      <div class="star star-13"></div>
+      <div class="star star-14"></div>
+      <div class="star star-15"></div>
+    </div>
+
+    <!-- Floating geometric shapes -->
+    <div class="geometric-shapes absolute inset-0 pointer-events-none">
+      <div class="geometric-shape shape-1"></div>
+      <div class="geometric-shape shape-2"></div>
+      <div class="geometric-shape shape-3"></div>
+      <div class="geometric-shape shape-4"></div>
+      <div class="geometric-shape shape-5"></div>
+    </div>
+
+    <!-- Premium Content with Advanced Effects -->
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="hero-content">
+        <!-- Premium Badge -->
+        <div class="premium-badge mb-6">
+          <span class="inline-flex items-center gap-2 bg-gradient-to-r from-amber-400/20 to-amber-600/20 backdrop-blur-sm border border-amber-400/30 px-6 py-2 rounded-full text-amber-200 text-sm font-medium">
+            <div class="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></div>
+            LUXURY HAIR EXPERIENCE
+            <div class="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></div>
+          </span>
+        </div>
+
+        <h1 class="hero-title text-5xl md:text-8xl font-bold text-white mb-8 relative">
+          <span class="glow-text block">Profesionálna</span>
+          <span class="glow-text block text-gradient">starostlivosť</span>
+          <span class="glow-text block">o vaše vlasy</span>
+
+          <!-- Enhanced floating particles -->
+          <div class="floating-particles">
+            <div class="particle particle-1"></div>
+            <div class="particle particle-2"></div>
+            <div class="particle particle-3"></div>
+            <div class="particle particle-4"></div>
+            <div class="particle particle-5"></div>
+            <div class="particle particle-6"></div>
+          </div>
+
+          <!-- 3D Text effect -->
+          <div class="text-3d absolute inset-0 text-5xl md:text-8xl font-bold opacity-10 transform translate-x-1 translate-y-1">
+            Profesionálna starostlivosť
+          </div>
+        </h1>
+
+        <p class="text-xl md:text-3xl text-gray-100 mb-8 max-w-5xl mx-auto leading-relaxed glow-text-subtle font-light">
+          Komplexné kadernícke služby svetovej triedy pre dámy a pánov s <span class="text-amber-300 font-semibold">AI-powered</span> prístupom a najnovšími trendmi.
+          <span class="block mt-2 text-lg text-amber-200/80">Vaša krása je naša vášeň.</span>
+        </p>
+
+        <!-- Interactive Demo Button -->
+        <div class="demo-preview mb-8">
+          <button class="demo-button bg-gradient-to-r from-amber-500/20 to-amber-600/20 backdrop-blur-sm border border-amber-400/40 text-amber-200 px-8 py-4 rounded-full text-lg font-medium hover:from-amber-500/30 hover:to-amber-600/30 transition-all duration-300 group">
+            <span class="flex items-center gap-3">
+              <div class="w-3 h-3 bg-amber-400 rounded-full animate-pulse"></div>
+              Vyskúšajte AI analýzu
+              <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+              </svg>
+            </span>
+          </button>
+        </div>
+        
+        <div class="flex flex-col sm:flex-row gap-8 justify-center items-center">
+          <a
+            href="/kontakty"
+            class="cta-button primary-glow bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-300 hover:via-amber-400 hover:to-amber-500 text-black px-12 py-6 rounded-full text-xl font-bold transition-all duration-500 transform hover:scale-110 hover:-translate-y-2 shadow-2xl hover:shadow-amber-400/60 relative overflow-hidden group"
+          >
+            <span class="relative z-10 flex items-center gap-3">
+              <span class="animate-pulse">✨</span>
+              Rezervovať termín
+              <div class="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+            </span>
+            <div class="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          </a>
+
+          <a
+            href="#ai-demo"
+            class="cta-button secondary-glow border-2 border-amber-400/40 text-amber-200 hover:bg-amber-400/20 hover:border-amber-300 px-12 py-6 rounded-full text-xl font-semibold transition-all duration-500 backdrop-blur-sm relative overflow-hidden group"
+          >
+            <span class="relative z-10 flex items-center gap-3 group-hover:text-amber-100 transition-colors">
+              <div class="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></div>
+              AI Demo
+              <svg class="w-6 h-6 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+              </svg>
+            </span>
+            <div class="absolute inset-0 bg-gradient-to-r from-amber-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          </a>
+        </div>
+
+        <!-- Trust indicators -->
+        <div class="trust-indicators mt-12 flex flex-wrap justify-center items-center gap-8 text-sm text-gray-300">
+          <div class="flex items-center gap-2">
+            <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+            <span>AI Powered</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="w-3 h-3 bg-amber-400 rounded-full animate-pulse"></div>
+            <span>Profesionálny salón</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="w-3 h-3 bg-blue-400 rounded-full animate-pulse"></div>
+            <span>5★ hodnotenie</span>
+          </div>
+        </div>
+
+        <!-- Scroll indicator -->
+        <div class="scroll-indicator mt-20">
+          <div class="scroll-arrow animate-bounce">
+            <svg class="w-8 h-8 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+          </div>
+          <p class="text-white/60 text-sm mt-2">Objavte viac</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Prečo si vybrať náš salón?
+        </h2>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+          Sme vaším spoľahlivým partnerom pre starostlivosť o vlasy s dlhoročnými skúsenosťami a profesionálnym prístupom.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {features.map((feature, index) => (
+          <div class={`text-center group ${index > 0 ? 'animate-slide-up' : ''}`} style={`animation-delay: ${index * 100}ms`}>
+            <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary-200 transition-colors">
+              <svg class="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">{feature.title}</h3>
+            <p class="text-gray-600">{feature.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Naše služby
+        </h2>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+          Komplexný servis pre všetky typy kaderníckych služieb s doplnkovými procedúrami pre vašu krásu.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        {services.map((service, index) => (
+          <ServiceCard
+            title={service.title}
+            description={service.description}
+            icon={service.icon}
+          />
+        ))}
+      </div>
+
+      <div class="text-center">
+        <a
+          href="/sluzby"
+          class="bg-primary-600 hover:bg-primary-700 text-white px-8 py-3 rounded-lg font-semibold transition-all transform hover:scale-105 inline-flex items-center"
+        >
+          Zobraziť všetky služby
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Čo hovoria naši klienti
+        </h2>
+        <p class="text-xl text-gray-600">
+          Spokojnosť našich klientov je naším hlavným cieľom.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {testimonials.map((testimonial, index) => (
+          <div class="bg-gray-50 rounded-xl p-6 hover:shadow-lg transition-shadow">
+            <div class="flex mb-4">
+              {Array.from({ length: testimonial.rating }).map(() => (
+                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+              ))}
+            </div>
+            <p class="text-gray-700 mb-4 italic">"{testimonial.text}"</p>
+            <p class="font-semibold text-gray-900">- {testimonial.name}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- AI Demo Section -->
+  <section id="ai-demo" class="py-20 bg-gradient-to-br from-gray-900 via-black to-gray-900 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-r from-amber-900/10 to-transparent"></div>
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-6xl font-bold text-white mb-6">
+          <span class="text-gradient">AI-Powered</span> Hair Analysis
+        </h2>
+        <p class="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
+          Vyskúšajte našu revolučnú AI technológiu, ktorá analyzuje vaše vlasy a poskytuje personalizované odporúčania ako profesionálny kaderník.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <!-- Demo Interface -->
+        <div class="demo-interface bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 border border-amber-400/20">
+          <div class="demo-placeholder aspect-video bg-gradient-to-br from-amber-900/20 to-black rounded-lg mb-6 flex items-center justify-center">
+            <div class="text-center">
+              <div class="w-16 h-16 bg-amber-400/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                </svg>
+              </div>
+              <p class="text-amber-200 font-medium">AI Demo Interface</p>
+              <p class="text-gray-400 text-sm">Kliknite pre spustenie</p>
+            </div>
+          </div>
+
+          <div class="demo-features grid grid-cols-2 gap-4">
+            <div class="feature-item bg-black/30 rounded-lg p-4 text-center">
+              <div class="w-12 h-12 bg-amber-400/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                <svg class="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a4 4 0 004-4V5z"></path>
+                </svg>
+              </div>
+              <h3 class="text-white font-semibold text-sm">Analýza vlasov</h3>
+              <p class="text-gray-400 text-xs">AI rozpoznanie typu a stavu</p>
+            </div>
+
+            <div class="feature-item bg-black/30 rounded-lg p-4 text-center">
+              <div class="w-12 h-12 bg-amber-400/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                <svg class="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+              </div>
+              <h3 class="text-white font-semibold text-sm">Virtuálny try-on</h3>
+              <p class="text-gray-400 text-xs">Vyskúšanie účesov v reálnom čase</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Demo Info -->
+        <div class="demo-info">
+          <h3 class="text-3xl font-bold text-white mb-6">Ako to funguje?</h3>
+          <div class="space-y-6">
+            <div class="flex items-start gap-4">
+              <div class="w-8 h-8 bg-amber-400 rounded-full flex items-center justify-center text-black font-bold text-sm flex-shrink-0">1</div>
+              <div>
+                <h4 class="text-xl font-semibold text-white mb-2">Nahrajte fotografiu</h4>
+                <p class="text-gray-300">Jednoducho nahrajte fotografiu vašich vlasov alebo použite kameru</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-8 h-8 bg-amber-400 rounded-full flex items-center justify-center text-black font-bold text-sm flex-shrink-0">2</div>
+              <div>
+                <h4 class="text-xl font-semibold text-white mb-2">AI analýza</h4>
+                <p class="text-gray-300">Pokročilá AI analyzuje váš typ vlasov, tvar tváre a stav</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-8 h-8 bg-amber-400 rounded-full flex items-center justify-center text-black font-bold text-sm flex-shrink-0">3</div>
+              <div>
+                <h4 class="text-xl font-semibold text-white mb-2">Personalizované odporúčania</h4>
+                <p class="text-gray-300">Získajte profesionálne odporúčania pre strihy, farby a starostlivosť</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8">
+            <a href="/#analyze" class="bg-gradient-to-r from-amber-400 to-amber-600 text-black px-8 py-4 rounded-full text-lg font-bold hover:from-amber-300 hover:to-amber-500 transition-all transform hover:scale-105 shadow-lg inline-flex items-center gap-3">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+              </svg>
+              Spustiť AI analýzu
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-20 bg-gradient-to-br from-amber-900 via-amber-800 to-amber-900">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">
+        Pripravení na <span class="text-gradient">revolučnú zmenu</span> vášho looku?
+      </h2>
+      <p class="text-xl text-amber-100 mb-8 leading-relaxed">
+        Rezervujte si termín ešte dnes a doprajte svojim vlasom profesionálnu AI-powered starostlivosť svetovej triedy.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-6 justify-center">
+        <a
+          href="/kontakty"
+          class="bg-white text-amber-900 hover:bg-gray-100 px-10 py-5 rounded-full text-xl font-bold transition-all transform hover:scale-110 shadow-xl hover:shadow-white/20 inline-flex items-center justify-center gap-3"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3a2 2 0 012-2h4a2 2 0 012 2v4m-6 9l6-6m0 0v6m0-6h-6"></path>
+          </svg>
+          Rezervovať termín
+        </a>
+        <a
+          href="tel:+421949459624"
+          class="border-2 border-white text-white hover:bg-white hover:text-amber-900 px-10 py-5 rounded-full text-xl font-semibold transition-all transform hover:scale-105 backdrop-blur-sm"
+        >
+          +421 949 459 624
+        </a>
+      </div>
+
+      <!-- Premium Features -->
+      <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="text-center">
+          <div class="w-16 h-16 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+            </svg>
+          </div>
+          <h3 class="text-white font-semibold mb-2">AI Technológia</h3>
+          <p class="text-amber-100 text-sm">Pokročilá umelá inteligencia pre personalizované odporúčania</p>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-white font-semibold mb-2">Prémiová starostlivosť</h3>
+          <p class="text-amber-100 text-sm">Luxusné procedúry s profesionálnymi kaderníkmi</p>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+            </svg>
+          </div>
+          <h3 class="text-white font-semibold mb-2">Výnimočné ceny</h3>
+          <p class="text-amber-100 text-sm">Prémiová kvalita za dostupné ceny</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  /* Hero Section Styles */
+  .hero-section {
+    position: relative;
+    background: radial-gradient(ellipse at center, #1a1a2e 0%, #16213e 50%, #0f0f0f 100%);
+  }
+
+  .hero-bg img {
+    filter: brightness(0.4) contrast(1.2) saturate(0.8);
+  }
+
+  /* Glowing Text Effects */
+  .glow-text {
+    text-shadow: 
+      0 0 10px rgba(255, 255, 255, 0.3),
+      0 0 20px rgba(255, 255, 255, 0.2),
+      0 0 30px rgba(255, 255, 255, 0.1),
+      0 0 40px rgba(251, 191, 36, 0.1);
+    animation: textGlow 3s ease-in-out infinite alternate;
+  }
+
+  .glow-text-subtle {
+    text-shadow: 
+      0 0 10px rgba(255, 255, 255, 0.2),
+      0 0 20px rgba(255, 255, 255, 0.1);
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b, #d97706, #92400e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  @keyframes textGlow {
+    0% {
+      text-shadow: 
+        0 0 10px rgba(255, 255, 255, 0.3),
+        0 0 20px rgba(255, 255, 255, 0.2),
+        0 0 30px rgba(255, 255, 255, 0.1),
+        0 0 40px rgba(251, 191, 36, 0.1);
+    }
+    100% {
+      text-shadow: 
+        0 0 15px rgba(255, 255, 255, 0.4),
+        0 0 25px rgba(255, 255, 255, 0.3),
+        0 0 35px rgba(255, 255, 255, 0.2),
+        0 0 50px rgba(251, 191, 36, 0.2);
+    }
+  }
+
+  /* Stars Animation */
+  .stars-container {
+    background: 
+      radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+      radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+      radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+      radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
+      radial-gradient(2px 2px at 160px 30px, #ddd, transparent);
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    animation: sparkle 20s linear infinite;
+  }
+
+  @keyframes sparkle {
+    from { transform: translateX(0); }
+    to { transform: translateX(200px); }
+  }
+
+  .star {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle 2s infinite;
+  }
+
+  .star-1 { top: 20%; left: 10%; animation-delay: 0s; }
+  .star-2 { top: 10%; left: 20%; animation-delay: 0.5s; }
+  .star-3 { top: 30%; left: 30%; animation-delay: 1s; }
+  .star-4 { top: 15%; left: 60%; animation-delay: 1.5s; }
+  .star-5 { top: 25%; left: 80%; animation-delay: 2s; }
+  .star-6 { top: 60%; left: 15%; animation-delay: 0.3s; }
+  .star-7 { top: 70%; left: 70%; animation-delay: 0.8s; }
+  .star-8 { top: 80%; left: 40%; animation-delay: 1.3s; }
+  .star-9 { top: 40%; left: 90%; animation-delay: 1.8s; }
+  .star-10 { top: 50%; left: 50%; animation-delay: 2.3s; }
+
+  @keyframes twinkle {
+    0%, 100% { 
+      opacity: 0.3;
+      transform: scale(1);
+      box-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
+    }
+    50% { 
+      opacity: 1;
+      transform: scale(1.2);
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.8), 0 0 24px rgba(251, 191, 36, 0.4);
+    }
+  }
+
+  /* Floating Particles */
+  .floating-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .particle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: radial-gradient(circle, #fbbf24, #f59e0b);
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .particle-1 { 
+    top: 10%; 
+    left: 20%; 
+    animation-delay: 0s;
+    animation-duration: 4s;
+  }
+  .particle-2 { 
+    top: 20%; 
+    right: 30%; 
+    animation-delay: 1s;
+    animation-duration: 5s;
+  }
+  .particle-3 { 
+    bottom: 30%; 
+    left: 10%; 
+    animation-delay: 2s;
+    animation-duration: 6s;
+  }
+  .particle-4 { 
+    bottom: 20%; 
+    right: 20%; 
+    animation-delay: 3s;
+    animation-duration: 4.5s;
+  }
+
+  @keyframes float {
+    0%, 100% { 
+      transform: translateY(0px) rotate(0deg);
+      opacity: 0.4;
+    }
+    25% { 
+      transform: translateY(-20px) rotate(90deg);
+      opacity: 0.8;
+    }
+    50% { 
+      transform: translateY(-10px) rotate(180deg);
+      opacity: 1;
+    }
+    75% { 
+      transform: translateY(-30px) rotate(270deg);
+      opacity: 0.6;
+    }
+  }
+
+  /* Button Glow Effects */
+  .primary-glow {
+    box-shadow: 
+      0 0 20px rgba(251, 191, 36, 0.3),
+      0 0 40px rgba(251, 191, 36, 0.2),
+      0 0 60px rgba(251, 191, 36, 0.1);
+    animation: buttonPulse 2s ease-in-out infinite alternate;
+  }
+
+  .primary-glow:hover {
+    box-shadow: 
+      0 0 30px rgba(251, 191, 36, 0.5),
+      0 0 60px rgba(251, 191, 36, 0.3),
+      0 0 90px rgba(251, 191, 36, 0.2);
+  }
+
+  .secondary-glow:hover {
+    box-shadow: 
+      0 0 20px rgba(255, 255, 255, 0.3),
+      0 0 40px rgba(255, 255, 255, 0.1);
+  }
+
+  @keyframes buttonPulse {
+    0% {
+      box-shadow: 
+        0 0 20px rgba(251, 191, 36, 0.3),
+        0 0 40px rgba(251, 191, 36, 0.2),
+        0 0 60px rgba(251, 191, 36, 0.1);
+    }
+    100% {
+      box-shadow: 
+        0 0 25px rgba(251, 191, 36, 0.4),
+        0 0 50px rgba(251, 191, 36, 0.3),
+        0 0 75px rgba(251, 191, 36, 0.2);
+    }
+  }
+
+  /* Hero Content Animation */
+  .hero-content {
+    animation: heroFadeIn 1.5s ease-out;
+  }
+
+  @keyframes heroFadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Scroll Indicator */
+  .scroll-indicator {
+    animation: fadeInUp 2s ease-out 1s both;
+  }
+
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .hero-title {
+      font-size: 2.5rem !important;
+    }
+    
+    .particle {
+      width: 6px;
+      height: 6px;
+    }
+
+    .star {
+      width: 3px;
+      height: 3px;
+    }
+  }
+
+  /* Premium Design Elements */
+
+  /* Premium Badge */
+  .premium-badge {
+    animation: premiumGlow 3s ease-in-out infinite alternate;
+  }
+
+  @keyframes premiumGlow {
+    0% {
+      filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.3));
+    }
+    100% {
+      filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.6));
+    }
+  }
+
+  /* Enhanced Stars */
+  .star-11 { top: 35%; left: 5%; animation-delay: 0.7s; }
+  .star-12 { top: 45%; left: 95%; animation-delay: 1.2s; }
+  .star-13 { top: 75%; left: 25%; animation-delay: 1.7s; }
+  .star-14 { top: 85%; left: 75%; animation-delay: 2.2s; }
+  .star-15 { top: 65%; left: 50%; animation-delay: 2.7s; }
+
+  /* Geometric Shapes */
+  .geometric-shapes {
+    background:
+      radial-gradient(circle at 20% 20%, rgba(251, 191, 36, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(251, 191, 36, 0.05) 0%, transparent 50%);
+  }
+
+  .geometric-shape {
+    position: absolute;
+    background: linear-gradient(45deg, rgba(251, 191, 36, 0.1), rgba(251, 191, 36, 0.05));
+    animation: geometricFloat 20s ease-in-out infinite;
+  }
+
+  .shape-1 {
+    width: 100px;
+    height: 100px;
+    top: 10%;
+    left: 5%;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    animation-delay: 0s;
+  }
+
+  .shape-2 {
+    width: 80px;
+    height: 80px;
+    top: 20%;
+    right: 10%;
+    clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+    animation-delay: 5s;
+  }
+
+  .shape-3 {
+    width: 120px;
+    height: 120px;
+    bottom: 20%;
+    left: 10%;
+    clip-path: circle(50% at 50% 50%);
+    animation-delay: 10s;
+  }
+
+  .shape-4 {
+    width: 60px;
+    height: 60px;
+    bottom: 30%;
+    right: 15%;
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    animation-delay: 15s;
+  }
+
+  .shape-5 {
+    width: 90px;
+    height: 90px;
+    top: 50%;
+    left: 50%;
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+    animation-delay: 7s;
+  }
+
+  @keyframes geometricFloat {
+    0%, 100% {
+      transform: translateY(0px) rotate(0deg) scale(1);
+      opacity: 0.3;
+    }
+    25% {
+      transform: translateY(-30px) rotate(90deg) scale(1.1);
+      opacity: 0.6;
+    }
+    50% {
+      transform: translateY(-20px) rotate(180deg) scale(0.9);
+      opacity: 0.8;
+    }
+    75% {
+      transform: translateY(-40px) rotate(270deg) scale(1.1);
+      opacity: 0.4;
+    }
+  }
+
+  /* Enhanced Particles */
+  .particle-5 {
+    top: 30%;
+    left: 80%;
+    animation-delay: 2.5s;
+    animation-duration: 7s;
+  }
+
+  .particle-6 {
+    bottom: 40%;
+    left: 60%;
+    animation-delay: 3.5s;
+    animation-duration: 5.5s;
+  }
+
+  /* 3D Text Effect */
+  .text-3d {
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(251, 191, 36, 0.05));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: blur(1px);
+    pointer-events: none;
+  }
+
+  /* Demo Button */
+  .demo-button {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .demo-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+  }
+
+  .demo-button:hover::before {
+    left: 100%;
+  }
+
+  /* Trust Indicators */
+  .trust-indicators {
+    animation: fadeInUp 2s ease-out 2s both;
+  }
+
+  /* Enhanced Button Effects */
+  .primary-glow {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .primary-glow::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+
+  .primary-glow:hover::after {
+    width: 300px;
+    height: 300px;
+  }
+
+  /* Legacy animations */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.8s ease-out;
+  }
+
+  /* Demo Interface Styles */
+  .demo-interface {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .demo-interface::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.05), rgba(251, 191, 36, 0.02));
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
+  .demo-placeholder {
+    position: relative;
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(0, 0, 0, 0.8));
+    border: 2px dashed rgba(251, 191, 36, 0.3);
+    transition: all 0.3s ease;
+  }
+
+  .demo-placeholder:hover {
+    border-color: rgba(251, 191, 36, 0.6);
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(0, 0, 0, 0.7));
+  }
+
+  .feature-item {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .feature-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(251, 191, 36, 0.1);
+  }
+
+  /* Enhanced CTA Section */
+  .text-gradient {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b, #d97706, #92400e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 200% 200%;
+    animation: gradientShift 3s ease infinite;
+  }
+
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* Premium Features Grid */
+  .premium-features-grid {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+
+  /* Responsive Enhancements */
+  @media (max-width: 768px) {
+    .hero-title {
+      font-size: 3rem !important;
+    }
+
+    .geometric-shape {
+      opacity: 0.5;
+      transform: scale(0.7);
+    }
+
+    .premium-badge {
+      font-size: 0.8rem;
+      padding: 0.5rem 1rem;
+    }
+
+    .demo-features {
+      grid-template-columns: 1fr;
+    }
+
+    .premium-features-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+</style>

@@ -1,0 +1,58 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Node and build directories
+node_modules
+dist
+dist-ssr
+# Specific local environment files
+# Replace generic '*.local' with specific patterns
+.env
+.env.local
+.env.*.local
+
+# Astro & Vite build outputs
+.astro/
+node_modules/.vite/
+*.tsbuildinfo
+.cache/
+
+# Coverage directory
+coverage/
+ 
+# Build directories
+dev-dist/
+
+# Editor swap and backup
+*~
+*.swp
+*.swo
+
+# Windows system files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Jest snapshots
+__snapshots__/
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.vercel
+
+# Local backup files
+*.bak.*

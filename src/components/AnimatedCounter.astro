@@ -1,0 +1,32 @@
+---
+export interface Props {
+  value: number;
+  suffix?: string;
+  duration?: number;
+}
+
+const { value, suffix = '', duration = 2000 } = Astro.props;
+
+<div class="animated-counter">
+  <astro-island client:visible>
+    <script>
+      import AnimatedCounter from './preact/AnimatedCounter.tsx';
+
+      export default function CounterWrapper() {
+        return (
+          <AnimatedCounter
+            value={value}
+            suffix={suffix}
+            duration={duration}
+          />
+        );
+      }
+    </script>
+  </astro-island>
+</div>
+
+<style>
+  .animated-counter {
+    display: inline-block;
+  }
+</style>

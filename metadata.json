@@ -1,0 +1,7 @@
+{
+  "name": "PHD - AI Hair Studio",
+  "description": "A personalized hair color consultation app powered by virtual try-on. Get an expert hair diagnosis and discover your perfect, tailor-made color with advanced AI.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}

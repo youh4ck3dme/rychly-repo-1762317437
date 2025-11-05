@@ -1,0 +1,78 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #000000;
+    background-image: linear-gradient(180deg, #101010 0%, #000000 100%);
+  }
+  @media (min-width: 1024px) {
+    body {
+      background-image: radial-gradient(circle at top, #1a1a1a 0%, #000000 40%);
+    }
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.4), 0 0 40px rgba(255, 215, 0, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(255, 215, 0, 0.6), 0 0 60px rgba(255, 215, 0, 0.4);
+  }
+}
+
+@keyframes float-particle {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  50% { opacity: 0.8; }
+  100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+}
+
+.particle-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  background-color: #FFD700;
+  border-radius: 50%;
+  opacity: 0;
+  animation-name: float-particle;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform, opacity;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyBAMAAADsEZWCAAAABlBMVEUAAAAAAAClZ7n4AAAAB3RSTlMAEREiIqaqu28sgAAAAIZJREFUOI1jYBgFo2AUjIJRMApGwSigBwYqPzM5+b/48AIQY2A5MmgAAmMDrA6DGgAIsyAE0SgYBaNgFIyCUTAKRsEooAcGJj8Dk2MAwWywOhgNAgDMghBEo2AUjIJRMApGwSighgEkM6B/GSYEAEDaBw4w8AsuAQDygCETAKRsEo2AUjAIAAAA77sW28jLfH8AAAAASUVORK5CYII=');
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: -1;
+}

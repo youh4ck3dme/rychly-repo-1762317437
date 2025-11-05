@@ -1,0 +1,84 @@
+config:
+  target: 'https://phd-ai-hair-studio-5hbgan143-h4ck3d-labs-projects.vercel.app'
+  phases:
+    - duration: 60
+      arrivalRate: 5
+      name: Warm up
+    - duration: 240
+      arrivalRate: 10
+      name: Sustained load
+    - duration: 60
+      arrivalRate: 20
+      name: Peak load
+  defaults:
+    headers:
+      Content-Type: 'application/json'
+
+scenarios:
+  - name: "Chat API Load Test"
+    weight: 60
+    flow:
+      - post:
+          url: "/api/chat"
+          json:
+            message: "Load testing message {{ $randomString }}"
+          expect:
+            - statusCode: [200, 429]
+            - hasProperty: 'reply'
+
+  - name: "Hair Analysis API Load Test"
+    weight: 40
+    flow:
+      - post:
+          url: "/api/hair/analyze"
+          json:
+            imageUrl: "https://picsum.photos/seed/hair/{{ $randomInt }}"
+          expect:
+            - statusCode: [200, 429]
+            - hasProperty: 'summary'
+
+  - name: "Security Headers Test"
+    weight: 10
+    flow:
+      - get:
+          url: "/"
+          expect:
+            - statusCode: 200
+          capture:
+            - json: "$"
+              as: "response"
+
+  - name: "Rate Limiting Test"
+    flow:
+      - loop:
+          - post:
+              url: "/api/chat"
+              json:
+                message: "Rate limit test {{ $loopCount }}"
+          - expect:
+              - statusCode: [200, 429]
+        count: 150  # Exceed rate limit
+      - think: 5  # Wait 5 seconds
+
+# Reporting
+reporter:
+  - type: 'html'
+    filename: 'artillery-report.html'
+  - type: 'json'
+    filename: 'artillery-report.json'
+
+# Plugins for enhanced testing
+plugins:
+  ensure:
+    - equals: [200, 201, 429]  # Allow rate limiting responses
+  metrics-by-endpoint: {}
+  metrics-by-response-code: {}
+
+# Custom metrics
+metrics:
+  - name: 'Response Time'
+    value: 'responseTime'
+  - name: 'Error Rate'
+    value: 'errors'
+  - name: 'Requests per Second'
+    value: 'rps'
