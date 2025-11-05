@@ -1,32 +1,52 @@
----
 export interface Props {
   value: number;
   suffix?: string;
   duration?: number;
 }
 
+
 const { value, suffix = '', duration = 2000 } = Astro.props;
+import AnimatedCounter from './preact/AnimatedCounter.tsx';
+
 
 <div class="animated-counter">
   <astro-island client:visible>
-    <script>
-      import AnimatedCounter from './preact/AnimatedCounter.tsx';
-
-      export default function CounterWrapper() {
-        return (
-          <AnimatedCounter
-            value={value}
-            suffix={suffix}
-            duration={duration}
-          />
-        );
-      }
-    </script>
+  <AnimatedCounter value={value} suffix={suffix} duration={duration}></AnimatedCounter>
   </astro-island>
 </div>
 
+
+---
+const { start = 0, end = 100, duration = 2000, class: cls = '' } = Astro.props;
+---
+---
+
+<span class={`animated-counter ${cls}`} data-end={end} data-start={start} data-duration={duration}>
+  {start}
+</span>
+
+<script type="module" client:load>
+  (function () {
+    const el = document.querySelector('.animated-counter');
+    if (!el) return;
+    const end = parseInt(el.dataset.end, 10) || 0;
+    const start = parseInt(el.dataset.start, 10) || 0;
+  const duration = parseInt(el.dataset.duration, 10) || 2000;
+    const startTime = performance.now();
+
+    function tick(now) {
+      const progress = Math.min((now - startTime) / duration, 1);
+      const value = Math.floor(start + (end - start) * progress);
+      el.textContent = value;
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  })();
+</script>
+
 <style>
-  .animated-counter {
-    display: inline-block;
-  }
+.animated-counter {
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+}
 </style>

@@ -103,17 +103,7 @@ import { Type, Modality, Chat } from "@google/genai";
       try {
         return await callApiProxy('analyzeHair', payload);
       } catch (e) {
-        // Dev fallback when backend route missing
-        if (typeof window !== 'undefined') {
-          console.warn('[analyzeHairImage] Falling back to mock result:', e);
-          return {
-            currentHair: { color: 'Unknown', condition: 'N/A', type: 'N/A' },
-            suggestions: [
-              { name: 'Mock Honey Blend', hairstyle: 'Layered', hex: '#E6B883', description: 'Layered warmth to frame the face.', services: ['Farbenie (celých vlasov)'] },
-              { name: 'Rich Espresso Depth', hairstyle: 'Current Style', hex: '#3B2F2F', description: 'Depth and shine enhancing natural tone.', services: ['Farbenie (odrasty)'] },
-            ]
-          } as HairAnalysisResult;
-        }
+        // In production, do not return mock data
         throw e;
       }
     };

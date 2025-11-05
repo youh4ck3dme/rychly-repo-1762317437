@@ -82,10 +82,11 @@ export const GET: APIRoute = secureAPI(async (request: Request) => {
       }
     ];
 
+    // TODO: Implement real notification fetching here
     return new Response(JSON.stringify({
-      notifications: mockNotifications,
-      total: mockNotifications.length,
-      unread: mockNotifications.filter(n => !n.read).length
+      notifications: [],
+      total: 0,
+      unread: 0
     }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
