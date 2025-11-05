@@ -1,24 +1,12 @@
+---
 export interface Props {
-  value: number;
-  suffix?: string;
+  start?: number;
+  end: number;
   duration?: number;
+  class?: string;
 }
 
-
-const { value, suffix = '', duration = 2000 } = Astro.props;
-import AnimatedCounter from './preact/AnimatedCounter.tsx';
-
-
-<div class="animated-counter">
-  <astro-island client:visible>
-  <AnimatedCounter value={value} suffix={suffix} duration={duration}></AnimatedCounter>
-  </astro-island>
-</div>
-
-
----
-const { start = 0, end = 100, duration = 2000, class: cls = '' } = Astro.props;
----
+const { start = 0, end, duration = 2000, class: cls = '' } = Astro.props;
 ---
 
 <span class={`animated-counter ${cls}`} data-end={end} data-start={start} data-duration={duration}>
@@ -31,7 +19,7 @@ const { start = 0, end = 100, duration = 2000, class: cls = '' } = Astro.props;
     if (!el) return;
     const end = parseInt(el.dataset.end, 10) || 0;
     const start = parseInt(el.dataset.start, 10) || 0;
-  const duration = parseInt(el.dataset.duration, 10) || 2000;
+    const duration = parseInt(el.dataset.duration, 10) || 2000;
     const startTime = performance.now();
 
     function tick(now) {

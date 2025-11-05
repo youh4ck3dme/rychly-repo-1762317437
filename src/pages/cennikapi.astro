@@ -1,25 +1,21 @@
----
-import { onMount } from 'astro/client';
-
 let services = [];
 let loading = true;
 let error = '';
 let panske = [];
 let damske = [];
 
-onMount(async () => {
-  try {
-    const res = await fetch('https://api.gruppa.cloud/wp-json/gruppa/services/');
-    if (!res.ok) throw new Error('Nepodarilo sa načítať dáta z API');
-    services = await res.json();
-    panske = services.filter(s => s.post_category && s.post_category.toLowerCase().includes('pánske'));
-    damske = services.filter(s => s.post_category && s.post_category.toLowerCase().includes('dámske'));
-  } catch (e) {
-    error = e.message || 'Chyba pri načítaní dát';
-  } finally {
-    loading = false;
-  }
-});
+// Fetch data on server side
+try {
+  const res = await fetch('https://api.gruppa.cloud/wp-json/gruppa/services/');
+  if (!res.ok) throw new Error('Nepodarilo sa načítať dáta z API');
+  services = await res.json();
+  panske = services.filter(s => s.post_category && s.post_category.toLowerCase().includes('pánske'));
+  damske = services.filter(s => s.post_category && s.post_category.toLowerCase().includes('dámske'));
+} catch (e) {
+  error = e.message || 'Chyba pri načítaní dát';
+} finally {
+  loading = false;
+}
 ---
 
 <section class="py-20 bg-white">
