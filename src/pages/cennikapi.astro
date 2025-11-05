@@ -1,0 +1,116 @@
+---
+import { onMount } from 'astro/client';
+
+let services = [];
+let loading = true;
+let error = '';
+let panske = [];
+let damske = [];
+
+onMount(async () => {
+  try {
+    const res = await fetch('https://api.gruppa.cloud/wp-json/gruppa/services/');
+    if (!res.ok) throw new Error('Nepodarilo sa načítať dáta z API');
+    services = await res.json();
+    panske = services.filter(s => s.post_category && s.post_category.toLowerCase().includes('pánske'));
+    damske = services.filter(s => s.post_category && s.post_category.toLowerCase().includes('dámske'));
+  } catch (e) {
+    error = e.message || 'Chyba pri načítaní dát';
+  } finally {
+    loading = false;
+  }
+});
+---
+
+<section class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    {loading ? (
+      <div class="text-center text-xl text-gray-500">Načítavam služby…</div>
+    ) : error ? (
+      <div class="text-center text-red-600 font-semibold">{error}</div>
+    ) : (
+      <>
+        <h2 class="text-3xl font-bold text-gray-900 mb-8">Dámske služby</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+          {damske && damske.length > 0 ? (
+            damske.map((service) => (
+              <div class="relative bg-white rounded-2xl shadow-lg border-2 p-8 border-gray-200 hover:border-primary-300 transition-all duration-300">
+                <div class="text-center mb-8">
+                  <h3 class="text-2xl font-bold text-gray-900 mb-2">{service.post_title}</h3>
+                  <div class="text-4xl font-bold text-primary-600 mb-2">{service.post_price ? `${service.post_price}€` : ''}</div>
+                  <p class="text-gray-600 mb-2">{service.post_desc}</p>
+                  <div class="text-sm text-gray-500 mb-1">Kategória: {service.post_category}</div>
+                  {service.post_subcategory && <div class="text-sm text-gray-500 mb-1">Podkategória: {service.post_subcategory}</div>}
+                  {service.post_duration && <div class="text-sm text-gray-500 mb-1">Trvanie: {service.post_duration} min</div>}
+                  {service._ID && <div class="text-xs text-gray-400">ID služby: {service._ID}</div>}
+                  {service._post_id && <div class="text-xs text-gray-400">ID klienta: {service._post_id}</div>}
+                  {service.cct_author_id && <div class="text-xs text-gray-400">Autor: {service.cct_author_id}</div>}
+                  {service.cct_created && <div class="text-xs text-gray-400">Vytvorené: {service.cct_created}</div>}
+                  {service.cct_modified && <div class="text-xs text-gray-400">Upravené: {service.cct_modified}</div>}
+                  {service.cct_status && <div class="text-xs text-gray-400">Stav: {service.cct_status}</div>}
+                  {/* Zobraz ďalšie polia ak existujú */}
+                  {Object.entries(service).map(([key, value]) => {
+                    if ([
+                      '_ID','_post_id','post_title','post_desc','post_category','post_subcategory','post_price','post_duration',
+                      'cct_author_id','cct_created','cct_modified','cct_status'
+                    ].includes(key)) return null;
+                    if (!value) return null;
+                    return <div class="text-xs text-gray-400">{key}: {String(value)}</div>;
+                  })}
+                </div>
+                <a
+                  href="/kontakty"
+                  class="w-full block text-center py-3 px-6 rounded-lg font-semibold transition-all bg-primary-600 hover:bg-primary-700 text-white shadow-lg hover:shadow-xl transform hover:scale-105"
+                >
+                  Vybrať službu
+                </a>
+              </div>
+            ))
+          ) : (
+            <div class="text-center text-gray-500">Žiadne dámske služby neboli nájdené.</div>
+          )}
+        </div>
+        <h2 class="text-3xl font-bold text-gray-900 mb-8">Pánske služby</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+          {panske && panske.length > 0 ? (
+            panske.map((service) => (
+              <div class="relative bg-white rounded-2xl shadow-lg border-2 p-8 border-gray-200 hover:border-primary-300 transition-all duration-300">
+                <div class="text-center mb-8">
+                  <h3 class="text-2xl font-bold text-gray-900 mb-2">{service.post_title}</h3>
+                  <div class="text-4xl font-bold text-primary-600 mb-2">{service.post_price ? `${service.post_price}€` : ''}</div>
+                  <p class="text-gray-600 mb-2">{service.post_desc}</p>
+                  <div class="text-sm text-gray-500 mb-1">Kategória: {service.post_category}</div>
+                  {service.post_subcategory && <div class="text-sm text-gray-500 mb-1">Podkategória: {service.post_subcategory}</div>}
+                  {service.post_duration && <div class="text-sm text-gray-500 mb-1">Trvanie: {service.post_duration} min</div>}
+                  {service._ID && <div class="text-xs text-gray-400">ID služby: {service._ID}</div>}
+                  {service._post_id && <div class="text-xs text-gray-400">ID klienta: {service._post_id}</div>}
+                  {service.cct_author_id && <div class="text-xs text-gray-400">Autor: {service.cct_author_id}</div>}
+                  {service.cct_created && <div class="text-xs text-gray-400">Vytvorené: {service.cct_created}</div>}
+                  {service.cct_modified && <div class="text-xs text-gray-400">Upravené: {service.cct_modified}</div>}
+                  {service.cct_status && <div class="text-xs text-gray-400">Stav: {service.cct_status}</div>}
+                  {/* Zobraz ďalšie polia ak existujú */}
+                  {Object.entries(service).map(([key, value]) => {
+                    if ([
+                      '_ID','_post_id','post_title','post_desc','post_category','post_subcategory','post_price','post_duration',
+                      'cct_author_id','cct_created','cct_modified','cct_status'
+                    ].includes(key)) return null;
+                    if (!value) return null;
+                    return <div class="text-xs text-gray-400">{key}: {String(value)}</div>;
+                  })}
+                </div>
+                <a
+                  href="/kontakty"
+                  class="w-full block text-center py-3 px-6 rounded-lg font-semibold transition-all bg-primary-600 hover:bg-primary-700 text-white shadow-lg hover:shadow-xl transform hover:scale-105"
+                >
+                  Vybrať službu
+                </a>
+              </div>
+            ))
+          ) : (
+            <div class="text-center text-gray-500">Žiadne pánske služby neboli nájdené.</div>
+          )}
+        </div>
+      </>
+    )}
+  </div>
+</section>
