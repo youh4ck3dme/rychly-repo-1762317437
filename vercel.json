@@ -1,15 +1,8 @@
 {
   "version": 2,
-  "builds": [
-    { "src": "package.json", "use": "@vercel/node" },
-    { "src": "src/index.tsx", "use": "@vercel/node" },
-    { "src": "src/App.tsx", "use": "@vercel/node" }
-  ],
-  "env": {},
-  "buildCommand": "npm run build || vite build || astro build",
+  "buildCommand": "astro build",
   "outputDirectory": "dist",
+  "installCommand": "npm install --legacy-peer-deps",
   "cleanUrls": true,
-  "trailingSlash": false,
-  "devCommand": "npm run build",
-  "installCommand": "npm install --legacy-peer-deps"
+  "trailingSlash": false
 }

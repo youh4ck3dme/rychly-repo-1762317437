@@ -1,3 +1,17 @@
+# lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# build
+build/
+
+# Vercel
+.vercel/
+
+# misc
+*.tmp
+*.patch
 # Logs
 logs
 *.log

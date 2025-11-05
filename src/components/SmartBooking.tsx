@@ -97,7 +97,7 @@ export const SmartBooking: React.FC<SmartBookingProps> = ({
         services: selectedServices
       };
 
-      console.log('Booking data:', bookingData);
+  // console.log('Booking data:', bookingData);
 
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 2000));
@@ -149,6 +149,7 @@ export const SmartBooking: React.FC<SmartBookingProps> = ({
             <button
               onClick={onClose}
               className="text-gray-400 hover:text-white transition-colors"
+              title="Zavrieť booking"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -255,6 +256,8 @@ export const SmartBooking: React.FC<SmartBookingProps> = ({
                 value={selectedService}
                 onChange={(e) => setSelectedService(e.target.value)}
                 className="w-full bg-gray-800 text-white rounded-xl px-4 py-4 border border-gray-600 focus:border-amber-400 focus:outline-none"
+                title="Vyberte službu"
+                aria-label="Vyberte službu"
               >
                 <option value="">Vyberte službu</option>
                 <option value="Dámske strihanie">Dámske strihanie</option>
@@ -276,6 +279,9 @@ export const SmartBooking: React.FC<SmartBookingProps> = ({
                   onChange={(e) => setCustomerName(e.target.value)}
                   className="w-full bg-gray-800 text-white rounded-lg px-4 py-3 border border-gray-600 focus:border-amber-400 focus:outline-none"
                   required
+                  title="Meno"
+                  placeholder="Zadajte meno"
+                  aria-label="Meno"
                 />
               </div>
               <div>
@@ -286,6 +292,9 @@ export const SmartBooking: React.FC<SmartBookingProps> = ({
                   onChange={(e) => setCustomerPhone(e.target.value)}
                   className="w-full bg-gray-800 text-white rounded-lg px-4 py-3 border border-gray-600 focus:border-amber-400 focus:outline-none"
                   required
+                  title="Telefón"
+                  placeholder="Zadajte telefón"
+                  aria-label="Telefón"
                 />
               </div>
               <div className="md:col-span-2">
@@ -295,6 +304,9 @@ export const SmartBooking: React.FC<SmartBookingProps> = ({
                   value={customerEmail}
                   onChange={(e) => setCustomerEmail(e.target.value)}
                   className="w-full bg-gray-800 text-white rounded-lg px-4 py-3 border border-gray-600 focus:border-amber-400 focus:outline-none"
+                  title="Email"
+                  placeholder="Zadajte email"
+                  aria-label="Email"
                 />
               </div>
             </div>
@@ -308,6 +320,8 @@ export const SmartBooking: React.FC<SmartBookingProps> = ({
                 className="w-full bg-gray-800 text-white rounded-lg px-4 py-3 border border-gray-600 focus:border-amber-400 focus:outline-none"
                 rows={3}
                 placeholder="Špeciálne požiadavky alebo poznámky..."
+                title="Poznámky"
+                aria-label="Poznámky"
               />
             </div>
 

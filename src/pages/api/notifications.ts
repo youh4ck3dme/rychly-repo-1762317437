@@ -10,89 +10,53 @@ interface NotificationRequest {
   bookingId?: string;
 }
 
-export const POST: APIRoute = secureAPI(async (request: Request, sanitizedBody: NotificationRequest) => {
-  const { type, title, message, recipientEmail, recipientPhone, bookingId } = sanitizedBody;
-
-  try {
-    // Validate required fields
-    if (!type || !title || !message) {
+export const POST: APIRoute = secureAPI(
+  async (request: Request, sanitizedBody: NotificationRequest): Promise<Response> => {
+    const { type, title, message, recipientEmail, recipientPhone, bookingId } = sanitizedBody;
+    try {
+      if (!type || !title || !message) {
+        return new Response(JSON.stringify({
+          error: "type, title, and message are required"
+        }), {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' }
+        });
+      }
+      // Simulate API calls
+      const results = {
+        emailSent: !!recipientEmail,
+        smsSent: !!recipientPhone,
+        pushSent: true,
+        stored: true
+      };
       return new Response(JSON.stringify({
-        error: "type, title, and message are required"
+        success: true,
+        results,
+        notificationId: `notif_${Date.now()}`,
+        timestamp: new Date().toISOString()
       }), {
-        status: 400,
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    } catch (error: any) {
+      return new Response(JSON.stringify({
+        error: "Failed to send notification",
+        details: error.message
+      }), {
+        status: 500,
         headers: { 'Content-Type': 'application/json' }
       });
     }
-
-    // In a real application, you would:
-    // 1. Send email via nodemailer
-    // 2. Send SMS via service like Twilio
-    // 3. Send push notification via service like Firebase
-    // 4. Store notification in database
-
-    console.log('Sending notification:', {
-      type,
-      title,
-      message,
-      recipientEmail,
-      recipientPhone,
-      bookingId,
-      timestamp: new Date().toISOString()
-    });
-
-    // Simulate API calls
-    const results = {
-      emailSent: !!recipientEmail,
-      smsSent: !!recipientPhone,
-      pushSent: true, // Browser notification
-      stored: true
-    };
-
-    // Send immediate browser notification if possible
-    if (typeof window !== 'undefined' && 'Notification' in window && Notification.permission === 'granted') {
-      const notification = new Notification(title, {
-        body: message,
-        icon: '/assets/android-chrome-192x192.png',
-        badge: '/assets/android-chrome-192x192.png',
-        tag: `papi-${type}`,
-        requireInteraction: type === 'booking'
-      });
-
-      // Auto close after 5 seconds for non-booking notifications
-      if (type !== 'booking') {
-        setTimeout(() => notification.close(), 5000);
-      }
-    }
-
-    return new Response(JSON.stringify({
-      success: true,
-      results,
-      notificationId: `notif_${Date.now()}`,
-      timestamp: new Date().toISOString()
-    }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' }
-    });
-
-  } catch (error: any) {
-    console.error('Notification error:', error);
-
-    return new Response(JSON.stringify({
-      error: "Failed to send notification",
-      details: error.message
-    }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' }
-    });
+  },
+  {
+    requiredFields: ['type', 'title', 'message'],
+    requireAuth: false,
+    rateLimitBy: 'ip',
+    rateLimitMax: 10,
+    rateLimitWindowMs: 60000,
+    maxBodyBytes: 1024 * 10
   }
-}, {
-  requiredFields: ['type', 'title', 'message'],
-  requireAuth: false, // Public endpoint for booking confirmations
-  rateLimitBy: 'ip',
-  rateLimitMax: 10,
-  rateLimitWindowMs: 60000, // 1 minute
-  maxBodyBytes: 1024 * 10, // 10KB max body size
-});
+);
 
 // GET endpoint for retrieving notification history
 export const GET: APIRoute = secureAPI(async (request: Request) => {
