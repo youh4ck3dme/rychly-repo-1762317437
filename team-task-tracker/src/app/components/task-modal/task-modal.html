@@ -1,0 +1,85 @@
+<!-- Modal Backdrop -->
+<div class="modal-backdrop"
+     *ngIf="isOpen"
+     (click)="onBackdropClick($event)"
+     role="dialog"
+     aria-modal="true"
+     [attr.aria-label]="isEditMode ? 'Edit Task Dialog' : 'Add Task Dialog'">
+
+  <!-- Modal Container -->
+  <div class="modal-container" (click)="stopPropagation($event)">
+
+    <!-- Modal Header -->
+    <div class="modal-header">
+      <h2>{{ isEditMode ? 'Edit Task' : 'Add New Task' }}</h2>
+      <button class="close-button"
+              (click)="onClose()"
+              aria-label="Close modal"
+              type="button">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Modal Form -->
+    <form (ngSubmit)="onSubmit()" class="modal-form">
+
+      <!-- Title Input -->
+      <div class="form-group">
+        <label for="task-title">Title *</label>
+        <input
+          type="text"
+          id="task-title"
+          [(ngModel)]="title"
+          name="title"
+          placeholder="Enter task title"
+          required
+          maxlength="100"
+          autocomplete="off">
+      </div>
+
+      <!-- Description Input -->
+      <div class="form-group">
+        <label for="task-description">Description *</label>
+        <textarea
+          id="task-description"
+          [(ngModel)]="description"
+          name="description"
+          placeholder="Enter task description"
+          required
+          maxlength="500"
+          rows="4"></textarea>
+      </div>
+
+      <!-- Status Select (only in edit mode) -->
+      <div class="form-group" *ngIf="isEditMode">
+        <label for="task-status">Status</label>
+        <select
+          id="task-status"
+          [(ngModel)]="status"
+          name="status">
+          <option *ngFor="let statusOption of statusOptions" [value]="statusOption">
+            {{ statusOption }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Form Actions -->
+      <div class="form-actions">
+        <button type="button"
+                class="button button-secondary"
+                (click)="onClose()">
+          Cancel
+        </button>
+        <button type="submit"
+                class="button button-primary"
+                [disabled]="!title.trim() || !description.trim()">
+          {{ isEditMode ? 'Update' : 'Create' }} Task
+        </button>
+      </div>
+    </form>
+
+  </div>
+</div>
