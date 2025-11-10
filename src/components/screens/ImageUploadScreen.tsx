@@ -34,21 +34,136 @@ const fileToDataUrl = (file: File): Promise<string> => {
   });
 };
 
+// Image validation and preprocessing utilities
+const validateImageFile = (file: File): { isValid: boolean; error?: string } => {
+  // Check file size (max 10MB)
+  const maxSize = 10 * 1024 * 1024; // 10MB
+  if (file.size > maxSize) {
+    return { isValid: false, error: 'Image is too large. Please upload a file smaller than 10MB.' };
+  }
+
+  // Check file type
+  const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+  if (!allowedTypes.includes(file.type)) {
+    return { isValid: false, error: 'Invalid file format. Please upload JPG, PNG, or WebP images.' };
+  }
+
+  return { isValid: true };
+};
+
+const compressImage = (dataUrl: string, maxWidth: number = 1024, quality: number = 0.8): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+
+      if (!ctx) {
+        reject(new Error('Failed to get canvas context'));
+        return;
+      }
+
+      // Calculate new dimensions
+      let { width, height } = img;
+      if (width > maxWidth) {
+        height = (height * maxWidth) / width;
+        width = maxWidth;
+      }
+
+      canvas.width = width;
+      canvas.height = height;
+
+      // Draw and compress
+      ctx.drawImage(img, 0, 0, width, height);
+      const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
+      resolve(compressedDataUrl);
+    };
+
+    img.onerror = () => reject(new Error('Failed to load image for compression'));
+    img.src = dataUrl;
+  });
+};
+
+const checkImageQuality = (dataUrl: string): Promise<{ brightness: number; contrast: number; isLowQuality: boolean }> => {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+
+      if (!ctx) {
+        reject(new Error('Failed to get canvas context'));
+        return;
+      }
+
+      // Scale down for performance
+      const scale = Math.min(200 / img.width, 200 / img.height);
+      canvas.width = img.width * scale;
+      canvas.height = img.height * scale;
+
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+      try {
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const data = imageData.data;
+
+        let brightness = 0;
+        let contrast = 0;
+        const pixelCount = data.length / 4;
+
+        // Calculate average brightness
+        for (let i = 0; i < data.length; i += 4) {
+          const r = data[i];
+          const g = data[i + 1];
+          const b = data[i + 2];
+          const gray = (r + g + b) / 3;
+          brightness += gray;
+        }
+        brightness /= pixelCount;
+
+        // Calculate contrast (standard deviation)
+        for (let i = 0; i < data.length; i += 4) {
+          const r = data[i];
+          const g = data[i + 1];
+          const b = data[i + 2];
+          const gray = (r + g + b) / 3;
+          contrast += Math.pow(gray - brightness, 2);
+        }
+        contrast = Math.sqrt(contrast / pixelCount);
+
+        // Determine if image is low quality (too dark, too bright, or low contrast)
+        const isLowQuality = brightness < 50 || brightness > 200 || contrast < 20;
+
+        resolve({ brightness, contrast, isLowQuality });
+      } catch (error) {
+        reject(error);
+      }
+    };
+
+    img.onerror = () => reject(new Error('Failed to load image for quality check'));
+    img.src = dataUrl;
+  });
+};
+
 const GoldParticleBackground = React.memo(() => {
     // PERFORMANCE: Memoize particles to prevent re-calculation on every render.
     const particles = React.useMemo(() => {
         return Array.from({ length: 50 }).map((_, i) => {
             const size = Math.random() * 2 + 1; // 1px to 3px
-            const style: React.CSSProperties = {
-                width: `${size}px`,
-                height: `${size}px`,
-                left: `${Math.random() * 100}%`,
-                bottom: `-${size}px`, // Start from below the screen
-                animationDelay: `${Math.random() * 20}s`,
-                animationDuration: `${Math.random() * 15 + 10}s`, // 10s to 25s duration
-                boxShadow: `0 0 ${Math.random() * 5 + 3}px rgba(255, 215, 0, 0.7)`,
-            };
-            return <div key={i} className="particle" style={style} />;
+            // Move style to CSS, pass dynamic values as data attributes
+            return (
+                <div
+                    key={i}
+                    className="particle"
+                    data-width={size}
+                    data-height={size}
+                    data-left={Math.random() * 100}
+                    data-bottom={-size}
+                    data-animation-delay={Math.random() * 20}
+                    data-animation-duration={Math.random() * 15 + 10}
+                    data-box-shadow={Math.random() * 5 + 3}
+                />
+            );
         });
     }, []);
 
@@ -266,16 +381,16 @@ const OptionCard = React.memo(({ label, description, icon, selected, onClick }: 
         whileHover={{ scale: 1.05 }}
         transition={{ type: 'spring', stiffness: 400, damping: 15 }}
     >
-        <div className="w-8 h-8 flex items-center justify-center">{icon}</div>
-        <p className="font-bold text-sm mt-2 text-white">{label}</p>
-        <p className="text-xs text-gray-400 mt-1 flex-grow">{description}</p>
+        <div className="flex items-center justify-center w-8 h-8">{icon}</div>
+        <p className="mt-2 text-sm font-bold text-white">{label}</p>
+        <p className="flex-grow mt-1 text-xs text-gray-400">{description}</p>
     </motion.div>
 ));
 
 const ErrorMessage = ({ message }: { message: string | null }) => {
   if (!message) return null;
   return (
-    <div className="bg-red-900/30 border border-red-500/30 text-red-300 text-sm rounded-lg p-3 mt-2 flex items-center gap-2 w-full text-left">
+    <div className="flex items-center w-full gap-2 p-3 mt-2 text-sm text-left text-red-300 border rounded-lg bg-red-900/30 border-red-500/30">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
       <span>{message}</span>
     </div>
@@ -307,11 +422,46 @@ export const ImageUploadScreen = React.memo(({ onImageReady, error, selectedStyl
     const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
+            // Validate file first
+            const validation = validateImageFile(file);
+            if (!validation.isValid) {
+                setCameraError(validation.error || 'Invalid image file');
+                return;
+            }
+
             try {
-                const dataUrl = await fileToDataUrl(file);
+                let dataUrl = await fileToDataUrl(file);
+
+                // Compress image if it's large
+                if (file.size > 2 * 1024 * 1024) { // Compress if > 2MB
+                    try {
+                        dataUrl = await compressImage(dataUrl, 1024, 0.8);
+                    } catch (compressError) {
+                        console.warn("Image compression failed, using original:", compressError);
+                        // Continue with original if compression fails
+                    }
+                }
+
+                // Check image quality
+                try {
+                    const qualityCheck = await checkImageQuality(dataUrl);
+                    if (qualityCheck.isLowQuality) {
+                        console.warn("Low quality image detected:", {
+                            brightness: qualityCheck.brightness,
+                            contrast: qualityCheck.contrast
+                        });
+                        // Don't block upload, but log for potential user feedback
+                    }
+                } catch (qualityError) {
+                    console.warn("Quality check failed:", qualityError);
+                    // Continue even if quality check fails
+                }
+
                 handleImageSubmission(dataUrl);
+                setCameraError(null); // Clear any previous errors
             } catch (err) {
-                console.error("Error reading file:", err);
+                console.error("Error processing file:", err);
+                setCameraError("Failed to process the image. Please try again.");
             }
         }
     };
@@ -375,7 +525,7 @@ export const ImageUploadScreen = React.memo(({ onImageReady, error, selectedStyl
         }
     }, [isCapturing, mediaStream, t]);
 
-    const handleCapture = useCallback(() => {
+    const handleCapture = useCallback(async () => {
         const video = videoRef.current;
         if (video && video.readyState >= 2) { // Check if video has enough data to capture
             const canvas = document.createElement('canvas');
@@ -388,7 +538,26 @@ export const ImageUploadScreen = React.memo(({ onImageReady, error, selectedStyl
                 ctx.scale(-1, 1);
                 ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
             }
-            const dataUrl = canvas.toDataURL('image/png');
+            let dataUrl = canvas.toDataURL('image/png');
+
+            // Compress captured image if it's large
+            try {
+                const qualityCheck = await checkImageQuality(dataUrl);
+                if (qualityCheck.isLowQuality) {
+                    console.warn("Low quality captured image detected:", {
+                        brightness: qualityCheck.brightness,
+                        contrast: qualityCheck.contrast
+                    });
+                    // Could show a warning to user about image quality
+                }
+
+                // Compress to reduce file size
+                dataUrl = await compressImage(dataUrl, 1024, 0.8);
+            } catch (processError) {
+                console.warn("Image processing failed, using original:", processError);
+                // Continue with original if processing fails
+            }
+
             stopCamera(); // Stop camera after successful capture
             handleImageSubmission(dataUrl);
         } else {
@@ -402,7 +571,7 @@ export const ImageUploadScreen = React.memo(({ onImageReady, error, selectedStyl
         switch (step) {
             case 1:
                 return (
-                    <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-4">
+                    <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-4">
                         {consultationStyles.map(style => (
                             <OptionCard key={style.id} label={t(`upload.styles.${style.id}`)} description={t(`upload.styles.${style.id}.desc`)} icon={style.icon} selected={selectedStyle === style.id} onClick={() => onStyleChange(style.id)} />
                         ))}
@@ -410,7 +579,7 @@ export const ImageUploadScreen = React.memo(({ onImageReady, error, selectedStyl
                 );
             case 2:
                 return (
-                    <div className="grid grid-cols-3 md:grid-cols-5 gap-3">
+                    <div className="grid grid-cols-3 gap-3 md:grid-cols-5">
                         {hairstylePreferences.map(style => (
                             <OptionCard key={style.id} label={t(`upload.hairstyles.${style.id}`)} description={t(`upload.hairstyles.${style.id}.desc`)} icon={style.icon} selected={selectedHairstyle === style.id} onClick={() => onHairstyleChange(style.id)} />
                         ))}
@@ -418,7 +587,7 @@ export const ImageUploadScreen = React.memo(({ onImageReady, error, selectedStyl
                 );
             case 3:
                 return (
-                     <div className="flex flex-col items-center gap-4 w-full">
+                     <div className="flex flex-col items-center w-full gap-4">
                         {/* Main container for video feed */}
                         <div className="w-full max-w-lg aspect-video sm:aspect-[4/3] bg-gray-800 rounded-lg overflow-hidden relative border border-yellow-300/20 mb-2">
                             <AnimatePresence mode="wait">
@@ -433,7 +602,7 @@ export const ImageUploadScreen = React.memo(({ onImageReady, error, selectedStyl
                                         <video ref={videoRef} autoPlay playsInline className="w-full h-full object-cover scale-x-[-1]"></video>
                                         <button 
                                             onClick={stopCamera} 
-                                            className="absolute top-3 right-3 z-10 p-2 bg-black/50 rounded-full hover:bg-black/70 transition-colors"
+                                            className="absolute z-10 p-2 transition-colors rounded-full top-3 right-3 bg-black/50 hover:bg-black/70"
                                             aria-label="Close camera"
                                         >
                                             <X size={20} />
@@ -445,7 +614,7 @@ export const ImageUploadScreen = React.memo(({ onImageReady, error, selectedStyl
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
                                         exit={{ opacity: 0 }}
-                                        className="w-full h-full relative bg-black"
+                                        className="relative w-full h-full bg-black"
                                     >
                                         <GoldParticleBackground />
                                     </motion.div>
@@ -454,7 +623,7 @@ export const ImageUploadScreen = React.memo(({ onImageReady, error, selectedStyl
                         </div>
 
                         {/* Controls */}
-                        <div className="w-full flex flex-col items-center gap-4 max-w-sm">
+                        <div className="flex flex-col items-center w-full max-w-sm gap-4">
                             <AnimatePresence mode="wait">
                                 {isCapturing ? (
                                     <motion.div
@@ -466,10 +635,10 @@ export const ImageUploadScreen = React.memo(({ onImageReady, error, selectedStyl
                                     >
                                         <button 
                                             onClick={handleCapture} 
-                                            className="w-20 h-20 rounded-full bg-white flex items-center justify-center border-4 border-black/30 transform transition hover:scale-105"
+                                            className="flex items-center justify-center w-20 h-20 transition transform bg-white border-4 rounded-full border-black/30 hover:scale-105"
                                             aria-label="Capture photo"
                                         >
-                                            <CameraIcon className="text-black w-8 h-8"/>
+                                            <CameraIcon className="w-8 h-8 text-black"/>
                                         </button>
                                     </motion.div>
                                 ) : (
@@ -478,15 +647,23 @@ export const ImageUploadScreen = React.memo(({ onImageReady, error, selectedStyl
                                         initial={{ opacity: 0, y: 20 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: -20 }}
-                                        className="w-full flex flex-col items-center gap-4"
+                                        className="flex flex-col items-center w-full gap-4"
                                     >
-                                        <button onClick={handleCameraStart} className="w-full bg-gray-800 text-white font-bold py-4 px-6 rounded-lg flex items-center justify-center gap-2 hover:bg-gray-700 transition-colors">
+                                        <button onClick={handleCameraStart} className="flex items-center justify-center w-full gap-2 px-6 py-4 font-bold text-white transition-colors bg-gray-800 rounded-lg hover:bg-gray-700">
                                             <Camera size={20} /> {t('upload.useCamera')}
                                         </button>
-                                        <button onClick={() => fileInputRef.current?.click()} className="w-full bg-gray-800 text-white font-bold py-4 px-6 rounded-lg flex items-center justify-center gap-2 hover:bg-gray-700 transition-colors">
+                                        <button onClick={() => fileInputRef.current?.click()} className="flex items-center justify-center w-full gap-2 px-6 py-4 font-bold text-white transition-colors bg-gray-800 rounded-lg hover:bg-gray-700">
                                             <Upload size={20} /> {t('upload.uploadPhoto')}
                                         </button>
-                                        <input type="file" accept="image/*" ref={fileInputRef} onChange={handleFileChange} className="hidden" />
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            ref={fileInputRef}
+                                            onChange={handleFileChange}
+                                            className="hidden"
+                                            aria-label="Upload image file"
+                                            title="Upload image file"
+                                        />
                                         <ErrorMessage message={cameraError} />
                                         <ErrorMessage message={error} />
                                         <PhotoGallery photos={photoHistory} onSelectPhoto={handleImageSubmission} />
@@ -501,25 +678,25 @@ export const ImageUploadScreen = React.memo(({ onImageReady, error, selectedStyl
     };
     
     return (
-        <div className="flex-grow flex flex-col bg-black text-white p-4">
-            <header className="text-center mb-6">
+        <div className="flex flex-col flex-grow p-4 text-white bg-black">
+            <header className="mb-6 text-center">
                 <h1 className="text-2xl font-bold tracking-wider">{t('upload.title')}</h1>
-                <p className="text-sm text-gray-400 mt-1">{t('upload.subtitle')}</p>
+                <p className="mt-1 text-sm text-gray-400">{t('upload.subtitle')}</p>
             </header>
             
             <div className="w-full max-w-sm mx-auto mb-6">
-                <div className="flex justify-between items-center text-xs text-gray-400 mb-1">
+                <div className="flex items-center justify-between mb-1 text-xs text-gray-400">
                     <span>{t(wizardSteps[0].title)}</span>
                     <span>{t(wizardSteps[1].title)}</span>
                     <span>{t(wizardSteps[2].title)}</span>
                 </div>
-                <div className="h-1 bg-gray-800 rounded-full relative">
+                <div className="relative h-1 bg-gray-800 rounded-full">
                     <motion.div className="h-1 bg-yellow-300 rounded-full" animate={{ width: `${(step / 3) * 100}%` }} transition={{ type: 'spring' }} />
                 </div>
             </div>
 
-            <main className="flex-grow flex flex-col items-center justify-center">
-                 <div className="text-center mb-6">
+            <main className="flex flex-col items-center justify-center flex-grow">
+                 <div className="mb-6 text-center">
                     <h2 className="text-lg font-bold">{t(currentStepInfo.title)}</h2>
                     <p className="text-xs text-gray-400">{t(currentStepInfo.subtitle)}</p>
                 </div>
@@ -538,9 +715,9 @@ export const ImageUploadScreen = React.memo(({ onImageReady, error, selectedStyl
             </main>
 
             {step < 3 && (
-                <footer className="mt-auto pt-6 flex justify-center gap-4 max-w-sm mx-auto w-full">
-                    {step > 1 && <button onClick={() => setStep(s => s - 1)} className="bg-gray-800 font-bold py-3 px-8 rounded-lg">{t('upload.prevStep')}</button>}
-                    <button onClick={() => setStep(s => s + 1)} className="bg-white text-black font-bold py-3 px-8 rounded-lg flex-grow">{t('upload.nextStep')}</button>
+                <footer className="flex justify-center w-full max-w-sm gap-4 pt-6 mx-auto mt-auto">
+                    {step > 1 && <button onClick={() => setStep(s => s - 1)} className="px-8 py-3 font-bold bg-gray-800 rounded-lg">{t('upload.prevStep')}</button>}
+                    <button onClick={() => setStep(s => s + 1)} className="flex-grow px-8 py-3 font-bold text-black bg-white rounded-lg">{t('upload.nextStep')}</button>
                 </footer>
             )}
              <MobilePairingModal isOpen={isPairingModalOpen} onClose={() => setIsPairingModalOpen(false)} />

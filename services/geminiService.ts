@@ -169,6 +169,28 @@ import { Type, Modality, Chat } from "@google/genai";
         }
     }
     
+    export const editImageWithPrompt = async (base64ImageData: string, prompt: string, mimeType: string): Promise<{ data: string | null; error: string | null }> => {
+      const imagePart = {
+        inlineData: { mimeType, data: base64ImageData },
+      };
+
+      const textPart = {
+        text: prompt,
+      };
+
+      const payload = { imagePart, textPart };
+      try {
+        const result = await callApiProxy('editImage', payload);
+        if (result && result.data) {
+          return { data: result.data, error: null };
+        }
+        return { data: null, error: "api_generationFailed" };
+      } catch (e) {
+        console.error("Error editing image:", e);
+        return { data: null, error: "api_unexpectedError" };
+      }
+    };
+
     export const createChatSession = (): Chat => {
       const systemInstruction = `You are a friendly, expert hair stylist from PAPI HAIR DESIGN & BARBER. Your goal is to assist users with their hair-related questions, provide advice, and gently guide them towards booking services at the salon. Be encouraging, knowledgeable, and professional.`;
       

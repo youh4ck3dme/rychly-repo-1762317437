@@ -66,6 +66,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       case 'virtualTryOn': {
         return json(res, 200, { imageUrl: 'data:image/png;base64,MOCK_IMAGE_DATA' });
       }
+      case 'editImage': {
+        // Placeholder for image editing with prompt
+        return json(res, 200, { data: 'MOCK_BASE64_DATA' });
+      }
       case 'chat': {
         const text = payload?.messages?.slice(-1)?.[0]?.text || 'Hello';
         return json(res, 200, { text: `Model reply: ${text}` });

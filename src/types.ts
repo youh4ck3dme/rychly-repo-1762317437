@@ -1,7 +1,7 @@
 
-export type Screen = 'welcome' | 'upload' | 'analysis' | 'results';
+export type Screen = 'welcome' | 'upload' | 'analysis' | 'results' | 'virtual-try-on';
 
-export type Tab = 'home' | 'explore' | 'services' | 'about';
+export type Tab = 'home' | 'virtual-try-on' | 'explore' | 'services' | 'about';
 
 export type ConsultationStyle = 'classic' | 'trendy' | 'bold' | 'lowMaintenance' | 'glamorous' | 'bohemian' | 'artDeco' | 'futuristic';
 

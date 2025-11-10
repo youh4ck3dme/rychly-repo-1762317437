@@ -24,7 +24,7 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["vite/client", "@types/node"]
+    "types": ["@types/node"]
   },
   "include": ["src", "api"],
   "exclude": ["node_modules", "dist"]

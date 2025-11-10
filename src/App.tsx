@@ -1,20 +1,23 @@
 
 import React, { useState, useCallback } from 'react';
-    import { WelcomeScreen } from './components/screens/WelcomeScreen';
-    import { ImageUploadScreen } from './components/screens/ImageUploadScreen';
-    import { AnalysisScreen } from './components/screens/AnalysisScreen';
-    import { ResultsScreen } from './components/screens/ResultsScreen';
-    import { ExploreScreen } from './components/screens/ExploreScreen';
-    import { ServicesScreen } from './components/screens/ServicesScreen';
-    import { AboutScreen } from './components/screens/AboutScreen';
-    import type { Screen, HairAnalysisResult, ConsultationStyle, Tab, HairstylePreference, ChatMessage } from './types';
-    import { AnimatePresence, motion } from 'framer-motion';
-    import { AppHeader } from './components/ui/AppHeader';
-    import { AppFooter } from './components/ui/AppFooter';
-    import { Chatbot } from './components/ui/Chatbot';
-    import { PapiChatIcon } from './components/ui/PapiChatIcon';
-    import { createChatSession, type ChatSession } from './services/geminiService';
-    import { useTranslation } from './lib/i18n.tsx';
+// Import VirtualTryOn from local components
+import VirtualTryOn from './components/VirtualTryOn';
+import ParticleAnimation from './components/ParticleAnimation';
+import { WelcomeScreen } from './components/screens/WelcomeScreen';
+import { ImageUploadScreen } from './components/screens/ImageUploadScreen';
+import { AnalysisScreen } from './components/screens/AnalysisScreen';
+import { ResultsScreen } from './components/screens/ResultsScreen';
+import { ExploreScreen } from './components/screens/ExploreScreen';
+import { ServicesScreen } from './components/screens/ServicesScreen';
+import { AboutScreen } from './components/screens/AboutScreen';
+import type { Screen, HairAnalysisResult, ConsultationStyle, Tab, HairstylePreference, ChatMessage } from './types';
+import { AnimatePresence, motion } from 'framer-motion';
+import { AppHeader } from './components/ui/AppHeader';
+import { AppFooter } from './components/ui/AppFooter';
+import { Chatbot } from './components/ui/Chatbot';
+import { PapiChatIcon } from './components/ui/PapiChatIcon';
+import { createChatSession, type ChatSession } from './services/geminiService';
+import { useTranslation } from './lib/i18n.tsx';
     
     
     // FIX: Wrapped component in `React.memo` to stabilize its type for the TypeScript compiler, resolving issues with `framer-motion` prop type inference.
@@ -133,7 +136,29 @@ import React, { useState, useCallback } from 'react';
       const renderConsultationScreen = () => {
         switch (screen) {
           case 'welcome':
-            return <WelcomeScreen onStart={handleStart} />;
+              return <WelcomeScreen onStart={handleStart} />;
+            case 'virtual-try-on':
+              // Show the VirtualTryOn component in a dedicated screen
+              return (
+                <div className="flex flex-col items-center justify-center w-full h-full">
+                  <h2 className="mb-2 text-2xl font-bold text-yellow-600">Štúdio | PAPI HAIR DESIGN & BARBER</h2>
+                  <p className="mb-4 text-lg text-gray-200">Vaša transformácia začína tu. Nasledujte kroky a vytvorte si vzhľad, ktorý je jedinečne váš.</p>
+                  <ol className="mb-6 text-base text-gray-300 list-decimal list-inside">
+                    <li>Vyberte si runu štýlu</li>
+                    <li>Predstavte si svoju formu</li>
+                    <li>Vyvolajte svoj obraz</li>
+                  </ol>
+                  {/* Particle animation container */}
+                  <div className="relative w-full max-w-lg mb-8 overflow-hidden border rounded-lg bg-gradient-to-br from-purple-900/20 to-emerald-900/20 backdrop-blur-sm border-white/10">
+                    <ParticleAnimation />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <p className="px-4 text-lg text-center text-white/80">✨ Transformácia vlasov s AI ✨</p>
+                    </div>
+                  </div>
+                  {/* VirtualTryOn React component for camera/photo functionality */}
+                  <VirtualTryOn />
+                </div>
+              );
           case 'upload':
             return <ImageUploadScreen onImageReady={handleImageReady} error={error} selectedStyle={consultationStyle} onStyleChange={setConsultationStyle} selectedHairstyle={hairstylePreference} onHairstyleChange={setHairstylePreference} />;
           case 'analysis':
@@ -157,6 +182,10 @@ import React, { useState, useCallback } from 'react';
         switch (activeTab) {
           case 'home':
             return renderConsultationScreen();
+          case 'virtual-try-on':
+            // Set screen to 'virtual-try-on' and render the screen
+            setScreen('virtual-try-on');
+            return renderConsultationScreen();
           case 'explore':
             return <ExploreScreen />;
           case 'services':
@@ -171,10 +200,10 @@ import React, { useState, useCallback } from 'react';
       const showFab = screen === 'results' || (activeTab !== 'home');
     
       return (
-        <div className="w-full min-h-screen h-screen bg-brand-background lg:bg-transparent font-sans flex flex-col max-w-md lg:max-w-5xl xl:max-w-7xl mx-auto relative shadow-2xl shadow-yellow-400/10 lg:bg-black/80 lg:backdrop-blur-sm lg:border-x lg:border-gray-800">
-          <div className="flex-grow flex flex-col overflow-y-auto">
+  <div className="relative flex flex-col w-full h-screen max-w-md min-h-screen mx-auto font-sans shadow-2xl bg-brand-background lg:max-w-5xl xl:max-w-7xl shadow-yellow-400/10 lg:bg-black/80 lg:backdrop-blur-sm lg:border-x lg:border-gray-800">
+          <div className="flex flex-col flex-grow overflow-y-auto">
               <AppHeader onRestart={handleRestart} activeTab={activeTab} onTabChange={setActiveTab} />
-              <main className="flex-grow flex flex-col">
+              <main className="flex flex-col flex-grow">
                 <AnimatePresence mode="wait">
                     <motion.div
                     key={activeTab === 'home' ? screen : activeTab}
@@ -182,7 +211,7 @@ import React, { useState, useCallback } from 'react';
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -50 }}
                     transition={{ duration: 0.5, ease: 'easeInOut' }}
-                    className="flex-grow flex flex-col"
+                    className="flex flex-col flex-grow"
                     >
                     {renderActiveTab()}
                     </motion.div>
@@ -220,7 +249,7 @@ import React, { useState, useCallback } from 'react';
     });
     
     const App = (): React.ReactElement => (
-      <AppContent />
+    <AppContent />
     );
     
     

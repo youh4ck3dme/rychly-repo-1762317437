@@ -1,7 +1,7 @@
 
 
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import type { HairAnalysisResult, ConsultationStyle, HairstylePreference } from '../../types';
 import { analyzeHairImage } from '../../services/geminiService';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -10,7 +10,7 @@ import { useTranslation } from '../../lib/i18n.tsx';
 interface AnalysisScreenProps {
   userImage: string;
   onAnalysisComplete: (result: HairAnalysisResult) => void;
-  onAnalysisError: (error: string) => void;
+  onAnalysisError: (error: string, options?: { retryable?: boolean; showRetryButton?: boolean }) => void;
   consultationStyle: ConsultationStyle;
   hairstylePreference: HairstylePreference;
 }
@@ -30,40 +30,73 @@ const analysisStepKeys = [
 // FIX: Wrapped component in `React.memo` to stabilize its type for the TypeScript compiler, resolving issues with `framer-motion` prop type inference.
 export const AnalysisScreen = React.memo(({ userImage, onAnalysisComplete, onAnalysisError, consultationStyle, hairstylePreference }: AnalysisScreenProps) => {
     const [currentStep, setCurrentStep] = useState(0);
+    const [isRetrying, setIsRetrying] = useState(false);
+    const [errorOptions, setErrorOptions] = useState<{ retryable?: boolean; showRetryButton?: boolean } | null>(null);
     const { t } = useTranslation();
 
-    useEffect(() => {
-        const performAnalysis = async () => {
-            try {
-                const result = await analyzeHairImage(userImage, consultationStyle, hairstylePreference);
-                onAnalysisComplete(result);
-            } catch (error) {
-                // Log more detailed error information for debugging
-                console.error("Detailed error during hair analysis:", error);
+    const performAnalysis = useCallback(async () => {
+        try {
+            setIsRetrying(false);
+            const result = await analyzeHairImage(userImage, consultationStyle, hairstylePreference);
+            onAnalysisComplete(result);
+            setErrorOptions(null); // Clear any previous error state
+        } catch (error) {
+            // Log more detailed error information for debugging
+            console.error("Detailed error during hair analysis:", error);
 
-                // Provide more specific feedback to the user
-                let userMessage = "We couldn't analyze your photo. Please try another one with better lighting."; // Default message
+            // Enhanced error categorization and user-friendly messages
+            let userMessage = "We couldn't analyze your photo. Please try another one with better lighting.";
+            let retryable = true;
+            let showRetryButton = false;
 
-                if (error instanceof Error && error.message) {
-                    const message = error.message.toLowerCase();
-                    if (message.includes('safety') || message.includes('blocked')) {
-                        userMessage = "The uploaded image couldn't be processed due to safety policies. Please try a different photo.";
-                    } else if (message.includes('503') || message.includes('unavailable')) {
-                        userMessage = "The analysis service is temporarily unavailable. Please try again in a few moments.";
-                    } else if (message.includes('invalid response structure') || error instanceof SyntaxError) {
-                        userMessage = "The AI analysis returned an unexpected result. A different photo with clearer lighting might work better.";
-                    } else if (message.includes('api key')) {
-                         userMessage = "There is a configuration issue with the service. Please contact support.";
-                    }
+            if (error instanceof Error && error.message) {
+                const message = error.message.toLowerCase();
+
+                if (message.includes('safety') || message.includes('blocked') || message.includes('content policy')) {
+                    userMessage = "The uploaded image couldn't be processed due to content policies. Please try a different photo with clear hair visibility.";
+                    retryable = false;
+                } else if (message.includes('timeout') || message.includes('408')) {
+                    userMessage = "The analysis is taking longer than expected. Please try again.";
+                    showRetryButton = true;
+                } else if (message.includes('rate limit') || message.includes('429') || message.includes('too many requests')) {
+                    userMessage = "The service is currently busy. Please wait a moment and try again.";
+                    showRetryButton = true;
+                } else if (message.includes('network') || message.includes('connection') || message.includes('503')) {
+                    userMessage = "Network connection issue. Please check your internet and try again.";
+                    showRetryButton = true;
+                } else if (message.includes('quota') || message.includes('insufficient') || message.includes('billing')) {
+                    userMessage = "The analysis service is temporarily unavailable. Please try again later.";
+                    retryable = false;
+                } else if (message.includes('invalid image') || message.includes('format') || message.includes('corrupted')) {
+                    userMessage = "The image format is not supported. Please upload a clear photo in JPG, PNG, or WebP format.";
+                    retryable = false;
+                } else if (message.includes('parse') || message.includes('json') || message.includes('unexpected result')) {
+                    userMessage = "The AI analysis encountered an issue. A different photo with better lighting might work better.";
+                    retryable = true;
+                } else if (message.includes('api key') || message.includes('authentication')) {
+                    userMessage = "There is a temporary service issue. Please contact support if this persists.";
+                    retryable = false;
+                } else if (message.includes('size') || message.includes('too large')) {
+                    userMessage = "The image is too large. Please upload a smaller photo (max 10MB).";
+                    retryable = false;
                 }
-                
-                onAnalysisError(userMessage);
             }
-        };
 
+            const options = { retryable, showRetryButton };
+            setErrorOptions(options);
+            onAnalysisError(userMessage, options);
+        }
+    }, [userImage, consultationStyle, hairstylePreference, onAnalysisComplete, onAnalysisError]);
+
+    useEffect(() => {
         performAnalysis();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userImage, onAnalysisComplete, onAnalysisError, consultationStyle, hairstylePreference]);
+    }, [userImage, consultationStyle, hairstylePreference]);
+
+    const handleRetry = useCallback(() => {
+        setIsRetrying(true);
+        performAnalysis();
+    }, [performAnalysis]);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -73,16 +106,16 @@ export const AnalysisScreen = React.memo(({ userImage, onAnalysisComplete, onAna
     }, []);
 
     return (
-        <div className="flex-grow flex flex-col items-center justify-center text-center p-8 bg-black text-white">
+        <div className="flex flex-col items-center justify-center flex-grow p-8 text-center text-white bg-black">
             <motion.div 
                 animate={{ scale: [1, 1.1, 1] }}
                 transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                className="w-48 h-48 rounded-full overflow-hidden border-4 border-white shadow-lg"
+                className="w-48 h-48 overflow-hidden border-4 border-white rounded-full shadow-lg"
             >
-                <img src={userImage} alt="User for analysis" className="w-full h-full object-cover" />
+                <img src={userImage} alt="User for analysis" className="object-cover w-full h-full" />
             </motion.div>
             
-            <h1 className="text-3xl font-bold mt-8 tracking-wide">{t('analysis.title')}</h1>
+            <h1 className="mt-8 text-3xl font-bold tracking-wide">{t('analysis.title')}</h1>
             
             <div className="h-6 mt-4 overflow-hidden">
                 <AnimatePresence mode="wait">
@@ -98,6 +131,19 @@ export const AnalysisScreen = React.memo(({ userImage, onAnalysisComplete, onAna
                     </motion.p>
                 </AnimatePresence>
             </div>
+
+            {/* Retry button for retryable errors */}
+            {errorOptions?.showRetryButton && (
+                <motion.button
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="px-6 py-3 mt-6 font-bold text-black transition-colors bg-yellow-500 rounded-lg hover:bg-yellow-400 disabled:opacity-50"
+                    onClick={handleRetry}
+                    disabled={isRetrying}
+                >
+                    {isRetrying ? (t('analysis.retrying') || 'Retrying...') : (t('analysis.retry') || 'Try Again')}
+                </motion.button>
+            )}
         </div>
     );
 });
