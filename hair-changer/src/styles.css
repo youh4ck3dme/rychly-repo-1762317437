@@ -110,7 +110,7 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
   font-size: 16px;
   color: #333;
   /* Papi Hair Design Logo */
-  background-image: url("https://cloud.papihairdesign.sk/wp-content/uploads/2025/11/6af2e6b989a158cee5230ee1698e84b3.jpg");
+  background-image: url("./public/assets/logo.png");
   background-repeat: no-repeat;
   background-position: right 10px center; /* 10px from right edge, vertically centered */
   background-size: 28px auto; /* Adjust logo size */
