@@ -146,10 +146,10 @@ const testimonials = [
       <div class="clouds"></div>
     </div>
 
-    <!-- Logo Placement -->
-    <div class="absolute z-50 top-8 left-8">
+    <!-- Logo Placement - Centered above main content -->
+    <div class="absolute z-50 transform -translate-x-1/2 top-8 left-1/2">
   <img
-    src="/dist/assets/images/new-logo.png"
+    src="/assets/images/new-logo.png"
     alt="Papi Hair Design logo"
     class="logo-hero"
   />
@@ -586,6 +586,17 @@ const testimonials = [
       </div>
     </div>
   </section>
+
+  <!-- PAPI HAIR STUDIO Button Above Footer - Centered -->
+  <div class="fixed z-50 transform -translate-x-1/2 bottom-20 left-1/2">
+    <button
+      onclick="window.location.href='/hair-changer/'"
+      class="flex items-center gap-2 px-6 py-3 font-bold text-white transition-all duration-300 transform rounded-full shadow-lg bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 hover:shadow-xl hover:scale-105"
+    >
+      <span>🏪</span>
+      PAPI HAIR STUDIO
+    </button>
+  </div>
 
   <Footer />
 </BaseLayout>

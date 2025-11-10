@@ -212,7 +212,7 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.7);
   }
 
-  /* Change purple background to black in tablet mode */
+  /* Change purple background to pure black in tablet mode */
   body {
     background-color: #000000 !important;
     background-image: none !important;
@@ -221,6 +221,11 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
   .dark body {
     background-color: #000000 !important;
     background-image: none !important;
+  }
+
+  /* Change gradient background to pure black */
+  .fixed.inset-0.bg-gradient-to-b.from-indigo-900.via-purple-900.to-black {
+    background: #000000 !important;
   }
 }
 

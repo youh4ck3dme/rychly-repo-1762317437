@@ -178,23 +178,23 @@ const HairstyleCard: React.FC<{
 }> = ({ style, onSelect, isBusy, isSelected }) => {
   const { t } = useTranslation();
   return (
-    <div className="group glass-panel flex flex-col overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-2">
+    <div className="flex flex-col overflow-hidden transition-all duration-300 group glass-panel hover:shadow-2xl hover:-translate-y-2">
       <div className="relative aspect-square">
         <img
           src={style.image}
           alt={t(`style_${style.id}_name`)}
-          className="w-full h-full object-cover rounded-t-lg"
+          className="object-cover w-full h-full rounded-t-lg"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent p-2 sm:p-3 flex flex-col justify-end">
+        <div className="absolute inset-0 flex flex-col justify-end p-2 bg-gradient-to-t from-black/60 via-black/20 to-transparent sm:p-3">
           <h3
-            className="font-display text-white text-base sm:text-lg font-bold"
+            className="text-base font-bold text-white font-display sm:text-lg"
             style={{ textShadow: "1px 1px 4px rgba(0,0,0,0.8)" }}
           >
             {t(`style_${style.id}_name`)}
           </h3>
         </div>
       </div>
-      <div className="p-4 flex flex-col flex-grow text-center">
+      <div className="flex flex-col flex-grow p-4 text-center">
         <p className="flex-grow text-sm text-gray-600 dark:text-gray-300">
           {t(style.descriptionId)}
         </p>
@@ -204,7 +204,7 @@ const HairstyleCard: React.FC<{
           className="w-full mt-4 !bg-black/80 dark:!bg-white/90 !text-white dark:!text-black !font-semibold !py-2.5 !px-4 !rounded-full text-sm uppercase tracking-wider"
         >
           {isSelected ? (
-            <div className="w-5 h-5 border-2 border-t-transparent border-current rounded-full animate-spin mx-auto"></div>
+            <div className="w-5 h-5 mx-auto border-2 border-current rounded-full border-t-transparent animate-spin"></div>
           ) : (
             t("vto_try")
           )}
@@ -419,11 +419,11 @@ const VirtualTryOn: React.FC<{ sharedImage?: string }> = ({ sharedImage }) => {
   if (!isAiAvailable) {
     return (
       <section id="virtual-try-on" className="py-24 sm:py-32">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center glass-panel p-10">
-          <h2 className="text-5xl md:text-6xl font-serif font-bold text-black dark:text-white">
+        <div className="container p-10 px-4 mx-auto text-center sm:px-6 lg:px-8 glass-panel">
+          <h2 className="font-serif text-5xl font-bold text-black md:text-6xl dark:text-white">
             {t("vto_unavailable_title")}
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 mt-6 max-w-2xl mx-auto">
+          <p className="max-w-2xl mx-auto mt-6 text-lg text-gray-600 dark:text-gray-400">
             {t("vto_unavailable_subtitle")}
           </p>
         </div>
@@ -434,8 +434,8 @@ const VirtualTryOn: React.FC<{ sharedImage?: string }> = ({ sharedImage }) => {
   const renderInteractiveArea = () => {
     if (isLoading) {
       return (
-        <div className="text-center w-full max-w-lg mx-auto p-8">
-          <div className="progress-track mb-4">
+        <div className="w-full max-w-lg p-8 mx-auto text-center">
+          <div className="mb-4 progress-track">
             <div
               className="progress-bar"
               style={{ width: `${progress}%` }}
@@ -450,8 +450,8 @@ const VirtualTryOn: React.FC<{ sharedImage?: string }> = ({ sharedImage }) => {
 
     if (isCameraOn) {
       return (
-        <div className="text-center w-full max-w-3xl mx-auto glass-panel p-4 md:p-6">
-          <div className="relative w-full aspect-video rounded-lg overflow-hidden">
+        <div className="w-full max-w-3xl p-4 mx-auto text-center glass-panel md:p-6">
+          <div className="relative w-full overflow-hidden rounded-lg aspect-video">
             <video
               ref={videoRef}
               autoPlay
@@ -461,13 +461,13 @@ const VirtualTryOn: React.FC<{ sharedImage?: string }> = ({ sharedImage }) => {
             ></video>
             {!isCameraReady && (
               <div className="absolute inset-0 flex items-center justify-center bg-black/60">
-                <div className="w-12 h-12 border-4 border-t-transparent border-white rounded-full animate-spin"></div>
+                <div className="w-12 h-12 border-4 border-white rounded-full border-t-transparent animate-spin"></div>
               </div>
             )}
             {isCameraReady && (
               <button
                 onClick={toggleFacingMode}
-                className="absolute top-4 right-4 z-10 p-2 rounded-full bg-black/50 text-white hover:bg-black/70 transition-all"
+                className="absolute z-10 p-2 text-white transition-all rounded-full top-4 right-4 bg-black/50 hover:bg-black/70"
                 aria-label={t("vto_button_flipCamera")}
               >
                 <FlipCameraIcon className="w-6 h-6" />
@@ -480,12 +480,12 @@ const VirtualTryOn: React.FC<{ sharedImage?: string }> = ({ sharedImage }) => {
               disabled={!isCameraReady}
               className="text-base"
             >
-              <CameraIcon className="w-6 h-6 inline-block mr-2" />{" "}
+              <CameraIcon className="inline-block w-6 h-6 mr-2" />{" "}
               {t("vto_button_takeSnapshot")}
             </FancyButton>
             <button
               onClick={stopCamera}
-              className="bg-gray-200 dark:bg-white/10 text-black dark:text-white font-bold py-3 px-8 rounded-full text-base uppercase tracking-wider hover:bg-gray-300 dark:hover:bg-white/20 transition-colors"
+              className="px-8 py-3 text-base font-bold tracking-wider text-black uppercase transition-colors bg-gray-200 rounded-full dark:bg-white/10 dark:text-white hover:bg-gray-300 dark:hover:bg-white/20"
             >
               {t("vto_button_cancel")}
             </button>
@@ -497,25 +497,25 @@ const VirtualTryOn: React.FC<{ sharedImage?: string }> = ({ sharedImage }) => {
     if (generatedImage && userImage) {
       return (
         <div className="w-full">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 mb-10">
-            <div className="text-center glass-panel p-4">
-              <h3 className="text-3xl font-serif font-bold mb-4 text-black dark:text-white">
+          <div className="grid grid-cols-1 gap-6 mb-10 md:grid-cols-2 md:gap-10">
+            <div className="p-4 text-center glass-panel">
+              <h3 className="mb-4 font-serif text-3xl font-bold text-black dark:text-white">
                 {t("vto_before")}
               </h3>
               <img
                 src={userImage}
                 alt="Before"
-                className="rounded-lg shadow-2xl mx-auto w-full max-w-md aspect-square object-cover"
+                className="object-cover w-full max-w-md mx-auto rounded-lg shadow-2xl aspect-square"
               />
             </div>
-            <div className="text-center glass-panel p-4">
-              <h3 className="text-3xl font-serif font-bold mb-4 text-black dark:text-white">
+            <div className="p-4 text-center glass-panel">
+              <h3 className="mb-4 font-serif text-3xl font-bold text-black dark:text-white">
                 {t("vto_after")}
               </h3>
               <img
                 src={generatedImage}
                 alt="After"
-                className="rounded-lg shadow-2xl mx-auto w-full max-w-md aspect-square object-cover"
+                className="object-cover w-full max-w-md mx-auto rounded-lg shadow-2xl aspect-square"
               />
             </div>
           </div>
@@ -542,20 +542,20 @@ const VirtualTryOn: React.FC<{ sharedImage?: string }> = ({ sharedImage }) => {
             </button>
           </div>
 
-          <div className="mt-10 max-w-2xl mx-auto glass-panel p-6 md:p-8">
-            <h4 className="text-xl font-serif font-bold text-black dark:text-white mb-4">
+          <div className="max-w-2xl p-6 mx-auto mt-10 glass-panel md:p-8">
+            <h4 className="mb-4 font-serif text-xl font-bold text-black dark:text-white">
               {t("vto_refine_title")}
             </h4>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+            <p className="mb-4 text-sm text-gray-500 dark:text-gray-400">
               {t("vto_refine_subtitle")}
             </p>
-            <div className="flex flex-col sm:flex-row gap-2">
+            <div className="flex flex-col gap-2 sm:flex-row">
               <input
                 type="text"
                 value={refinePrompt}
                 onChange={(e) => setRefinePrompt(e.target.value)}
                 placeholder={t("vto_refine_placeholder")}
-                className="form-input flex-grow"
+                className="flex-grow form-input"
                 aria-label={t("vto_refine_title")}
               />
               <FancyButton
@@ -564,7 +564,7 @@ const VirtualTryOn: React.FC<{ sharedImage?: string }> = ({ sharedImage }) => {
                 className="!py-3 !px-6 text-sm flex-shrink-0"
               >
                 {selectedHairstyleId === "refine" ? (
-                  <div className="w-5 h-5 border-2 border-t-transparent border-black rounded-full animate-spin mx-auto"></div>
+                  <div className="w-5 h-5 mx-auto border-2 border-black rounded-full border-t-transparent animate-spin"></div>
                 ) : (
                   t("vto_refine_button")
                 )}
@@ -577,17 +577,17 @@ const VirtualTryOn: React.FC<{ sharedImage?: string }> = ({ sharedImage }) => {
 
     if (userImage) {
       return (
-        <div className="text-center w-full max-w-xl mx-auto glass-panel p-6 md:p-8">
+        <div className="w-full max-w-xl p-6 mx-auto text-center glass-panel md:p-8">
           <img
             src={userImage}
             alt="User snapshot"
-            className="rounded-lg shadow-2xl mx-auto w-full max-w-xs"
+            className="w-full max-w-xs mx-auto rounded-lg shadow-2xl"
           />
-          <div className="mt-6 flex items-center justify-center mx-auto gap-4">
+          <div className="flex items-center justify-center gap-4 mx-auto mt-6">
             {!isSharedSession && (
               <button
                 onClick={handleStartCameraClick}
-                className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors"
+                className="flex items-center gap-2 text-sm text-gray-500 transition-colors dark:text-gray-400 hover:text-black dark:hover:text-white"
               >
                 <RetakeIcon className="w-4 h-4" /> {t("vto_button_retake")}
               </button>
@@ -595,10 +595,10 @@ const VirtualTryOn: React.FC<{ sharedImage?: string }> = ({ sharedImage }) => {
             <button
               onClick={handleInviteFriend}
               disabled={isSharing || isDevMode}
-              className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors disabled:opacity-50 disabled:cursor-wait"
+              className="flex items-center gap-2 text-sm text-gray-500 transition-colors dark:text-gray-400 hover:text-black dark:hover:text-white disabled:opacity-50 disabled:cursor-wait"
             >
               {isSharing ? (
-                <div className="w-4 h-4 border-2 border-t-transparent rounded-full animate-spin"></div>
+                <div className="w-4 h-4 border-2 rounded-full border-t-transparent animate-spin"></div>
               ) : (
                 <InviteIcon className="w-4 h-4" />
               )}
@@ -606,20 +606,20 @@ const VirtualTryOn: React.FC<{ sharedImage?: string }> = ({ sharedImage }) => {
             </button>
           </div>
 
-          <div className="mt-8 border-t border-gray-200 dark:border-white/10 pt-8">
-            <h4 className="text-xl font-serif font-bold text-black dark:text-white mb-4">
+          <div className="pt-8 mt-8 border-t border-gray-200 dark:border-white/10">
+            <h4 className="mb-4 font-serif text-xl font-bold text-black dark:text-white">
               {t("vto_customPrompt_title")}
             </h4>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+            <p className="mb-4 text-sm text-gray-500 dark:text-gray-400">
               {t("vto_customPrompt_subtitle")}
             </p>
-            <div className="flex flex-col sm:flex-row gap-2">
+            <div className="flex flex-col gap-2 sm:flex-row">
               <input
                 type="text"
                 value={customPrompt}
                 onChange={(e) => setCustomPrompt(e.target.value)}
                 placeholder={t("vto_customPrompt_placeholder")}
-                className="form-input flex-grow"
+                className="flex-grow form-input"
                 aria-label={t("vto_customPrompt_title")}
               />
               <FancyButton
@@ -628,7 +628,7 @@ const VirtualTryOn: React.FC<{ sharedImage?: string }> = ({ sharedImage }) => {
                 className="!py-3 !px-6 text-sm flex-shrink-0"
               >
                 {selectedHairstyleId === "custom" ? (
-                  <div className="w-5 h-5 border-2 border-t-transparent border-black rounded-full animate-spin mx-auto"></div>
+                  <div className="w-5 h-5 mx-auto border-2 border-black rounded-full border-t-transparent animate-spin"></div>
                 ) : (
                   t("vto_customPrompt_button")
                 )}
@@ -640,19 +640,27 @@ const VirtualTryOn: React.FC<{ sharedImage?: string }> = ({ sharedImage }) => {
     }
 
     return (
-      <div className="text-center w-full max-w-3xl mx-auto">
+      <div className="w-full max-w-3xl mx-auto text-center">
         <div className="border-2 border-blue-400/50 dark:border-blue-500/70 rounded-lg p-4 min-h-[300px] flex items-center justify-center glass-panel !bg-opacity-20 dark:!bg-opacity-30 shadow-inner">
           <IntroAnimation />
         </div>
-        <p className="text-lg text-gray-600 dark:text-gray-400 mt-8 max-w-2xl mx-auto">
+        <p className="max-w-2xl mx-auto mt-8 text-lg text-gray-600 dark:text-gray-400">
           {t("vto_activateCameraPrompt")}
         </p>
-        <FancyButton
-          onClick={handleStartCameraClick}
-          className="mt-6 text-base"
-        >
-          {t("vto_button_startCamera")}
-        </FancyButton>
+        <div className="flex flex-col gap-4 mt-6">
+          <FancyButton
+            onClick={handleStartCameraClick}
+            className="text-base"
+          >
+            {t("vto_button_startCamera")}
+          </FancyButton>
+          <button
+            onClick={() => window.open('https://papi-hair-design.vercel.app', '_blank')}
+            className="text-sm btn-primary"
+          >
+            PAPI HAIR STUDIO
+          </button>
+        </div>
       </div>
     );
   };
@@ -676,7 +684,7 @@ const VirtualTryOn: React.FC<{ sharedImage?: string }> = ({ sharedImage }) => {
   return (
     <section
       id="virtual-try-on"
-      className="py-24 sm:py-32 relative overflow-hidden"
+      className="relative py-24 overflow-hidden sm:py-32"
     >
       {!isSharedSession && (
         <button
@@ -692,16 +700,16 @@ const VirtualTryOn: React.FC<{ sharedImage?: string }> = ({ sharedImage }) => {
           Credits remaining: {devCredits}
         </div>
       )}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-20">
+      <div className="container px-4 mx-auto sm:px-6 lg:px-8">
+        <div className="mb-20 text-center">
           <h2
-            className="text-5xl md:text-6xl font-serif font-bold text-black dark:text-white"
+            className="font-serif text-5xl font-bold text-black md:text-6xl dark:text-white"
             style={{ textShadow: "0 2px 10px rgba(0,0,0,0.1)" }}
           >
             {t("vto_title")}
           </h2>
           {!userImage && !isCameraOn && (
-            <p className="text-lg text-gray-600 dark:text-gray-400 mt-6 max-w-2xl mx-auto">
+            <p className="max-w-2xl mx-auto mt-6 text-lg text-gray-600 dark:text-gray-400">
               {t("vto_subtitle")}
             </p>
           )}
@@ -717,13 +725,13 @@ const VirtualTryOn: React.FC<{ sharedImage?: string }> = ({ sharedImage }) => {
         </div>
 
         {!isCameraOn && !isLoading && (
-          <div className="mt-20 w-full">
-            <div className="text-center mb-12">
-              <h3 className="text-4xl font-serif font-bold text-black dark:text-white">
+          <div className="w-full mt-20">
+            <div className="mb-12 text-center">
+              <h3 className="font-serif text-4xl font-bold text-black dark:text-white">
                 {renderCatalogTitle()}
               </h3>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8 max-w-7xl mx-auto">
+            <div className="grid grid-cols-2 gap-6 mx-auto sm:grid-cols-3 lg:grid-cols-4 lg:gap-8 max-w-7xl">
               {hairstylesData.map((style) => (
                 <HairstyleCard
                   key={style.id}
@@ -740,14 +748,14 @@ const VirtualTryOn: React.FC<{ sharedImage?: string }> = ({ sharedImage }) => {
       <canvas ref={canvasRef} className="hidden"></canvas>
       {isShareModalOpen && (
         <div
-          className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-in"
           onClick={() => setIsShareModalOpen(false)}
         >
           <div
-            className="glass-panel w-full max-w-md p-6 text-center"
+            className="w-full max-w-md p-6 text-center glass-panel"
             onClick={(e) => e.stopPropagation()}
           >
-            <h3 className="text-2xl font-serif font-bold text-black dark:text-white mb-6">
+            <h3 className="mb-6 font-serif text-2xl font-bold text-black dark:text-white">
               {t("vto_share_modal_title")}
             </h3>
             <div className="space-y-4">
@@ -757,7 +765,7 @@ const VirtualTryOn: React.FC<{ sharedImage?: string }> = ({ sharedImage }) => {
                 className="w-full flex items-center justify-center gap-3 text-lg font-semibold py-3 px-4 rounded-full transition-colors bg-[#1877F2] text-white hover:bg-[#166e_d_a] disabled:opacity-60 disabled:cursor-wait"
               >
                 {isUploadingForShare ? (
-                  <div className="w-6 h-6 border-2 border-t-transparent rounded-full animate-spin"></div>
+                  <div className="w-6 h-6 border-2 rounded-full border-t-transparent animate-spin"></div>
                 ) : (
                   <FacebookIcon className="w-6 h-6" />
                 )}
@@ -766,10 +774,10 @@ const VirtualTryOn: React.FC<{ sharedImage?: string }> = ({ sharedImage }) => {
               <button
                 onClick={() => handlePlatformShare("twitter")}
                 disabled={isUploadingForShare}
-                className="w-full flex items-center justify-center gap-3 text-lg font-semibold py-3 px-4 rounded-full transition-colors bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200 disabled:opacity-60 disabled:cursor-wait"
+                className="flex items-center justify-center w-full gap-3 px-4 py-3 text-lg font-semibold text-white transition-colors bg-black rounded-full hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200 disabled:opacity-60 disabled:cursor-wait"
               >
                 {isUploadingForShare ? (
-                  <div className="w-6 h-6 border-2 border-t-transparent rounded-full animate-spin"></div>
+                  <div className="w-6 h-6 border-2 rounded-full border-t-transparent animate-spin"></div>
                 ) : (
                   <XIcon className="w-6 h-6" />
                 )}
@@ -783,14 +791,14 @@ const VirtualTryOn: React.FC<{ sharedImage?: string }> = ({ sharedImage }) => {
                   <InstagramIcon className="w-6 h-6" />{" "}
                   {t("vto_share_for_instagram")}
                 </button>
-                <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">
+                <p className="mt-2 text-xs text-gray-600 dark:text-gray-400">
                   {t("vto_share_for_instagram_desc")}
                 </p>
               </div>
 
               <button
                 onClick={handleGenericShare}
-                className="w-full flex items-center justify-center gap-3 text-lg font-semibold py-3 px-4 rounded-full transition-colors bg-gray-600 text-white hover:bg-gray-700"
+                className="flex items-center justify-center w-full gap-3 px-4 py-3 text-lg font-semibold text-white transition-colors bg-gray-600 rounded-full hover:bg-gray-700"
               >
                 <ShareIcon className="w-6 h-6" /> {t("vto_share_image_file")}
               </button>

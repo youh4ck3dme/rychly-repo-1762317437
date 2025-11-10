@@ -60,7 +60,7 @@ const AppContent: React.FC = () => {
   // If it's a shared session, show VTO with the shared image.
   if (isSharedSession) {
     return (
-      <div className="bg-white text-gray-800 dark:bg-black dark:text-gray-200 min-h-screen">
+      <div className="min-h-screen text-gray-800 bg-white dark:bg-black dark:text-gray-200">
         <Suspense fallback={<Spinner />}>
           {sharedImage ? (
             <VirtualTryOn sharedImage={sharedImage} />
@@ -73,11 +73,11 @@ const AppContent: React.FC = () => {
     );
   }
 
-  // Otherwise, follow the normal authentication flow.
+  // Skip authentication and go directly to VirtualTryOn
   return (
-    <div className="bg-white text-gray-800 dark:bg-black dark:text-gray-200 min-h-screen">
+    <div className="min-h-screen text-gray-800 bg-white dark:bg-black dark:text-gray-200">
       <Suspense fallback={<Spinner />}>
-        {currentUser ? <VirtualTryOn /> : <LoginScreen />}
+        <VirtualTryOn />
         <NotificationContainer />
       </Suspense>
     </div>

@@ -53,7 +53,7 @@ const VirtualTryOn: React.FC = () => {
     return (
       <div className="w-full max-w-lg p-8 mx-auto text-center">
         <div className="mb-4 progress-track">
-          <div className="progress-bar" style={{ width: "50%" }}></div>
+          <div className="w-1/2 progress-bar"></div>
         </div>
         <p className="mt-6 text-lg text-black dark:text-white animate-pulse">
           {loadingMessage}

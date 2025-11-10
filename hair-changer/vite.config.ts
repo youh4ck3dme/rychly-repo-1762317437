@@ -19,5 +19,17 @@ export default defineConfig(({ mode }) => {
         "@": path.resolve(__dirname, "."),
       },
     },
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            vendor: ['react', 'react-dom'],
+            firebase: ['firebase/app', 'firebase/auth', 'firebase/firestore'],
+            gemini: ['@google/genai'],
+          },
+        },
+      },
+      chunkSizeWarningLimit: 1000,
+    },
   };
 });
