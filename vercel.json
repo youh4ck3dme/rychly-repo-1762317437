@@ -1,7 +1,5 @@
 {
   "version": 2,
-  "buildCommand": "astro build",
-  "outputDirectory": "dist",
   "installCommand": "npm install --legacy-peer-deps",
   "cleanUrls": true,
   "trailingSlash": false
