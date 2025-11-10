@@ -1,8 +1,8 @@
-import type { APIRoute } from 'astro';
-import OpenAI from 'openai';
+import type { APIRoute } from "astro";
+import OpenAI from "openai";
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY!
+  apiKey: process.env.OPENAI_API_KEY!,
 });
 
 export const POST: APIRoute = async ({ request }) => {
@@ -19,31 +19,33 @@ export const POST: APIRoute = async ({ request }) => {
       messages: [
         {
           role: "system",
-          content: systemPrompt
+          content: systemPrompt,
         },
         {
           role: "user",
-          content: userPrompt
-        }
+          content: userPrompt,
+        },
       ],
       max_tokens: 400,
-      temperature: 0.7
+      temperature: 0.7,
     });
 
     const content = response.choices[0]?.message?.content;
     if (!content) {
-      throw new Error('No response from OpenAI');
+      throw new Error("No response from OpenAI");
     }
 
     return new Response(JSON.stringify({ ideas: JSON.parse(content) }), {
       status: 200,
-      headers: { 'Content-Type': 'application/json' }
+      headers: { "Content-Type": "application/json" },
     });
-
   } catch (error: any) {
-    return new Response(JSON.stringify({ error: error.message || "Bad request" }), {
-      status: 400,
-      headers: { 'Content-Type': 'application/json' }
-    });
+    return new Response(
+      JSON.stringify({ error: error.message || "Bad request" }),
+      {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      },
+    );
   }
 };

@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useTranslation } from '../lib/i18n.tsx';
+import React, { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from "../lib/i18n.tsx";
 
 interface BeforeAfterComparisonProps {
   isVisible: boolean;
@@ -16,17 +16,19 @@ export const BeforeAfterComparison: React.FC<BeforeAfterComparisonProps> = ({
   onClose,
   originalImage,
   resultImage,
-  hairstyle = 'Moderný účes',
-  color = '#8B4513'
+  hairstyle = "Moderný účes",
+  color = "#8B4513",
 }) => {
   const { t } = useTranslation();
-  const [activeView, setActiveView] = useState<'split' | 'before' | 'after' | 'overlay'>('split');
+  const [activeView, setActiveView] = useState<
+    "split" | "before" | "after" | "overlay"
+  >("split");
   const [splitPercentage, setSplitPercentage] = useState(50);
   const [isAnimating, setIsAnimating] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (activeView !== 'split' || !containerRef.current) return;
+    if (activeView !== "split" || !containerRef.current) return;
 
     const rect = containerRef.current.getBoundingClientRect();
     const percentage = ((e.clientX - rect.left) / rect.width) * 100;
@@ -35,17 +37,17 @@ export const BeforeAfterComparison: React.FC<BeforeAfterComparisonProps> = ({
 
   const startAnimation = () => {
     setIsAnimating(true);
-    setActiveView('overlay');
+    setActiveView("overlay");
 
     // Animate between before and after
     const interval = setInterval(() => {
-      setActiveView(prev => prev === 'before' ? 'after' : 'before');
+      setActiveView((prev) => (prev === "before" ? "after" : "before"));
     }, 2000);
 
     setTimeout(() => {
       clearInterval(interval);
       setIsAnimating(false);
-      setActiveView('split');
+      setActiveView("split");
     }, 10000);
   };
 
@@ -53,7 +55,7 @@ export const BeforeAfterComparison: React.FC<BeforeAfterComparisonProps> = ({
     if (isVisible && originalImage && resultImage) {
       // Preload images for smooth transitions
       const preloadImages = [originalImage, resultImage];
-      preloadImages.forEach(src => {
+      preloadImages.forEach((src) => {
         const img = new Image();
         img.src = src;
       });
@@ -87,8 +89,18 @@ export const BeforeAfterComparison: React.FC<BeforeAfterComparisonProps> = ({
               onClick={onClose}
               className="text-gray-400 hover:text-white transition-colors"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                ></path>
               </svg>
             </button>
           </div>
@@ -97,10 +109,10 @@ export const BeforeAfterComparison: React.FC<BeforeAfterComparisonProps> = ({
           <div className="flex justify-center mb-8">
             <div className="bg-gray-800/50 rounded-xl p-2 flex gap-2">
               {[
-                { id: 'split', label: 'Rozdelené', icon: '⚡' },
-                { id: 'before', label: 'Pred', icon: '📸' },
-                { id: 'after', label: 'Po', icon: '✨' },
-                { id: 'overlay', label: 'Animácia', icon: '🎬' }
+                { id: "split", label: "Rozdelené", icon: "⚡" },
+                { id: "before", label: "Pred", icon: "📸" },
+                { id: "after", label: "Po", icon: "✨" },
+                { id: "overlay", label: "Animácia", icon: "🎬" },
               ].map((view) => (
                 <motion.button
                   key={view.id}
@@ -109,8 +121,8 @@ export const BeforeAfterComparison: React.FC<BeforeAfterComparisonProps> = ({
                   onClick={() => setActiveView(view.id as any)}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                     activeView === view.id
-                      ? 'bg-amber-400 text-black shadow-lg'
-                      : 'text-gray-300 hover:text-white hover:bg-gray-700/50'
+                      ? "bg-amber-400 text-black shadow-lg"
+                      : "text-gray-300 hover:text-white hover:bg-gray-700/50"
                   }`}
                 >
                   <span className="mr-2">{view.icon}</span>
@@ -126,7 +138,9 @@ export const BeforeAfterComparison: React.FC<BeforeAfterComparisonProps> = ({
               ref={containerRef}
               className="relative aspect-video bg-gray-900 rounded-xl overflow-hidden cursor-col-resize"
               onMouseMove={handleMouseMove}
-              style={{ cursor: activeView === 'split' ? 'col-resize' : 'default' }}
+              style={{
+                cursor: activeView === "split" ? "col-resize" : "default",
+              }}
             >
               {/* Before Image (always visible in background) */}
               <img
@@ -136,7 +150,7 @@ export const BeforeAfterComparison: React.FC<BeforeAfterComparisonProps> = ({
               />
 
               {/* After Image (overlay based on view mode) */}
-              {activeView === 'split' && (
+              {activeView === "split" && (
                 <>
                   <div
                     className="absolute left-0 top-0 h-full overflow-hidden"
@@ -170,7 +184,7 @@ export const BeforeAfterComparison: React.FC<BeforeAfterComparisonProps> = ({
                 </>
               )}
 
-              {activeView === 'before' && (
+              {activeView === "before" && (
                 <motion.img
                   key="before"
                   src={originalImage}
@@ -183,7 +197,7 @@ export const BeforeAfterComparison: React.FC<BeforeAfterComparisonProps> = ({
                 />
               )}
 
-              {activeView === 'after' && (
+              {activeView === "after" && (
                 <motion.img
                   key="after"
                   src={resultImage}
@@ -196,10 +210,10 @@ export const BeforeAfterComparison: React.FC<BeforeAfterComparisonProps> = ({
                 />
               )}
 
-              {activeView === 'overlay' && (
+              {activeView === "overlay" && (
                 <AnimatePresence mode="wait">
                   <motion.img
-                    key={isAnimating ? 'after' : 'before'}
+                    key={isAnimating ? "after" : "before"}
                     src={isAnimating ? resultImage : originalImage}
                     alt={isAnimating ? "After" : "Before"}
                     className="w-full h-full object-cover"
@@ -229,7 +243,7 @@ export const BeforeAfterComparison: React.FC<BeforeAfterComparisonProps> = ({
             </div>
 
             {/* Animation Controls */}
-            {activeView === 'overlay' && (
+            {activeView === "overlay" && (
               <div className="mt-6 text-center">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
@@ -245,8 +259,18 @@ export const BeforeAfterComparison: React.FC<BeforeAfterComparisonProps> = ({
                     </>
                   ) : (
                     <>
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 8a9 9 0 110-18 9 9 0 010 18z"></path>
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 8a9 9 0 110-18 9 9 0 010 18z"
+                        ></path>
                       </svg>
                       Spustiť animáciu
                     </>
@@ -261,7 +285,7 @@ export const BeforeAfterComparison: React.FC<BeforeAfterComparisonProps> = ({
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => setActiveView('split')}
+              onClick={() => setActiveView("split")}
               className="bg-gray-800 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-700 transition-all"
             >
               📊 Interaktívne porovnanie

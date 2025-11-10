@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'preact/hooks';
-import { motion } from 'framer-motion';
+import { useEffect, useState } from "preact/hooks";
+import { motion } from "framer-motion";
 
 interface AnimatedCounterProps {
   value: number;
@@ -7,7 +7,11 @@ interface AnimatedCounterProps {
   duration?: number;
 }
 
-export default function AnimatedCounter({ value, suffix = '', duration = 2000 }: AnimatedCounterProps) {
+export default function AnimatedCounter({
+  value,
+  suffix = "",
+  duration = 2000,
+}: AnimatedCounterProps) {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -44,7 +48,8 @@ export default function AnimatedCounter({ value, suffix = '', duration = 2000 }:
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5, delay: 0.2 }}
     >
-      {count.toLocaleString()}{suffix}
+      {count.toLocaleString()}
+      {suffix}
     </motion.span>
   );
 }

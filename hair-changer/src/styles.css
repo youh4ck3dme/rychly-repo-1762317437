@@ -1,10 +1,10 @@
-
-
 :root {
-  --font-serif: 'Oswald', sans-serif;
-  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-  --font-display: 'Playfair Display', serif;
-  --color-accent: #D4AF37; /* Muted Gold */
+  --font-serif: "Oswald", sans-serif;
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-display: "Playfair Display", serif;
+  --color-accent: #d4af37; /* Muted Gold */
   --color-accent-dark: #b89b31;
   --border-radius: 1rem; /* 16px */
   --border-radius-small: 0.75rem; /* 12px */
@@ -16,7 +16,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #f0f2f5;
-  background-image: radial-gradient(circle at 1% 1%, hsla(212, 40%, 95%, 1) 0%, hsla(0, 0%, 100%, 1) 100%);
+  background-image: radial-gradient(
+    circle at 1% 1%,
+    hsla(212, 40%, 95%, 1) 0%,
+    hsla(0, 0%, 100%, 1) 100%
+  );
   transition: background-color 0.5s ease;
 }
 
@@ -25,12 +29,19 @@ body {
   background-image: radial-gradient(circle at 1% 1%, #1e293b 0%, #020617 100%);
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-serif);
   letter-spacing: 0.025em;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   font-size: 21px;
   font-weight: 400;
 }
@@ -43,7 +54,11 @@ h1, h2, h3 {
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: var(--border-radius);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
-  transition: background 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.3s ease;
 }
 
 .dark .glass-panel {
@@ -53,18 +68,19 @@ h1, h2, h3 {
 }
 
 .glass-panel.group:hover {
-    border-color: rgba(255, 255, 255, 0.3);
-    box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.15);
 }
 .dark .glass-panel.group:hover {
-    border-color: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
 }
-
 
 /* Style for the date/time picker icon */
 input[type="datetime-local"]::-webkit-calendar-picker-indicator {
-  filter: invert(0.5); cursor: pointer; transition: filter 0.2s;
+  filter: invert(0.5);
+  cursor: pointer;
+  transition: filter 0.2s;
 }
 input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
   filter: invert(0.7);
@@ -83,7 +99,12 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
   border-radius: var(--border-radius-small);
   transition: all 0.3s;
   border: 1px solid rgba(0, 0, 0, 0.1);
-  background: rgba(255, 255, 255, 0.3); /* Base background, can be overridden by image below */
+  background: rgba(
+    255,
+    255,
+    255,
+    0.3
+  ); /* Base background, can be overridden by image below */
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
   font-size: 16px;
@@ -120,11 +141,16 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
   background: rgba(30, 41, 59, 0.7);
 }
 
-
 /* Notification Animation */
 @keyframes slideInFromRight {
-  from { opacity: 0; transform: translateX(100%); }
-  to { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 /* View Transition Animation */
@@ -144,11 +170,15 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
 }
 
 @keyframes fade-in {
-    from { opacity: 0; }
-    to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 .animate-fade-in {
-    animation: fade-in 0.3s ease-out forwards;
+  animation: fade-in 0.3s ease-out forwards;
 }
 
 /* New Intro Animation Text Style */
@@ -164,9 +194,8 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
 }
 
 .intro-text-animate {
-    animation: simpleFadeInUp 0.8s ease-out forwards;
+  animation: simpleFadeInUp 0.8s ease-out forwards;
 }
-
 
 /* Accessibility Focus Ring */
 *:focus-visible {
@@ -184,13 +213,18 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   border: none;
-  background-image: linear-gradient(to right, #FFD700 0%, #FDB813 51%, #FFD700 100%);
+  background-image: linear-gradient(
+    to right,
+    #ffd700 0%,
+    #fdb813 51%,
+    #ffd700 100%
+  );
   background-size: 200% auto;
   box-shadow: 0 4px 15px 0 rgba(253, 184, 19, 0.4); /* Base shadow */
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); /* Updated transition for hover/glow */
 
   position: relative; /* Needed for ripple effect */
-  overflow: hidden;   /* Needed for ripple effect */
+  overflow: hidden; /* Needed for ripple effect */
   display: inline-flex; /* Ensure content wrapper fills space */
   align-items: center; /* Center content vertically */
   justify-content: center; /* Center content horizontally */
@@ -203,19 +237,21 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
 }
 
 .btn-primary:active {
-    transform: scale(0.98);
-    box-shadow: 0 2px 10px 0 rgba(253, 184, 19, 0.5);
+  transform: scale(0.98);
+  box-shadow: 0 2px 10px 0 rgba(253, 184, 19, 0.5);
 }
 .btn-primary:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: scale(1);
-    box-shadow: none;
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: scale(1);
+  box-shadow: none;
 }
 
 /* Click state liquid gold glow */
 .btn-primary.btn-liquid-glow {
-    box-shadow: 0 0 0 5px rgba(255, 215, 0, 0.5), 0 4px 20px rgba(255, 215, 130, 0.4); /* Enhanced glow on click */
+  box-shadow:
+    0 0 0 5px rgba(255, 215, 0, 0.5),
+    0 4px 20px rgba(255, 215, 130, 0.4); /* Enhanced glow on click */
 }
 
 /* Ripple effect styles */
@@ -258,46 +294,69 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
   width: 100%;
 }
 
-
 .font-display {
   font-family: var(--font-display);
 }
 
-
 /* New Studio Progress Bar */
 @keyframes progress-glow {
-  0% { box-shadow: 0 0 5px var(--color-accent), 0 0 10px var(--color-accent); }
-  50% { box-shadow: 0 0 15px var(--color-accent), 0 0 25px var(--color-accent); }
-  100% { box-shadow: 0 0 5px var(--color-accent), 0 0 10px var(--color-accent); }
+  0% {
+    box-shadow:
+      0 0 5px var(--color-accent),
+      0 0 10px var(--color-accent);
+  }
+  50% {
+    box-shadow:
+      0 0 15px var(--color-accent),
+      0 0 25px var(--color-accent);
+  }
+  100% {
+    box-shadow:
+      0 0 5px var(--color-accent),
+      0 0 10px var(--color-accent);
+  }
 }
 
 .progress-track {
-    height: 12px;
-    border-radius: 6px;
-    background: rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    padding: 2px;
-    overflow: hidden;
+  height: 12px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 2px;
+  overflow: hidden;
 }
 .dark .progress-track {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .progress-bar {
-    height: 100%;
-    border-radius: 4px;
-    background-image: linear-gradient(90deg, var(--color-accent-dark) 0%, var(--color-accent) 100%);
-    box-shadow: 0 0 8px var(--color-accent);
-    animation: progress-glow 2s ease-in-out infinite;
-    transition: width 1s cubic-bezier(0.65, 0, 0.35, 1) !important;
+  height: 100%;
+  border-radius: 4px;
+  background-image: linear-gradient(
+    90deg,
+    var(--color-accent-dark) 0%,
+    var(--color-accent) 100%
+  );
+  box-shadow: 0 0 8px var(--color-accent);
+  animation: progress-glow 2s ease-in-out infinite;
+  transition: width 1s cubic-bezier(0.65, 0, 0.35, 1) !important;
 }
 
 /* Drag and Drop Zone Styles */
 @keyframes border-glow {
-  0% { border-color: rgba(66, 153, 225, 0.5); box-shadow: 0 0 0 0px rgba(66, 153, 225, 0.2); }
-  50% { border-color: rgba(66, 153, 225, 0.8); box-shadow: 0 0 0 5px rgba(66, 153, 225, 0.4); }
-  100% { border-color: rgba(66, 153, 225, 0.5); box-shadow: 0 0 0 0px rgba(66, 153, 225, 0.2); }
+  0% {
+    border-color: rgba(66, 153, 225, 0.5);
+    box-shadow: 0 0 0 0px rgba(66, 153, 225, 0.2);
+  }
+  50% {
+    border-color: rgba(66, 153, 225, 0.8);
+    box-shadow: 0 0 0 5px rgba(66, 153, 225, 0.4);
+  }
+  100% {
+    border-color: rgba(66, 153, 225, 0.5);
+    box-shadow: 0 0 0 0px rgba(66, 153, 225, 0.2);
+  }
 }
 
 .border-accent-dark-glow-animation {

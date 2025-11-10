@@ -11,5 +11,6 @@
 - Chatbot: cez shim (createChatSession) → /api/chat
 
 ## Next
+
 - Vercel: `vercel env add OPENAI_API_KEY` + `vercel --prod`
 - (Voliteľné) Nahradiť legacy importy na čisté lib/hairApi & openaiChat

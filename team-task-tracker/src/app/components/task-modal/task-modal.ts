@@ -13,7 +13,7 @@ import { Task, TaskStatus } from '../../models/task.model';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './task-modal.html',
-  styleUrls: ['./task-modal.css']
+  styleUrls: ['./task-modal.css'],
 })
 export class TaskModalComponent implements OnInit {
   @Input() isOpen = false;
@@ -47,7 +47,7 @@ export class TaskModalComponent implements OnInit {
       this.save.emit({
         title: this.title.trim(),
         description: this.description.trim(),
-        status: this.isEditMode ? this.status : undefined
+        status: this.isEditMode ? this.status : undefined,
       });
       this.resetForm();
     }

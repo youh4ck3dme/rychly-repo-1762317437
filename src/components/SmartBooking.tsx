@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useTranslation } from '../lib/i18n.tsx';
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from "../lib/i18n.tsx";
 
 interface TimeSlot {
   time: string;
@@ -17,16 +17,16 @@ interface SmartBookingProps {
 export const SmartBooking: React.FC<SmartBookingProps> = ({
   isVisible,
   onClose,
-  selectedServices = []
+  selectedServices = [],
 }) => {
   const { t } = useTranslation();
-  const [selectedDate, setSelectedDate] = useState<string>('');
-  const [selectedTime, setSelectedTime] = useState<string>('');
-  const [selectedService, setSelectedService] = useState<string>('');
-  const [customerName, setCustomerName] = useState('');
-  const [customerPhone, setCustomerPhone] = useState('');
-  const [customerEmail, setCustomerEmail] = useState('');
-  const [notes, setNotes] = useState('');
+  const [selectedDate, setSelectedDate] = useState<string>("");
+  const [selectedTime, setSelectedTime] = useState<string>("");
+  const [selectedService, setSelectedService] = useState<string>("");
+  const [customerName, setCustomerName] = useState("");
+  const [customerPhone, setCustomerPhone] = useState("");
+  const [customerEmail, setCustomerEmail] = useState("");
+  const [notes, setNotes] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Generate next 14 days for date selection
@@ -34,21 +34,22 @@ export const SmartBooking: React.FC<SmartBookingProps> = ({
     const date = new Date();
     date.setDate(date.getDate() + i);
     return {
-      value: date.toISOString().split('T')[0],
-      label: date.toLocaleDateString('sk-SK', {
-        weekday: 'long',
-        day: 'numeric',
-        month: 'long'
+      value: date.toISOString().split("T")[0],
+      label: date.toLocaleDateString("sk-SK", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
       }),
       isToday: i === 0,
-      isWeekend: date.getDay() === 0 || date.getDay() === 6
+      isWeekend: date.getDay() === 0 || date.getDay() === 6,
     };
   });
 
   // Generate time slots based on selected date
   const getTimeSlots = (date: string): TimeSlot[] => {
     const slots: TimeSlot[] = [];
-    const isWeekend = new Date(date).getDay() === 0 || new Date(date).getDay() === 6;
+    const isWeekend =
+      new Date(date).getDay() === 0 || new Date(date).getDay() === 6;
 
     // Weekend hours: 9:00 - 16:00
     // Weekday hours: 8:00 - 18:00
@@ -57,18 +58,19 @@ export const SmartBooking: React.FC<SmartBookingProps> = ({
 
     for (let hour = startHour; hour < endHour; hour++) {
       for (let minute = 0; minute < 60; minute += 30) {
-        const timeString = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+        const timeString = `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`;
 
         // Mock availability - in real app this would come from API
         const isAvailable = Math.random() > 0.3; // 70% availability
 
         // Mark some slots as recommended based on AI
-        const isRecommended = selectedServices.length > 0 && Math.random() > 0.7;
+        const isRecommended =
+          selectedServices.length > 0 && Math.random() > 0.7;
 
         slots.push({
           time: timeString,
           available: isAvailable,
-          recommended: isRecommended
+          recommended: isRecommended,
         });
       }
     }
@@ -80,7 +82,8 @@ export const SmartBooking: React.FC<SmartBookingProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!selectedDate || !selectedTime || !customerName || !customerPhone) return;
+    if (!selectedDate || !selectedTime || !customerName || !customerPhone)
+      return;
 
     setIsSubmitting(true);
 
@@ -94,30 +97,30 @@ export const SmartBooking: React.FC<SmartBookingProps> = ({
         customerPhone,
         customerEmail,
         notes,
-        services: selectedServices
+        services: selectedServices,
       };
 
-  // console.log('Booking data:', bookingData);
+      // console.log('Booking data:', bookingData);
 
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 2000));
 
       // Show success message
-      alert('Termín bol úspešne rezervovaný!');
+      alert("Termín bol úspešne rezervovaný!");
 
       // Reset form
-      setSelectedDate('');
-      setSelectedTime('');
-      setSelectedService('');
-      setCustomerName('');
-      setCustomerPhone('');
-      setCustomerEmail('');
-      setNotes('');
+      setSelectedDate("");
+      setSelectedTime("");
+      setSelectedService("");
+      setCustomerName("");
+      setCustomerPhone("");
+      setCustomerEmail("");
+      setNotes("");
 
       onClose();
     } catch (error) {
-      console.error('Booking error:', error);
-      alert('Nastala chyba pri rezervácii. Skúste to znovu.');
+      console.error("Booking error:", error);
+      alert("Nastala chyba pri rezervácii. Skúste to znovu.");
     } finally {
       setIsSubmitting(false);
     }
@@ -151,8 +154,18 @@ export const SmartBooking: React.FC<SmartBookingProps> = ({
               className="text-gray-400 hover:text-white transition-colors"
               title="Zavrieť booking"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                ></path>
               </svg>
             </button>
           </div>
@@ -161,7 +174,9 @@ export const SmartBooking: React.FC<SmartBookingProps> = ({
             {/* Selected Services */}
             {selectedServices.length > 0 && (
               <div className="bg-amber-900/20 border border-amber-400/30 rounded-xl p-6">
-                <h3 className="text-lg font-semibold text-amber-200 mb-4">Vybrané služby</h3>
+                <h3 className="text-lg font-semibold text-amber-200 mb-4">
+                  Vybrané služby
+                </h3>
                 <div className="flex flex-wrap gap-2">
                   {selectedServices.map((service, index) => (
                     <span
@@ -177,7 +192,9 @@ export const SmartBooking: React.FC<SmartBookingProps> = ({
 
             {/* Date Selection */}
             <div>
-              <label className="block text-lg font-medium text-white mb-4">Vyberte dátum</label>
+              <label className="block text-lg font-medium text-white mb-4">
+                Vyberte dátum
+              </label>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-3">
                 {availableDates.map((date) => (
                   <motion.button
@@ -188,20 +205,20 @@ export const SmartBooking: React.FC<SmartBookingProps> = ({
                     onClick={() => setSelectedDate(date.value)}
                     className={`p-3 rounded-xl text-center transition-all ${
                       selectedDate === date.value
-                        ? 'bg-amber-400 text-black shadow-lg shadow-amber-400/50'
+                        ? "bg-amber-400 text-black shadow-lg shadow-amber-400/50"
                         : date.isWeekend
-                        ? 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50 border border-gray-600'
-                        : 'bg-gray-800/70 text-white hover:bg-gray-700 border border-gray-600'
+                          ? "bg-gray-800/50 text-gray-300 hover:bg-gray-700/50 border border-gray-600"
+                          : "bg-gray-800/70 text-white hover:bg-gray-700 border border-gray-600"
                     }`}
                   >
                     <div className="text-xs mb-1">
-                      {date.isToday ? 'DNES' : date.label.split(' ')[0]}
+                      {date.isToday ? "DNES" : date.label.split(" ")[0]}
                     </div>
                     <div className="font-semibold">
                       {new Date(date.value).getDate()}
                     </div>
                     <div className="text-xs">
-                      {date.label.split(' ').slice(1).join(' ')}
+                      {date.label.split(" ").slice(1).join(" ")}
                     </div>
                   </motion.button>
                 ))}
@@ -215,7 +232,9 @@ export const SmartBooking: React.FC<SmartBookingProps> = ({
                 animate={{ opacity: 1, y: 0 }}
                 className="space-y-4"
               >
-                <label className="block text-lg font-medium text-white">Vyberte čas</label>
+                <label className="block text-lg font-medium text-white">
+                  Vyberte čas
+                </label>
                 <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2">
                   {timeSlots.map((slot) => (
                     <motion.button
@@ -224,15 +243,17 @@ export const SmartBooking: React.FC<SmartBookingProps> = ({
                       disabled={!slot.available}
                       whileHover={slot.available ? { scale: 1.05 } : {}}
                       whileTap={slot.available ? { scale: 0.95 } : {}}
-                      onClick={() => slot.available && setSelectedTime(slot.time)}
+                      onClick={() =>
+                        slot.available && setSelectedTime(slot.time)
+                      }
                       className={`p-3 rounded-lg text-sm font-medium transition-all ${
                         selectedTime === slot.time
-                          ? 'bg-amber-400 text-black shadow-lg'
+                          ? "bg-amber-400 text-black shadow-lg"
                           : slot.available
-                          ? slot.recommended
-                            ? 'bg-green-600/20 text-green-300 border border-green-400/50 hover:bg-green-600/30'
-                            : 'bg-gray-800/70 text-white hover:bg-gray-700 border border-gray-600'
-                          : 'bg-gray-900/50 text-gray-500 cursor-not-allowed'
+                            ? slot.recommended
+                              ? "bg-green-600/20 text-green-300 border border-green-400/50 hover:bg-green-600/30"
+                              : "bg-gray-800/70 text-white hover:bg-gray-700 border border-gray-600"
+                            : "bg-gray-900/50 text-gray-500 cursor-not-allowed"
                       }`}
                     >
                       {slot.time}
@@ -251,7 +272,9 @@ export const SmartBooking: React.FC<SmartBookingProps> = ({
 
             {/* Service Selection */}
             <div>
-              <label className="block text-lg font-medium text-white mb-4">Služba (voliteľné)</label>
+              <label className="block text-lg font-medium text-white mb-4">
+                Služba (voliteľné)
+              </label>
               <select
                 value={selectedService}
                 onChange={(e) => setSelectedService(e.target.value)}
@@ -272,7 +295,9 @@ export const SmartBooking: React.FC<SmartBookingProps> = ({
             {/* Customer Information */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">Meno *</label>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  Meno *
+                </label>
                 <input
                   type="text"
                   value={customerName}
@@ -285,7 +310,9 @@ export const SmartBooking: React.FC<SmartBookingProps> = ({
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">Telefón *</label>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  Telefón *
+                </label>
                 <input
                   type="tel"
                   value={customerPhone}
@@ -298,7 +325,9 @@ export const SmartBooking: React.FC<SmartBookingProps> = ({
                 />
               </div>
               <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-300 mb-2">Email (voliteľné)</label>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  Email (voliteľné)
+                </label>
                 <input
                   type="email"
                   value={customerEmail}
@@ -313,7 +342,9 @@ export const SmartBooking: React.FC<SmartBookingProps> = ({
 
             {/* Notes */}
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">Poznámky (voliteľné)</label>
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                Poznámky (voliteľné)
+              </label>
               <textarea
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
@@ -328,7 +359,13 @@ export const SmartBooking: React.FC<SmartBookingProps> = ({
             {/* Submit Button */}
             <button
               type="submit"
-              disabled={!selectedDate || !selectedTime || !customerName || !customerPhone || isSubmitting}
+              disabled={
+                !selectedDate ||
+                !selectedTime ||
+                !customerName ||
+                !customerPhone ||
+                isSubmitting
+              }
               className="w-full bg-gradient-to-r from-amber-400 to-amber-600 text-black font-bold py-4 px-8 rounded-xl hover:from-amber-300 hover:to-amber-500 transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-3 text-lg"
             >
               {isSubmitting ? (
@@ -338,8 +375,18 @@ export const SmartBooking: React.FC<SmartBookingProps> = ({
                 </>
               ) : (
                 <>
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                    ></path>
                   </svg>
                   Rezervovať termín
                 </>

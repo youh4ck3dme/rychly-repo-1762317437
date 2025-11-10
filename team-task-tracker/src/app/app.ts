@@ -15,7 +15,7 @@ import { TaskModalComponent } from './components/task-modal/task-modal';
   standalone: true,
   imports: [CommonModule, RouterOutlet, TaskModalComponent],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
 export class App implements OnInit, OnDestroy {
   tasks: Task[] = [];
@@ -31,11 +31,9 @@ export class App implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // Subscribe to tasks updates
-    this.taskService.tasks$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(tasks => {
-        this.tasks = tasks;
-      });
+    this.taskService.tasks$.pipe(takeUntil(this.destroy$)).subscribe((tasks) => {
+      this.tasks = tasks;
+    });
   }
 
   ngOnDestroy(): void {
@@ -76,7 +74,7 @@ export class App implements OnInit, OnDestroy {
       this.taskService.updateTask(this.selectedTask.id, {
         title: data.title,
         description: data.description,
-        status: data.status || this.selectedTask.status
+        status: data.status || this.selectedTask.status,
       });
     } else {
       // Add new task
@@ -115,6 +113,6 @@ export class App implements OnInit, OnDestroy {
    * Get task count by status
    */
   getTaskCountByStatus(status: TaskStatus): number {
-    return this.tasks.filter(task => task.status === status).length;
+    return this.tasks.filter((task) => task.status === status).length;
   }
 }

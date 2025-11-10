@@ -1,5 +1,5 @@
-import React from 'react';
-import { EnhancedChatbotIcon } from './EnhancedChatbotIcon';
+import React from "react";
+import { EnhancedChatbotIcon } from "./EnhancedChatbotIcon";
 
 export const IconDemo: React.FC = () => {
   return (
@@ -17,7 +17,14 @@ export const IconDemo: React.FC = () => {
               <h3 className="text-lg font-medium mb-4">Původní</h3>
               <div className="w-16 h-16 bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-2">
                 <svg width="32" height="32" viewBox="0 0 64 64">
-                  <circle cx="32" cy="32" r="30" fill="url(#goldGlow)" stroke="#FFD700" strokeWidth="1.5"/>
+                  <circle
+                    cx="32"
+                    cy="32"
+                    r="30"
+                    fill="url(#goldGlow)"
+                    stroke="#FFD700"
+                    strokeWidth="1.5"
+                  />
                 </svg>
               </div>
               <p className="text-sm text-gray-400">Základní kruh</p>
@@ -74,7 +81,9 @@ export const IconDemo: React.FC = () => {
           <h2 className="text-2xl font-semibold mb-6">Vlastnosti nové ikony</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <h3 className="text-lg font-medium mb-3 text-yellow-400">✨ Vizuální vylepšení</h3>
+              <h3 className="text-lg font-medium mb-3 text-yellow-400">
+                ✨ Vizuální vylepšení
+              </h3>
               <ul className="space-y-2 text-sm">
                 <li>• Glassmorphism efekt s průhledností</li>
                 <li>• Holografické gradienty (zlatá → oranžová → měděná)</li>
@@ -84,7 +93,9 @@ export const IconDemo: React.FC = () => {
               </ul>
             </div>
             <div>
-              <h3 className="text-lg font-medium mb-3 text-blue-400">🤖 AI & Beauty prvky</h3>
+              <h3 className="text-lg font-medium mb-3 text-blue-400">
+                🤖 AI & Beauty prvky
+              </h3>
               <ul className="space-y-2 text-sm">
                 <li>• Chat bublina jako hlavní symbol</li>
                 <li>• Nůžky jako beauty prvek</li>

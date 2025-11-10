@@ -8,7 +8,7 @@ export const firebaseConfig = {
   storageBucket: "hairchainger-main-876665-176e8.appspot.com",
   messagingSenderId: "1058200372429",
   appId: "1:1058200372429:web:282ddae973418945705584",
-  measurementId: "G-WKF7CKN6MN"
+  measurementId: "G-WKF7CKN6MN",
 };
 
 // =====================================================================================
@@ -22,4 +22,5 @@ export const firebaseConfig = {
 // Without it, push notifications WILL NOT WORK. Generate a new key pair if you don't have one
 // and insert the public key here.
 // =====================================================================================
-export const VAPID_KEY = "BHP3kLvC_t94VvsRHrFhqjI5C6PRJtpfe_IYDv_7VmEWyjXVZXAEtCC8kNN_j4oMyecUFzQazcyhVigIiPcqUb8";
+export const VAPID_KEY =
+  "BHP3kLvC_t94VvsRHrFhqjI5C6PRJtpfe_IYDv_7VmEWyjXVZXAEtCC8kNN_j4oMyecUFzQazcyhVigIiPcqUb8";

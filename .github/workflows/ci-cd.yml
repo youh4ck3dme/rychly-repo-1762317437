@@ -6,9 +6,9 @@ env:
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main, develop]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 permissions:
   contents: read
@@ -131,16 +131,16 @@ jobs:
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          scan-type: 'fs'
-          scan-ref: '.'
-          format: 'sarif'
-          output: 'trivy-results.sarif'
+          scan-type: "fs"
+          scan-ref: "."
+          format: "sarif"
+          output: "trivy-results.sarif"
 
       - name: Upload Trivy scan results
         uses: github/codeql-action/upload-sarif@v2
         if: always()
         with:
-          sarif_file: 'trivy-results.sarif'
+          sarif_file: "trivy-results.sarif"
 
   build:
     name: 🏗️ Build Production
@@ -170,10 +170,10 @@ jobs:
           END_TIME=$(date +%s)
           BUILD_TIME=$((END_TIME - START_TIME))
           BUILD_SIZE=$(du -sh dist/ | cut -f1)
-          
+
           echo "size=$BUILD_SIZE" >> $GITHUB_OUTPUT
           echo "time=${BUILD_TIME}s" >> $GITHUB_OUTPUT
-          
+
           echo "## 🏗️ Build Information" >> $GITHUB_STEP_SUMMARY
           echo "- Bundle Size: $BUILD_SIZE" >> $GITHUB_STEP_SUMMARY
           echo "- Build Time: ${BUILD_TIME}s" >> $GITHUB_STEP_SUMMARY
@@ -240,7 +240,7 @@ jobs:
         run: |
           echo "🔍 Validating deployment secrets..."
           MISSING_SECRETS=0
-          
+
           for SECRET in VERCEL_TOKEN VERCEL_ORG_ID VERCEL_PROJECT_ID OPENAI_API_KEY API_AUTH_TOKEN; do
             if [ -z "${!SECRET}" ]; then
               echo "❌ Missing required secret: $SECRET"
@@ -249,12 +249,12 @@ jobs:
               echo "✅ Secret present: $SECRET"
             fi
           done
-          
+
           if [ $MISSING_SECRETS -eq 1 ]; then
             echo "💥 Deployment failed: Missing required secrets"
             exit 1
           fi
-          
+
           echo "✅ All required secrets are configured"
 
       - name: Install Vercel CLI
@@ -275,20 +275,20 @@ jobs:
           NODE_ENV: production
         run: |
           echo "🚀 Deploying to production..."
-          
+
           timeout ${{ env.DEPLOYMENT_TIMEOUT }} vercel --prod --confirm --token "$VERCEL_TOKEN" > deployment-log.txt 2>&1 || {
             echo "❌ Deployment timed out or failed"
             cat deployment-log.txt
             exit 1
           }
-          
+
           URL=$(cat deployment-log.txt | grep -E "https://.*\.vercel\.app" | tail -1)
           if [ -z "$URL" ]; then
             echo "❌ Could not extract deployment URL"
             cat deployment-log.txt
             exit 1
           fi
-          
+
           echo "url=$URL" >> $GITHUB_OUTPUT
           echo "✅ Production deployment successful: $URL"
 
@@ -296,10 +296,10 @@ jobs:
         run: |
           echo "🏥 Performing health checks..."
           URL="${{ steps.prod-deploy.outputs.url }}"
-          
+
           # Wait for deployment to be ready
           sleep 15
-          
+
           # Basic connectivity check
           if curl -sSf -m 30 "$URL" >/dev/null; then
             echo "✅ Homepage is reachable"
@@ -307,18 +307,18 @@ jobs:
             echo "❌ Homepage health check failed"
             exit 1
           fi
-          
+
           # API health check
           if curl -sSf -m 30 "$URL/api/health" >/dev/null 2>&1; then
             echo "✅ API endpoints are healthy"
           else
             echo "⚠️ API health check failed (may be expected if no health endpoint)"
           fi
-          
+
           # Performance check
           LOAD_TIME=$(curl -o /dev/null -s -w "%{time_total}" "$URL")
           echo "⚡ Page load time: ${LOAD_TIME}s"
-          
+
           if (( $(echo "$LOAD_TIME > 5.0" | bc -l) )); then
             echo "⚠️ Page load time is slower than expected (${LOAD_TIME}s > 5s)"
           else

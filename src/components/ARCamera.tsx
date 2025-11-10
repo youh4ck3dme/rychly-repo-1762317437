@@ -1,6 +1,6 @@
-import React, { useRef, useEffect, useState, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useTranslation } from '../lib/i18n.tsx';
+import React, { useRef, useEffect, useState, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from "../lib/i18n.tsx";
 
 interface FaceDetectionResult {
   x: number;
@@ -20,8 +20,8 @@ interface ARCameraProps {
 export const ARCamera: React.FC<ARCameraProps> = ({
   isVisible,
   onClose,
-  selectedHairstyle = 'longLayers',
-  selectedColor = '#8B4513'
+  selectedHairstyle = "longLayers",
+  selectedColor = "#8B4513",
 }) => {
   const { t } = useTranslation();
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -45,8 +45,8 @@ export const ARCamera: React.FC<ARCameraProps> = ({
   const loadHairOverlay = useCallback(async (style: string, color: string) => {
     try {
       // Generate hair overlay using canvas
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
 
       if (!ctx) return;
 
@@ -59,15 +59,15 @@ export const ARCamera: React.FC<ARCameraProps> = ({
       ctx.beginPath();
 
       switch (style) {
-        case 'bob':
+        case "bob":
           // Bob haircut shape
           ctx.ellipse(100, 75, 80, 60, 0, 0, Math.PI * 2);
           break;
-        case 'longLayers':
+        case "longLayers":
           // Long layers shape
           ctx.ellipse(100, 90, 85, 80, 0, 0, Math.PI * 2);
           break;
-        case 'pixie':
+        case "pixie":
           // Pixie cut shape
           ctx.ellipse(100, 60, 60, 40, 0, 0, Math.PI * 2);
           break;
@@ -83,7 +83,7 @@ export const ARCamera: React.FC<ARCameraProps> = ({
       image.onload = () => setHairOverlay(image);
       image.src = canvas.toDataURL();
     } catch (err) {
-      console.error('Error loading hair overlay:', err);
+      console.error("Error loading hair overlay:", err);
     }
   }, []);
 
@@ -92,15 +92,15 @@ export const ARCamera: React.FC<ARCameraProps> = ({
       setError(null);
 
       if (streamRef.current) {
-        streamRef.current.getTracks().forEach(track => track.stop());
+        streamRef.current.getTracks().forEach((track) => track.stop());
       }
 
       const stream = await navigator.mediaDevices.getUserMedia({
         video: {
-          facingMode: 'user',
+          facingMode: "user",
           width: { ideal: 1280 },
-          height: { ideal: 720 }
-        }
+          height: { ideal: 720 },
+        },
       });
 
       if (videoRef.current) {
@@ -112,14 +112,14 @@ export const ARCamera: React.FC<ARCameraProps> = ({
         startFaceDetection();
       }
     } catch (err) {
-      console.error('Camera error:', err);
-      setError('Nepodarilo sa spustiť kameru. Skúste to znovu.');
+      console.error("Camera error:", err);
+      setError("Nepodarilo sa spustiť kameru. Skúste to znovu.");
     }
   }, []);
 
   const stopCamera = useCallback(() => {
     if (streamRef.current) {
-      streamRef.current.getTracks().forEach(track => track.stop());
+      streamRef.current.getTracks().forEach((track) => track.stop());
       streamRef.current = null;
     }
     setIsStreaming(false);
@@ -135,7 +135,7 @@ export const ARCamera: React.FC<ARCameraProps> = ({
 
     const video = videoRef.current;
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
 
     if (!ctx) return;
 
@@ -159,23 +159,25 @@ export const ARCamera: React.FC<ARCameraProps> = ({
         setFaceDetected(true);
 
         // Draw face detection box
-        ctx.strokeStyle = '#FFD700';
+        ctx.strokeStyle = "#FFD700";
         ctx.lineWidth = 3;
-        ctx.strokeRect(faceResult.x, faceResult.y, faceResult.width, faceResult.height);
+        ctx.strokeRect(
+          faceResult.x,
+          faceResult.y,
+          faceResult.width,
+          faceResult.height,
+        );
 
         // Draw hair overlay if available
         if (hairOverlay) {
-          const hairX = faceResult.x + (faceResult.width * 0.1);
-          const hairY = faceResult.y - (faceResult.height * 0.3);
+          const hairX = faceResult.x + faceResult.width * 0.1;
+          const hairY = faceResult.y - faceResult.height * 0.3;
           const hairWidth = faceResult.width * 0.8;
           const hairHeight = faceResult.height * 0.6;
 
           ctx.save();
           ctx.globalAlpha = 0.8;
-          ctx.drawImage(
-            hairOverlay,
-            hairX, hairY, hairWidth, hairHeight
-          );
+          ctx.drawImage(hairOverlay, hairX, hairY, hairWidth, hairHeight);
           ctx.restore();
         }
 
@@ -191,7 +193,9 @@ export const ARCamera: React.FC<ARCameraProps> = ({
     detectFace();
   }, [hairOverlay]);
 
-  const detectFaceInFrame = (video: HTMLVideoElement): FaceDetectionResult | null => {
+  const detectFaceInFrame = (
+    video: HTMLVideoElement,
+  ): FaceDetectionResult | null => {
     // Simplified face detection - in production, use proper face detection library
     const width = video.videoWidth;
     const height = video.videoHeight;
@@ -206,31 +210,34 @@ export const ARCamera: React.FC<ARCameraProps> = ({
       y: centerY - 120,
       width: 200,
       height: 240,
-      confidence: 0.85
+      confidence: 0.85,
     };
   };
 
-  const drawInfoOverlay = (ctx: CanvasRenderingContext2D, face: FaceDetectionResult) => {
+  const drawInfoOverlay = (
+    ctx: CanvasRenderingContext2D,
+    face: FaceDetectionResult,
+  ) => {
     // Draw detection info
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+    ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
     ctx.fillRect(10, 10, 300, 120);
 
-    ctx.fillStyle = '#FFD700';
-    ctx.font = '16px Arial';
-    ctx.fillText(`Face Detected: ${faceDetected ? '✓' : '✗'}`, 20, 30);
+    ctx.fillStyle = "#FFD700";
+    ctx.font = "16px Arial";
+    ctx.fillText(`Face Detected: ${faceDetected ? "✓" : "✗"}`, 20, 30);
     ctx.fillText(`Confidence: ${Math.round(face.confidence * 100)}%`, 20, 50);
     ctx.fillText(`Hairstyle: ${selectedHairstyle}`, 20, 70);
     ctx.fillText(`Color: ${selectedColor}`, 20, 90);
-    ctx.fillText('AR Mode: Active', 20, 110);
+    ctx.fillText("AR Mode: Active", 20, 110);
   };
 
   const captureResult = useCallback(() => {
     if (!canvasRef.current) return;
 
     const canvas = canvasRef.current;
-    const link = document.createElement('a');
+    const link = document.createElement("a");
     link.download = `papi-ar-result-${Date.now()}.png`;
-    link.href = canvas.toDataURL('image/png');
+    link.href = canvas.toDataURL("image/png");
     link.click();
   }, []);
 
@@ -282,9 +289,13 @@ export const ARCamera: React.FC<ARCameraProps> = ({
             {/* AR Overlay Info */}
             <div className="absolute top-4 left-4 bg-black/70 backdrop-blur-sm rounded-lg p-4">
               <div className="flex items-center gap-2 text-white">
-                <div className={`w-3 h-3 rounded-full ${faceDetected ? 'bg-green-400' : 'bg-red-400'} animate-pulse`}></div>
+                <div
+                  className={`w-3 h-3 rounded-full ${faceDetected ? "bg-green-400" : "bg-red-400"} animate-pulse`}
+                ></div>
                 <span className="text-sm font-medium">
-                  {faceDetected ? 'Face Detected - AR Active' : 'Looking for face...'}
+                  {faceDetected
+                    ? "Face Detected - AR Active"
+                    : "Looking for face..."}
                 </span>
               </div>
             </div>
@@ -314,7 +325,8 @@ export const ARCamera: React.FC<ARCameraProps> = ({
             <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-sm rounded-lg p-3">
               <div className="text-white text-sm space-y-2">
                 <div>
-                  <span className="text-amber-400">Style:</span> {selectedHairstyle}
+                  <span className="text-amber-400">Style:</span>{" "}
+                  {selectedHairstyle}
                 </div>
                 <div>
                   <span className="text-amber-400">Color:</span>

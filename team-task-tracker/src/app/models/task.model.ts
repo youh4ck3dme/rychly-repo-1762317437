@@ -18,7 +18,7 @@ export interface Task {
 export enum TaskStatus {
   TODO = 'To Do',
   IN_PROGRESS = 'In Progress',
-  DONE = 'Done'
+  DONE = 'Done',
 }
 
 /**
@@ -32,7 +32,7 @@ export function createTask(title: string, description: string): Task {
     description,
     status: TaskStatus.TODO,
     createdAt: now,
-    updatedAt: now
+    updatedAt: now,
   };
 }
 

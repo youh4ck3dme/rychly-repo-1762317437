@@ -1,6 +1,7 @@
 # Quick Setup Guide - Team Task Tracker PWA
 
 ## Overview
+
 This is a complete Angular PWA application with full offline support, responsive design, and production-ready code.
 
 ## Quick Start
@@ -44,17 +45,21 @@ All code is organized in clearly named files:
 ### Core Application Files
 
 **Models** (`src/app/models/`)
+
 - `task.model.ts` - Task interface and enums
 
 **Services** (`src/app/services/`)
+
 - `task.service.ts` - Task management with localStorage
 
 **Components** (`src/app/`)
+
 - `app.ts` - Main app component
 - `app.html` - Main template
 - `app.css` - Main styles
 
 **Modal Component** (`src/app/components/task-modal/`)
+
 - `task-modal.ts` - Modal logic
 - `task-modal.html` - Modal template
 - `task-modal.css` - Modal styles
@@ -62,14 +67,17 @@ All code is organized in clearly named files:
 ### Configuration Files
 
 **PWA Configuration**
+
 - `public/manifest.webmanifest` - PWA manifest
 - `ngsw-config.json` - Service worker config
 - `src/index.html` - HTML with PWA meta tags
 
 **Global Styles**
+
 - `src/styles.css` - Global CSS
 
 **Build Configuration**
+
 - `angular.json` - Angular CLI config
 - `package.json` - Dependencies
 - `tsconfig.json` - TypeScript config
@@ -77,6 +85,7 @@ All code is organized in clearly named files:
 ## Features Implemented
 
 ### Task Management
+
 ✅ Create tasks with title and description
 ✅ Edit tasks (title, description, status)
 ✅ Delete tasks with confirmation
@@ -85,6 +94,7 @@ All code is organized in clearly named files:
 ✅ localStorage persistence
 
 ### PWA Features
+
 ✅ Service worker for offline support
 ✅ Web app manifest for installability
 ✅ Icons in all required sizes (72px to 512px)
@@ -93,6 +103,7 @@ All code is organized in clearly named files:
 ✅ Offline-first architecture
 
 ### Design & UX
+
 ✅ 100% responsive (320px to 4K)
 ✅ Mobile-first design
 ✅ Touch-friendly buttons (44x44px minimum)
@@ -113,6 +124,7 @@ All code is organized in clearly named files:
 ## Testing the App
 
 ### Test Offline Capability
+
 1. Build and serve production version
 2. Open DevTools → Application → Service Workers
 3. Check "Offline" checkbox
@@ -121,6 +133,7 @@ All code is organized in clearly named files:
 6. All changes persist
 
 ### Test Responsive Design
+
 1. Open DevTools → Device Toolbar (Cmd/Ctrl + Shift + M)
 2. Test different devices:
    - iPhone SE (375px)
@@ -129,6 +142,7 @@ All code is organized in clearly named files:
 3. Verify layout adapts perfectly
 
 ### Test Installation
+
 1. Build and serve production
 2. Look for install prompt/icon
 3. Install app to desktop/home screen
@@ -137,16 +151,19 @@ All code is organized in clearly named files:
 ## Browser DevTools Tips
 
 **Service Worker Status**
+
 - DevTools → Application → Service Workers
 - Check registration and status
 - Unregister to test fresh install
 
 **localStorage Data**
+
 - DevTools → Application → Local Storage
 - Key: `team-task-tracker-tasks`
 - View/edit/clear task data
 
 **PWA Audit**
+
 - DevTools → Lighthouse
 - Run PWA audit
 - Expected score: 95+
@@ -154,40 +171,47 @@ All code is organized in clearly named files:
 ## Common Scenarios
 
 ### Adding First Task
+
 1. Click purple + button (bottom-right)
 2. Enter "Complete project setup"
 3. Enter "Set up development environment"
 4. Click "Create Task"
 
 ### Editing Task Status
+
 1. Click on any task card
 2. Change status dropdown
 3. Click "Update Task"
 
 ### Deleting Tasks
+
 1. Click trash icon on task card
 2. Confirm in dialog
 
 ## Production Deployment
 
 ### Build Optimization
+
 ```bash
 ng build --configuration production
 ```
 
 Output:
+
 - Minified bundle
 - Tree-shaken code
 - Service worker included
 - ~87 KB gzipped
 
 ### Deployment Requirements
+
 - HTTPS required for service workers
 - Serve from root or configure base href
 - Enable gzip compression
 - Set proper cache headers
 
 ### Hosting Options
+
 - Vercel (recommended)
 - Netlify
 - Firebase Hosting
@@ -222,6 +246,7 @@ Output:
 ## Support
 
 For questions or issues:
+
 - Check `README.md` for detailed documentation
 - Review Angular docs: https://angular.dev
 - Review PWA docs: https://web.dev/progressive-web-apps/

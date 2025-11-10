@@ -1,8 +1,8 @@
-import type { APIRoute } from 'astro';
-import OpenAI from 'openai';
+import type { APIRoute } from "astro";
+import OpenAI from "openai";
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY!
+  apiKey: process.env.OPENAI_API_KEY!,
 });
 
 // Helper function to validate image URL
@@ -10,7 +10,7 @@ function isValidImageUrl(url: string): boolean {
   try {
     const parsedUrl = new URL(url);
     // Check if it's HTTP/HTTPS
-    if (!['http:', 'https:'].includes(parsedUrl.protocol)) {
+    if (!["http:", "https:"].includes(parsedUrl.protocol)) {
       return false;
     }
     // Check if it has a valid hostname
@@ -18,11 +18,13 @@ function isValidImageUrl(url: string): boolean {
       return false;
     }
     // Basic check for image extensions or data URLs
-    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.bmp'];
-    const isDataUrl = url.startsWith('data:image/');
-    const hasImageExtension = imageExtensions.some(ext => url.toLowerCase().includes(ext));
+    const imageExtensions = [".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp"];
+    const isDataUrl = url.startsWith("data:image/");
+    const hasImageExtension = imageExtensions.some((ext) =>
+      url.toLowerCase().includes(ext),
+    );
 
-    return isDataUrl || hasImageExtension || url.includes('image');
+    return isDataUrl || hasImageExtension || url.includes("image");
   } catch {
     return false;
   }
@@ -39,18 +41,18 @@ function getFallbackAnalysis(): any {
       "Try taking the photo in better lighting conditions",
       "Ensure the hair is clearly visible in the image",
       "Avoid blurry or low-resolution photos",
-      "Consider professional consultation for accurate analysis"
+      "Consider professional consultation for accurate analysis",
     ],
     colorSuggestions: [
-      "Consult with a professional stylist for personalized color recommendations"
+      "Consult with a professional stylist for personalized color recommendations",
     ],
     careRoutine: [
       "Use gentle, sulfate-free shampoos",
       "Apply conditioner regularly",
       "Trim regularly to maintain healthy ends",
-      "Protect hair from heat damage"
+      "Protect hair from heat damage",
     ],
-    confidence: 0.1
+    confidence: 0.1,
   };
 }
 
@@ -60,24 +62,31 @@ export const POST: APIRoute = async ({ request }) => {
     const { imageUrl, locale = "sk" } = body || {};
 
     // Enhanced validation
-    if (!imageUrl || typeof imageUrl !== 'string') {
-      return new Response(JSON.stringify({
-        error: "imageUrl is required and must be a valid string",
-        code: "INVALID_IMAGE_URL"
-      }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' }
-      });
+    if (!imageUrl || typeof imageUrl !== "string") {
+      return new Response(
+        JSON.stringify({
+          error: "imageUrl is required and must be a valid string",
+          code: "INVALID_IMAGE_URL",
+        }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json" },
+        },
+      );
     }
 
     if (!isValidImageUrl(imageUrl)) {
-      return new Response(JSON.stringify({
-        error: "Invalid image URL format. Please provide a valid image URL or data URL",
-        code: "INVALID_IMAGE_FORMAT"
-      }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' }
-      });
+      return new Response(
+        JSON.stringify({
+          error:
+            "Invalid image URL format. Please provide a valid image URL or data URL",
+          code: "INVALID_IMAGE_FORMAT",
+        }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json" },
+        },
+      );
     }
 
     const systemPrompt = `You are a professional hair stylist and colorist with 15+ years of experience. Analyze the uploaded hair image and provide a comprehensive assessment.
@@ -123,7 +132,7 @@ Be specific, professional, and provide salon-quality advice. Language: Slovak (s
 
     // Add timeout wrapper for OpenAI API call
     const timeoutPromise = new Promise((_, reject) => {
-      setTimeout(() => reject(new Error('OpenAI API timeout')), 30000); // 30 second timeout
+      setTimeout(() => reject(new Error("OpenAI API timeout")), 30000); // 30 second timeout
     });
 
     const openaiPromise = openai.chat.completions.create({
@@ -131,37 +140,40 @@ Be specific, professional, and provide salon-quality advice. Language: Slovak (s
       messages: [
         {
           role: "system",
-          content: systemPrompt
+          content: systemPrompt,
         },
         {
           role: "user",
           content: [
             {
               type: "text",
-              text: "Analyzuj túto fotku a vráť JSON report s typom vlasov, tvarom tváre a odporúčaniami."
+              text: "Analyzuj túto fotku a vráť JSON report s typom vlasov, tvarom tváre a odporúčaniami.",
             },
             {
               type: "image_url",
               image_url: {
                 url: imageUrl,
-                detail: "low"
-              }
-            }
-          ]
-        }
+                detail: "low",
+              },
+            },
+          ],
+        },
       ],
       max_tokens: 500,
-      temperature: 0.7
+      temperature: 0.7,
     });
 
-    const response = await Promise.race([openaiPromise, timeoutPromise]) as any;
+    const response = (await Promise.race([
+      openaiPromise,
+      timeoutPromise,
+    ])) as any;
 
     const content = response.choices[0]?.message?.content;
     if (!content) {
-      console.warn('No content in OpenAI response, using fallback');
+      console.warn("No content in OpenAI response, using fallback");
       return new Response(JSON.stringify(getFallbackAnalysis()), {
         status: 200,
-        headers: { 'Content-Type': 'application/json' }
+        headers: { "Content-Type": "application/json" },
       });
     }
 
@@ -170,86 +182,104 @@ Be specific, professional, and provide salon-quality advice. Language: Slovak (s
     try {
       parsedContent = JSON.parse(content);
     } catch (parseError) {
-      console.error('JSON parsing error:', parseError, 'Content:', content);
-      return new Response(JSON.stringify({
-        error: "Failed to parse AI response. Please try again.",
-        code: "PARSE_ERROR",
-        fallback: getFallbackAnalysis()
-      }), {
-        status: 200, // Return 200 with fallback data instead of 500
-        headers: { 'Content-Type': 'application/json' }
-      });
+      console.error("JSON parsing error:", parseError, "Content:", content);
+      return new Response(
+        JSON.stringify({
+          error: "Failed to parse AI response. Please try again.",
+          code: "PARSE_ERROR",
+          fallback: getFallbackAnalysis(),
+        }),
+        {
+          status: 200, // Return 200 with fallback data instead of 500
+          headers: { "Content-Type": "application/json" },
+        },
+      );
     }
 
     return new Response(JSON.stringify(parsedContent), {
       status: 200,
-      headers: { 'Content-Type': 'application/json' }
+      headers: { "Content-Type": "application/json" },
     });
-
   } catch (error: any) {
-    console.error('Hair analysis API error:', error);
+    console.error("Hair analysis API error:", error);
 
     // Categorize errors for better handling
     let errorResponse = {
-      error: "We couldn't analyze your photo. Please try another one with better lighting.",
+      error:
+        "We couldn't analyze your photo. Please try another one with better lighting.",
       code: "ANALYSIS_FAILED",
-      details: error.message || "Unknown error"
+      details: error.message || "Unknown error",
     };
 
     let statusCode = 500;
 
-    if (error.message?.includes('timeout')) {
+    if (error.message?.includes("timeout")) {
       errorResponse = {
         error: "Analysis took too long. Please try again.",
         code: "TIMEOUT_ERROR",
-        details: "OpenAI API timeout"
+        details: "OpenAI API timeout",
       };
       statusCode = 408;
-    } else if (error.message?.includes('rate limit') || error.code === 'rate_limit_exceeded') {
+    } else if (
+      error.message?.includes("rate limit") ||
+      error.code === "rate_limit_exceeded"
+    ) {
       errorResponse = {
         error: "Service is busy. Please try again in a few moments.",
         code: "RATE_LIMIT_ERROR",
-        details: "OpenAI rate limit exceeded"
+        details: "OpenAI rate limit exceeded",
       };
       statusCode = 429;
-    } else if (error.message?.includes('insufficient_quota') || error.code === 'insufficient_quota') {
+    } else if (
+      error.message?.includes("insufficient_quota") ||
+      error.code === "insufficient_quota"
+    ) {
       errorResponse = {
         error: "Service temporarily unavailable. Please try again later.",
         code: "QUOTA_EXCEEDED",
-        details: "OpenAI quota exceeded"
+        details: "OpenAI quota exceeded",
       };
       statusCode = 503;
-    } else if (error.message?.includes('invalid_api_key') || error.code === 'invalid_api_key') {
+    } else if (
+      error.message?.includes("invalid_api_key") ||
+      error.code === "invalid_api_key"
+    ) {
       errorResponse = {
         error: "Service configuration error. Please contact support.",
         code: "API_KEY_ERROR",
-        details: "Invalid API key"
+        details: "Invalid API key",
       };
       statusCode = 500;
-    } else if (error.message?.includes('network') || error.name === 'TypeError') {
+    } else if (
+      error.message?.includes("network") ||
+      error.name === "TypeError"
+    ) {
       errorResponse = {
         error: "Network error. Please check your connection and try again.",
         code: "NETWORK_ERROR",
-        details: "Network connectivity issue"
+        details: "Network connectivity issue",
       };
       statusCode = 503;
     }
 
     // For client errors, return fallback data instead of error
     if (statusCode >= 400 && statusCode < 500) {
-      return new Response(JSON.stringify({
-        ...getFallbackAnalysis(),
-        warning: errorResponse.error,
-        code: errorResponse.code
-      }), {
-        status: 200, // Return success with fallback data
-        headers: { 'Content-Type': 'application/json' }
-      });
+      return new Response(
+        JSON.stringify({
+          ...getFallbackAnalysis(),
+          warning: errorResponse.error,
+          code: errorResponse.code,
+        }),
+        {
+          status: 200, // Return success with fallback data
+          headers: { "Content-Type": "application/json" },
+        },
+      );
     }
 
     return new Response(JSON.stringify(errorResponse), {
       status: statusCode,
-      headers: { 'Content-Type': 'application/json' }
+      headers: { "Content-Type": "application/json" },
     });
   }
 };

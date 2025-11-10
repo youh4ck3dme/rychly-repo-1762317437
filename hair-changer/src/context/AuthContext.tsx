@@ -14,13 +14,13 @@ import {
   createUserWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, Firestore } from "firebase/firestore";
 import { firebaseConfig } from "../config/firebaseConfig";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-export const db = getFirestore(app);
+export const db: Firestore = getFirestore(app); // Export db here for other services to use app instance
 
 interface AuthContextType {
   currentUser: User | null;

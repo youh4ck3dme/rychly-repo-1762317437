@@ -1,24 +1,37 @@
+import React, { useRef, useState, useEffect } from "react";
 
-import React, { useRef, useState, useEffect } from 'react';
-
-interface FancyButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface FancyButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   // Can add specific props here if needed, e.g., `variant`
 }
 
-const FancyButton: React.FC<FancyButtonProps> = ({ children, onClick, className = '', ...props }) => {
+const FancyButton: React.FC<FancyButtonProps> = ({
+  children,
+  onClick,
+  className = "",
+  ...props
+}) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const [ripples, setRipples] = useState<Array<{ x: number; y: number; id: number }>>([]);
+  const [ripples, setRipples] = useState<
+    Array<{ x: number; y: number; id: number }>
+  >([]);
   const [isActivatingGlow, setIsActivatingGlow] = useState(false);
 
-  const handleInteractionStart = (event: React.MouseEvent<HTMLButtonElement> | React.TouchEvent<HTMLButtonElement>) => {
+  const handleInteractionStart = (
+    event:
+      | React.MouseEvent<HTMLButtonElement>
+      | React.TouchEvent<HTMLButtonElement>,
+  ) => {
     if (buttonRef.current) {
       const buttonRect = buttonRef.current.getBoundingClientRect();
       let clientX, clientY;
 
-      if ('touches' in event) { // TouchEvent
+      if ("touches" in event) {
+        // TouchEvent
         clientX = event.touches[0].clientX;
         clientY = event.touches[0].clientY;
-      } else { // MouseEvent
+      } else {
+        // MouseEvent
         clientX = event.clientX;
         clientY = event.clientY;
       }
@@ -48,7 +61,7 @@ const FancyButton: React.FC<FancyButtonProps> = ({ children, onClick, className 
   return (
     <button
       ref={buttonRef}
-      className={`btn-primary ${className} ${isActivatingGlow ? 'btn-liquid-glow' : ''}`}
+      className={`btn-primary ${className} ${isActivatingGlow ? "btn-liquid-glow" : ""}`}
       onMouseDown={handleInteractionStart}
       onMouseUp={handleInteractionEnd}
       onMouseLeave={handleInteractionEnd}
@@ -56,7 +69,8 @@ const FancyButton: React.FC<FancyButtonProps> = ({ children, onClick, className 
       onTouchEnd={handleInteractionEnd}
       {...props}
     >
-      <span className="button-content-wrapper">{children}</span> {/* Wrapper for content to ensure stacking */}
+      <span className="button-content-wrapper">{children}</span>{" "}
+      {/* Wrapper for content to ensure stacking */}
       {ripples.map((ripple) => (
         <span
           key={ripple.id}

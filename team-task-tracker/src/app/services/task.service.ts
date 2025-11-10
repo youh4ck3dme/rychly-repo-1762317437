@@ -8,7 +8,7 @@ import { Task, TaskStatus, createTask } from '../models/task.model';
  * Provides reactive state management using RxJS
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TaskService {
   private readonly STORAGE_KEY = 'team-task-tracker-tasks';
@@ -33,7 +33,7 @@ export class TaskService {
    * Get a single task by ID
    */
   getTaskById(id: string): Task | undefined {
-    return this.tasksSubject.value.find(task => task.id === id);
+    return this.tasksSubject.value.find((task) => task.id === id);
   }
 
   /**
@@ -51,13 +51,13 @@ export class TaskService {
    */
   updateTask(id: string, updates: Partial<Omit<Task, 'id' | 'createdAt'>>): void {
     const currentTasks = this.tasksSubject.value;
-    const taskIndex = currentTasks.findIndex(task => task.id === id);
+    const taskIndex = currentTasks.findIndex((task) => task.id === id);
 
     if (taskIndex !== -1) {
       const updatedTask = {
         ...currentTasks[taskIndex],
         ...updates,
-        updatedAt: new Date()
+        updatedAt: new Date(),
       };
       const updatedTasks = [...currentTasks];
       updatedTasks[taskIndex] = updatedTask;
@@ -70,7 +70,7 @@ export class TaskService {
    */
   deleteTask(id: string): void {
     const currentTasks = this.tasksSubject.value;
-    const updatedTasks = currentTasks.filter(task => task.id !== id);
+    const updatedTasks = currentTasks.filter((task) => task.id !== id);
     this.updateTasks(updatedTasks);
   }
 
@@ -78,7 +78,7 @@ export class TaskService {
    * Get tasks filtered by status
    */
   getTasksByStatus(status: TaskStatus): Task[] {
-    return this.tasksSubject.value.filter(task => task.status === status);
+    return this.tasksSubject.value.filter((task) => task.status === status);
   }
 
   /**
@@ -101,7 +101,7 @@ export class TaskService {
         return tasks.map((task: any) => ({
           ...task,
           createdAt: new Date(task.createdAt),
-          updatedAt: new Date(task.updatedAt)
+          updatedAt: new Date(task.updatedAt),
         }));
       }
     } catch (error) {

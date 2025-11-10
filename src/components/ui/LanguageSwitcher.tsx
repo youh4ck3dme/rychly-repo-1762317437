@@ -1,12 +1,10 @@
-
-
-import { useTranslation } from '../../lib/i18n.tsx';
+import { useTranslation } from "../../lib/i18n.tsx";
 
 export const LanguageSwitcher = () => {
   const { language, setLanguage } = useTranslation();
 
   const toggleLanguage = () => {
-    setLanguage(language === 'en' ? 'sk' : 'en');
+    setLanguage(language === "en" ? "sk" : "en");
   };
 
   return (
@@ -15,7 +13,7 @@ export const LanguageSwitcher = () => {
       className="text-sm font-bold uppercase w-10 h-7 flex items-center justify-center rounded-full bg-black/30 hover:bg-black/50 transition-colors"
       aria-label="Change language"
     >
-      {language === 'sk' ? 'EN' : 'SK'}
+      {language === "sk" ? "EN" : "SK"}
     </button>
   );
 };

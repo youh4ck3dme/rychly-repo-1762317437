@@ -1,64 +1,59 @@
-import js from '@eslint/js';
-import ts from '@typescript-eslint/eslint-plugin';
-import tsParser from '@typescript-eslint/parser';
-import astro from 'eslint-plugin-astro';
+import js from "@eslint/js";
+import ts from "@typescript-eslint/eslint-plugin";
+import tsParser from "@typescript-eslint/parser";
+import astro from "eslint-plugin-astro";
 
 export default [
   js.configs.recommended,
   {
-    files: ['**/*.{js,mjs,cjs}'],
+    files: ["**/*.{js,mjs,cjs}"],
     languageOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'module',
+      ecmaVersion: "latest",
+      sourceType: "module",
       globals: {
-        console: 'readonly',
-        process: 'readonly',
-        Buffer: 'readonly',
-        __dirname: 'readonly',
-        __filename: 'readonly',
-        global: 'readonly',
-        require: 'readonly',
-        module: 'readonly',
-        exports: 'readonly'
-      }
-    }
+        console: "readonly",
+        process: "readonly",
+        Buffer: "readonly",
+        __dirname: "readonly",
+        __filename: "readonly",
+        global: "readonly",
+        require: "readonly",
+        module: "readonly",
+        exports: "readonly",
+      },
+    },
   },
   {
-    files: ['**/*.{ts,tsx}'],
+    files: ["**/*.{ts,tsx}"],
     languageOptions: {
       parser: tsParser,
-      ecmaVersion: 'latest',
-      sourceType: 'module',
+      ecmaVersion: "latest",
+      sourceType: "module",
       globals: {
-        console: 'readonly',
-        process: 'readonly',
-        Buffer: 'readonly'
-      }
+        console: "readonly",
+        process: "readonly",
+        Buffer: "readonly",
+      },
     },
     plugins: {
-      '@typescript-eslint': ts
+      "@typescript-eslint": ts,
     },
     rules: {
       ...ts.configs.recommended.rules,
-      '@typescript-eslint/no-unused-vars': 'warn',
-      '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/explicit-function-return-type': 'off',
-      '@typescript-eslint/explicit-module-boundary-types': 'off'
-    }
+      "@typescript-eslint/no-unused-vars": "warn",
+      "@typescript-eslint/no-explicit-any": "warn",
+      "@typescript-eslint/explicit-function-return-type": "off",
+      "@typescript-eslint/explicit-module-boundary-types": "off",
+    },
   },
   {
-    files: ['**/*.astro'],
-    processor: astro.processors['.astro'],
+    files: ["**/*.astro"],
+    processor: astro.processors[".astro"],
     rules: {
-      ...astro.configs.recommended.rules
-    }
+      ...astro.configs.recommended.rules,
+    },
   },
   {
-    ignores: [
-      'node_modules/**',
-      'dist/**',
-      '.astro/**',
-      'coverage/**'
-    ]
-  }
+    ignores: ["node_modules/**", "dist/**", ".astro/**", "coverage/**"],
+  },
 ];

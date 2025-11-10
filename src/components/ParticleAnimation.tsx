@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React from "react";
+import { motion } from "framer-motion";
 
 interface Particle {
   id: number;
@@ -42,7 +42,7 @@ const ParticleAnimation: React.FC = () => {
             duration: 3 + Math.random() * 2,
             repeat: Infinity,
             delay: particle.delay,
-            ease: 'easeInOut',
+            ease: "easeInOut",
           }}
         />
       ))}

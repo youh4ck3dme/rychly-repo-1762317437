@@ -1,12 +1,14 @@
-
-const PHOTO_HISTORY_KEY = 'photoHistory';
+const PHOTO_HISTORY_KEY = "photoHistory";
 const MAX_HISTORY_LENGTH = 4;
 
 export const savePhoto = (imageDataUrl: string): void => {
   try {
     const history = getPhotoHistory();
     // Add new photo to the beginning, removing duplicates
-    const newHistory = [imageDataUrl, ...history.filter(url => url !== imageDataUrl)];
+    const newHistory = [
+      imageDataUrl,
+      ...history.filter((url) => url !== imageDataUrl),
+    ];
     // Trim the history to the max length
     if (newHistory.length > MAX_HISTORY_LENGTH) {
       newHistory.length = MAX_HISTORY_LENGTH;
@@ -27,7 +29,10 @@ export const getPhotoHistory = (): string[] => {
       }
     }
   } catch (error) {
-    console.error("Failed to retrieve photo history from local storage:", error);
+    console.error(
+      "Failed to retrieve photo history from local storage:",
+      error,
+    );
   }
   return [];
 };

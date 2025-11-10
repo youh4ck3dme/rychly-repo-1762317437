@@ -1,163 +1,163 @@
 # Chaos Engineering Tests for PAPI Hair Design
 # Automated resilience testing for production systems
 
-version: '1.0'
-description: 'Chaos Engineering experiments for production resilience'
+version: "1.0"
+description: "Chaos Engineering experiments for production resilience"
 
 globals:
-  base_url: 'https://phd-ai-hair-studio-5hbgan143-h4ck3d-labs-projects.vercel.app'
-  api_token: '${{ API_AUTH_TOKEN }}'
-  experiment_timeout: 300  # 5 minutes
+  base_url: "https://phd-ai-hair-studio-5hbgan143-h4ck3d-labs-projects.vercel.app"
+  api_token: "${{ API_AUTH_TOKEN }}"
+  experiment_timeout: 300 # 5 minutes
 
 experiments:
   # Network Partition Tests
-  - name: 'network-latency'
-    description: 'Simulate network latency to test resilience'
-    type: 'network'
+  - name: "network-latency"
+    description: "Simulate network latency to test resilience"
+    type: "network"
     parameters:
       latency_ms: 1000
       jitter_ms: 100
       duration: 60
-    hypothesis: 'System should handle network latency gracefully'
+    hypothesis: "System should handle network latency gracefully"
     assertions:
-      - 'API response time < 5000ms'
-      - 'Error rate < 5%'
-      - 'No data loss'
+      - "API response time < 5000ms"
+      - "Error rate < 5%"
+      - "No data loss"
 
-  - name: 'packet-loss'
-    description: 'Simulate packet loss to test error handling'
-    type: 'network'
+  - name: "packet-loss"
+    description: "Simulate packet loss to test error handling"
+    type: "network"
     parameters:
       loss_percentage: 10
       duration: 30
-    hypothesis: 'System should handle packet loss with retries'
+    hypothesis: "System should handle packet loss with retries"
     assertions:
-      - 'Successful requests > 90%'
-      - 'Proper error handling'
+      - "Successful requests > 90%"
+      - "Proper error handling"
 
   # Resource Exhaustion Tests
-  - name: 'cpu-stress'
-    description: 'CPU stress test for serverless functions'
-    type: 'resource'
+  - name: "cpu-stress"
+    description: "CPU stress test for serverless functions"
+    type: "resource"
     parameters:
       cpu_load: 90
       duration: 120
-    hypothesis: 'System should handle high CPU load'
+    hypothesis: "System should handle high CPU load"
     assertions:
-      - 'Response time degradation < 50%'
-      - 'No function timeouts'
+      - "Response time degradation < 50%"
+      - "No function timeouts"
 
-  - name: 'memory-pressure'
-    description: 'Memory pressure test'
-    type: 'resource'
+  - name: "memory-pressure"
+    description: "Memory pressure test"
+    type: "resource"
     parameters:
       memory_mb: 128
       duration: 60
-    hypothesis: 'System should handle memory pressure'
+    hypothesis: "System should handle memory pressure"
     assertions:
-      - 'No out-of-memory errors'
-      - 'Garbage collection working'
+      - "No out-of-memory errors"
+      - "Garbage collection working"
 
   # Dependency Failure Tests
-  - name: 'openai-outage'
-    description: 'Simulate OpenAI API outage'
-    type: 'dependency'
+  - name: "openai-outage"
+    description: "Simulate OpenAI API outage"
+    type: "dependency"
     parameters:
       failure_rate: 100
       duration: 30
-    hypothesis: 'System should fallback gracefully'
+    hypothesis: "System should fallback gracefully"
     assertions:
-      - 'Fallback responses provided'
-      - 'No crashes or hanging requests'
+      - "Fallback responses provided"
+      - "No crashes or hanging requests"
 
-  - name: 'database-failure'
-    description: 'Simulate database connectivity issues'
-    type: 'dependency'
+  - name: "database-failure"
+    description: "Simulate database connectivity issues"
+    type: "dependency"
     parameters:
       timeout_seconds: 30
       duration: 60
-    hypothesis: 'System should handle DB failures'
+    hypothesis: "System should handle DB failures"
     assertions:
-      - 'Proper error messages'
-      - 'No data corruption'
+      - "Proper error messages"
+      - "No data corruption"
 
   # Load Spike Tests
-  - name: 'flash-crowd'
-    description: 'Sudden load spike simulation'
-    type: 'load'
+  - name: "flash-crowd"
+    description: "Sudden load spike simulation"
+    type: "load"
     parameters:
       users: 1000
       spawn_rate: 50
       duration: 60
-    hypothesis: 'System should handle flash crowds'
+    hypothesis: "System should handle flash crowds"
     assertions:
-      - 'Response time < 3000ms'
-      - 'Error rate < 1%'
-      - 'Rate limiting working'
+      - "Response time < 3000ms"
+      - "Error rate < 1%"
+      - "Rate limiting working"
 
   # Security Stress Tests
-  - name: 'attack-simulation'
-    description: 'DDoS and attack simulation'
-    type: 'security'
+  - name: "attack-simulation"
+    description: "DDoS and attack simulation"
+    type: "security"
     parameters:
       attack_rate: 1000
       duration: 30
-      attack_types: ['syn-flood', 'http-flood', 'slowloris']
-    hypothesis: 'Security measures should protect system'
+      attack_types: ["syn-flood", "http-flood", "slowloris"]
+    hypothesis: "Security measures should protect system"
     assertions:
-      - 'Rate limiting activated'
-      - 'No service degradation'
-      - 'Attack logged and blocked'
+      - "Rate limiting activated"
+      - "No service degradation"
+      - "Attack logged and blocked"
 
   # Regional Failure Tests
-  - name: 'region-failover'
-    description: 'Regional outage simulation'
-    type: 'infrastructure'
+  - name: "region-failover"
+    description: "Regional outage simulation"
+    type: "infrastructure"
     parameters:
-      failed_regions: ['iad1']  # US East
+      failed_regions: ["iad1"] # US East
       duration: 120
-    hypothesis: 'System should failover to other regions'
+    hypothesis: "System should failover to other regions"
     assertions:
-      - 'Service remains available'
-      - 'Latency increase < 100ms'
-      - 'No data loss'
+      - "Service remains available"
+      - "Latency increase < 100ms"
+      - "No data loss"
 
 # Steady State Hypotheses
 steady_state:
-  - metric: 'response_time_p95'
-    threshold: '< 1000ms'
-    description: '95th percentile response time'
+  - metric: "response_time_p95"
+    threshold: "< 1000ms"
+    description: "95th percentile response time"
 
-  - metric: 'error_rate'
-    threshold: '< 1%'
-    description: 'Overall error rate'
+  - metric: "error_rate"
+    threshold: "< 1%"
+    description: "Overall error rate"
 
-  - metric: 'availability'
-    threshold: '> 99.9%'
-    description: 'Service availability'
+  - metric: "availability"
+    threshold: "> 99.9%"
+    description: "Service availability"
 
-  - metric: 'cpu_usage'
-    threshold: '< 70%'
-    description: 'Average CPU utilization'
+  - metric: "cpu_usage"
+    threshold: "< 70%"
+    description: "Average CPU utilization"
 
 # Rollback Conditions
 rollback:
   conditions:
-    - 'error_rate > 5%'
-    - 'response_time_p95 > 5000ms'
-    - 'availability < 99%'
-    - 'data_loss_detected = true'
+    - "error_rate > 5%"
+    - "response_time_p95 > 5000ms"
+    - "availability < 99%"
+    - "data_loss_detected = true"
 
   actions:
-    - type: 'stop_experiment'
-    - type: 'rollback_deployment'
-    - type: 'alert_team'
-    - type: 'generate_report'
+    - type: "stop_experiment"
+    - type: "rollback_deployment"
+    - type: "alert_team"
+    - type: "generate_report"
 
 # Reporting
 reporting:
-  format: ['json', 'html', 'junit']
-  output_dir: 'chaos-reports'
+  format: ["json", "html", "junit"]
+  output_dir: "chaos-reports"
   include_metrics: true
   include_screenshots: false
 
@@ -166,8 +166,8 @@ safety:
   max_concurrent_experiments: 1
   required_approvals: 2
   blackout_periods:
-    - '00:00-06:00'  # No chaos during maintenance window
+    - "00:00-06:00" # No chaos during maintenance window
   emergency_stops:
-    - 'error_rate > 10%'
-    - 'response_time > 10000ms'
-    - 'failed_requests > 1000'
+    - "error_rate > 10%"
+    - "response_time > 10000ms"
+    - "failed_requests > 1000"

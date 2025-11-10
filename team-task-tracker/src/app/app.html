@@ -1,6 +1,5 @@
 <!-- Main App Container -->
 <div class="app-container">
-
   <!-- Header -->
   <header class="app-header">
     <div class="header-content">
@@ -11,7 +10,6 @@
 
   <!-- Main Content -->
   <main class="main-content">
-
     <!-- Task Statistics -->
     <div class="task-stats">
       <div class="stat-card stat-todo">
@@ -30,11 +28,20 @@
 
     <!-- Tasks List -->
     <div class="tasks-container">
-
       <!-- Empty State -->
       <div class="empty-state" *ngIf="tasks.length === 0">
-        <svg class="empty-icon" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+        <svg
+          class="empty-icon"
+          width="80"
+          height="80"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+        >
+          <path
+            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+          ></path>
         </svg>
         <h2>No tasks yet</h2>
         <p>Click the + button to create your first task</p>
@@ -42,22 +49,34 @@
 
       <!-- Task Items -->
       <div class="task-list" *ngIf="tasks.length > 0">
-        <article class="task-card"
-                 *ngFor="let task of tasks"
-                 (click)="openEditTaskModal(task)"
-                 role="button"
-                 tabindex="0"
-                 [attr.aria-label]="'Edit task: ' + task.title">
-
+        <article
+          class="task-card"
+          *ngFor="let task of tasks"
+          (click)="openEditTaskModal(task)"
+          role="button"
+          tabindex="0"
+          [attr.aria-label]="'Edit task: ' + task.title"
+        >
           <!-- Task Header -->
           <div class="task-header">
             <h3 class="task-title">{{ task.title }}</h3>
-            <button class="delete-button"
-                    (click)="deleteTask($event, task.id)"
-                    aria-label="Delete task"
-                    type="button">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"></path>
+            <button
+              class="delete-button"
+              (click)="deleteTask($event, task.id)"
+              aria-label="Delete task"
+              type="button"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"
+                ></path>
                 <line x1="10" y1="11" x2="10" y2="17"></line>
                 <line x1="14" y1="11" x2="14" y2="17"></line>
               </svg>
@@ -72,21 +91,23 @@
             <span class="status-badge" [ngClass]="getStatusClass(task.status)">
               {{ task.status }}
             </span>
-            <span class="task-date">{{ task.updatedAt | date:'short' }}</span>
+            <span class="task-date">{{ task.updatedAt | date: 'short' }}</span>
           </div>
         </article>
       </div>
-
     </div>
-
   </main>
 
   <!-- Floating Action Button -->
-  <button class="fab"
-          (click)="openAddTaskModal()"
-          aria-label="Add new task"
-          type="button">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+  <button class="fab" (click)="openAddTaskModal()" aria-label="Add new task" type="button">
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+    >
       <line x1="12" y1="5" x2="12" y2="19"></line>
       <line x1="5" y1="12" x2="19" y2="12"></line>
     </svg>
@@ -97,9 +118,9 @@
     [isOpen]="isModalOpen"
     [task]="selectedTask"
     (close)="closeModal()"
-    (save)="onSaveTask($event)">
+    (save)="onSaveTask($event)"
+  >
   </app-task-modal>
-
 </div>
 
 <router-outlet />

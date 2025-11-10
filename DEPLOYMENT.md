@@ -14,6 +14,7 @@ Kompletný návod na nasadenie Astro/Tailwind/Vercel projektu do produkcie.
 ### 1. Environment Variables
 
 **Povinné premenné:**
+
 ```bash
 NODE_ENV=production
 ASTRO_SITE=https://your-domain.vercel.app
@@ -22,6 +23,7 @@ OPENAI_API_KEY=your-openai-api-key
 ```
 
 **Voliteľné premenné:**
+
 ```bash
 # Email konfigurácia
 SMTP_HOST=smtp.your-provider.com
@@ -113,6 +115,7 @@ curl -X POST "https://your-domain.vercel.app/api/chat" \
 ### Vercel Analytics
 
 Projekt má nakonfigurované:
+
 - ✅ Web Analytics (automatické sledovanie návštev)
 - ✅ Speed Insights (Core Web Vitals)
 - ✅ Error tracking cez Vercel logs
@@ -138,12 +141,12 @@ time curl -s "https://your-domain.vercel.app/api/chat" \
 ```javascript
 // astro.config.mjs
 export default {
-  output: 'server',
+  output: "server",
   adapter: vercel({
     webAnalytics: { enabled: true },
-    speedInsights: { enabled: true }
-  })
-}
+    speedInsights: { enabled: true },
+  }),
+};
 ```
 
 ### Vercel Config
@@ -167,18 +170,21 @@ export default {
 ### Bežné Problémy
 
 **Build Error - OpenAI API Key**
+
 ```bash
 # Riešenie: Skontrolujte environment variables vo Vercel dashboard
 vercel env ls
 ```
 
 **Rate Limit Error**
+
 ```bash
 # Riešenie: Zvýšte limit alebo implementujte exponential backoff
 # Aktuálny limit: 100 požiadaviek/15 minút na IP
 ```
 
 **Memory Error**
+
 ```bash
 # Riešenie: Zvýšte memory limit vo vercel.json
 "functions": {
@@ -209,6 +215,7 @@ NODE_ENV=development npm run dev
 ### Núdzové Kontakty
 
 Pri kritických problémoch kontaktujte:
+
 - Vercel Support (cez dashboard)
 - OpenAI Support (pri API problémoch)
 

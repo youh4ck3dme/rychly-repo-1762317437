@@ -1,8 +1,8 @@
-import type { APIRoute } from 'astro';
-import OpenAI from 'openai';
+import type { APIRoute } from "astro";
+import OpenAI from "openai";
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY!
+  apiKey: process.env.OPENAI_API_KEY!,
 });
 
 export const POST: APIRoute = async ({ request }) => {
@@ -13,7 +13,7 @@ export const POST: APIRoute = async ({ request }) => {
     if (!description) {
       return new Response(JSON.stringify({ error: "description required" }), {
         status: 400,
-        headers: { 'Content-Type': 'application/json' }
+        headers: { "Content-Type": "application/json" },
       });
     }
 
@@ -21,20 +21,22 @@ export const POST: APIRoute = async ({ request }) => {
       model: "dall-e-3",
       prompt: `Ultra-realistic beauty portrait, ${description}. Salon lighting, preserve natural face & skin tone.`,
       size: "1024x1024",
-      response_format: "b64_json"
+      response_format: "b64_json",
     });
 
     const base64 = response.data?.[0]?.b64_json || null;
 
     return new Response(JSON.stringify({ base64, mime: "image/png" }), {
       status: 200,
-      headers: { 'Content-Type': 'application/json' }
+      headers: { "Content-Type": "application/json" },
     });
-
   } catch (error: any) {
-    return new Response(JSON.stringify({ error: error.message || "Bad request" }), {
-      status: 400,
-      headers: { 'Content-Type': 'application/json' }
-    });
+    return new Response(
+      JSON.stringify({ error: error.message || "Bad request" }),
+      {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      },
+    );
   }
 };

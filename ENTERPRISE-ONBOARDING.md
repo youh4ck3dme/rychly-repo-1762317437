@@ -5,6 +5,7 @@
 ### **Pre-developerov**
 
 #### **1. Repository Access**
+
 ```bash
 # 1. Join GitHub Organization
 # URL: https://github.com/h4ck3d-labs-projects
@@ -23,12 +24,14 @@ git remote add upstream https://github.com/h4ck3d-labs-projects/phd-ai-hair-stud
 #### **2. Development Environment Setup**
 
 **Required Software:**
+
 - ✅ **Node.js 18+** - `nvm install 18 && nvm use 18`
 - ✅ **Git** - Latest version
 - ✅ **VS Code** - With recommended extensions
 - ✅ **Vercel CLI** - `npm i -g vercel`
 
 **VS Code Extensions:**
+
 ```bash
 # Essential extensions
 code --install-extension astro-build.astro-vscode
@@ -60,19 +63,21 @@ npm run dev
 #### **4. Code Quality Standards**
 
 **ESLint Configuration:**
+
 ```javascript
 // .eslintrc.js
 module.exports = {
-  extends: ['@astro/eslint-config'],
+  extends: ["@astro/eslint-config"],
   rules: {
-    'no-console': 'warn',
-    'no-debugger': 'error',
-    'prefer-const': 'error'
-  }
-}
+    "no-console": "warn",
+    "no-debugger": "error",
+    "prefer-const": "error",
+  },
+};
 ```
 
 **Prettier Configuration:**
+
 ```json
 // .prettierrc
 {
@@ -84,6 +89,7 @@ module.exports = {
 ```
 
 **Commit Message Format:**
+
 ```
 <type>(<scope>): <description>
 
@@ -101,6 +107,7 @@ module.exports = {
 ### **Required API Keys**
 
 #### **OpenAI API Key**
+
 1. **Go to:** [https://platform.openai.com/api-keys](https://platform.openai.com/api-keys)
 2. **Create new secret key**
 3. **Add to `.env.local`:**
@@ -109,11 +116,13 @@ module.exports = {
    ```
 
 #### **Vercel Token (for deployment)**
+
 1. **Install Vercel CLI:** `npm i -g vercel`
 2. **Login:** `vercel login`
 3. **Get token:** `vercel token`
 
 #### **Sentry DSN (for error tracking)**
+
 1. **Go to:** [https://sentry.io](https://sentry.io)
 2. **Create project:** `phd-ai-hair-studio`
 3. **Get DSN from project settings**
@@ -140,6 +149,7 @@ SENTRY_DSN=https://your-sentry-dsn@sentry.io/project-id
 ### **Development Workflow**
 
 #### **Feature Branch Workflow**
+
 ```bash
 # 1. Create feature branch
 git checkout -b feature/amazing-feature
@@ -160,6 +170,7 @@ git push origin feature/amazing-feature
 ```
 
 #### **Code Review Process**
+
 - ✅ **Required reviewers:** 2 senior developers
 - ✅ **CI/CD checks:** All must pass
 - ✅ **Security scan:** No high-severity issues
@@ -168,6 +179,7 @@ git push origin feature/amazing-feature
 ### **Production Deployment**
 
 #### **Automated Deployment (Main Branch)**
+
 ```bash
 # 1. Merge to main (triggers automatic deployment)
 git checkout main
@@ -182,6 +194,7 @@ git push origin main
 ```
 
 #### **Manual Deployment (Emergency)**
+
 ```bash
 # 1. Emergency deployment
 ./vercel-deploy-guide.sh
@@ -200,6 +213,7 @@ vercel logs --follow
 ### **Development Monitoring**
 
 #### **Local Development**
+
 ```bash
 # 1. Start with monitoring
 npm run dev
@@ -212,6 +226,7 @@ tail -f production-monitor.log
 ```
 
 #### **Error Tracking Setup**
+
 ```bash
 # 1. Install Sentry CLI
 npm install -g @sentry/cli
@@ -228,11 +243,13 @@ curl -X POST "http://localhost:4321/api/chat" \
 ### **Production Monitoring**
 
 #### **Key Dashboards**
+
 1. **Vercel Dashboard** - Deployment & performance
 2. **Sentry Dashboard** - Error tracking
 3. **Custom Monitoring** - `./monitor-production.sh`
 
 #### **Alert Setup**
+
 ```bash
 # 1. Configure alerting thresholds
 # Edit monitor-production.sh
@@ -251,11 +268,13 @@ curl -X POST "http://localhost:4321/api/chat" \
 ### **Access Control**
 
 #### **Repository Access**
+
 - ✅ **GitHub Teams** - Role-based permissions
 - ✅ **Branch Protection** - Main branch protected
 - ✅ **CODEOWNERS** - Automatic review assignment
 
 #### **API Security**
+
 - ✅ **Token Rotation** - Monthly key rotation
 - ✅ **Access Logging** - All API calls logged
 - ✅ **Rate Limiting** - DDoS protection
@@ -263,6 +282,7 @@ curl -X POST "http://localhost:4321/api/chat" \
 ### **Security Best Practices**
 
 #### **Code Security**
+
 ```typescript
 // Always validate inputs
 const sanitizedInput = sanitizeInput(userInput);
@@ -275,11 +295,12 @@ try {
   // API calls
 } catch (error) {
   // Log error securely (no sensitive data)
-  console.error('Operation failed:', error.message);
+  console.error("Operation failed:", error.message);
 }
 ```
 
 #### **Dependency Security**
+
 ```bash
 # Regular security updates
 npm audit
@@ -294,15 +315,17 @@ npm audit fix
 ## 📚 **DOCUMENTATION ACCESS**
 
 ### **Key Documentation**
-| Document | Purpose | Location |
-|----------|---------|----------|
-| **README.md** | Project overview | Root directory |
-| **README_API.md** | API documentation | Root directory |
-| **DEPLOYMENT.md** | Deployment guide | Root directory |
-| **COMPLIANCE.md** | Security & compliance | Root directory |
+
+| Document                    | Purpose                  | Location       |
+| --------------------------- | ------------------------ | -------------- |
+| **README.md**               | Project overview         | Root directory |
+| **README_API.md**           | API documentation        | Root directory |
+| **DEPLOYMENT.md**           | Deployment guide         | Root directory |
+| **COMPLIANCE.md**           | Security & compliance    | Root directory |
 | **PRODUCTION-CHECKLIST.md** | Pre-deployment checklist | Root directory |
 
 ### **Architecture Documentation**
+
 - **System Architecture** - `docs/architecture.md`
 - **Database Schema** - `docs/schema.md`
 - **API Specifications** - `docs/api-spec.md`
@@ -313,21 +336,24 @@ npm audit fix
 ## 🚨 **INCIDENT RESPONSE**
 
 ### **Emergency Contacts**
-| Role | Contact | Availability |
-|------|---------|--------------|
-| **Tech Lead** | tech-lead@h4ck3d-labs.com | 24/7 |
-| **Security Team** | security@h4ck3d-labs.com | 24/7 |
-| **DevOps Team** | devops@h4ck3d-labs.com | Business hours |
-| **Product Owner** | product@h4ck3d-labs.com | Business hours |
+
+| Role              | Contact                   | Availability   |
+| ----------------- | ------------------------- | -------------- |
+| **Tech Lead**     | tech-lead@h4ck3d-labs.com | 24/7           |
+| **Security Team** | security@h4ck3d-labs.com  | 24/7           |
+| **DevOps Team**   | devops@h4ck3d-labs.com    | Business hours |
+| **Product Owner** | product@h4ck3d-labs.com   | Business hours |
 
 ### **Incident Response Process**
 
 #### **1. Detection**
+
 - **Monitoring alerts** - Automated detection
 - **User reports** - Customer feedback
 - **Log analysis** - Manual investigation
 
 #### **2. Assessment**
+
 ```bash
 # 1. Check system status
 ./production-health-check.sh
@@ -340,6 +366,7 @@ tail -100 production-monitor.log
 ```
 
 #### **3. Containment**
+
 ```bash
 # 1. Isolate affected services
 # Edit vercel.json for maintenance mode
@@ -352,6 +379,7 @@ tail -100 production-monitor.log
 ```
 
 #### **4. Recovery**
+
 ```bash
 # 1. Deploy fix
 git commit -m "fix: resolve incident"
@@ -371,6 +399,7 @@ git push origin main
 ### **Performance Monitoring**
 
 #### **Local Performance Testing**
+
 ```bash
 # 1. Lighthouse CI
 npx lighthouse-ci autorun
@@ -383,6 +412,7 @@ npm run build -- --analyze
 ```
 
 #### **Production Performance**
+
 - **Core Web Vitals** - Tracked by Vercel
 - **API Performance** - Custom monitoring
 - **Database Performance** - N/A (serverless)
@@ -390,29 +420,33 @@ npm run build -- --analyze
 ### **Scaling Considerations**
 
 #### **Current Architecture**
+
 - ✅ **Serverless** - Vercel Functions
 - ✅ **CDN** - Global edge network
 - ✅ **Auto-scaling** - Automatic scaling
 
 #### **Scaling Limits**
-| Component | Current Limit | Upgrade Path |
-|-----------|---------------|--------------|
-| **API Rate Limit** | 100/min per IP | Enterprise plan |
-| **Function Timeout** | 30 seconds | Custom runtime |
-| **Memory** | 1024 MB | Higher tier |
-| **Bandwidth** | 100 GB/month | CDN optimization |
+
+| Component            | Current Limit  | Upgrade Path     |
+| -------------------- | -------------- | ---------------- |
+| **API Rate Limit**   | 100/min per IP | Enterprise plan  |
+| **Function Timeout** | 30 seconds     | Custom runtime   |
+| **Memory**           | 1024 MB        | Higher tier      |
+| **Bandwidth**        | 100 GB/month   | CDN optimization |
 
 ---
 
 ## 🎯 **SUCCESS METRICS**
 
 ### **Development Metrics**
+
 - ✅ **Code Quality** - ESLint score > 90
 - ✅ **Test Coverage** - > 80% coverage
 - ✅ **Build Time** - < 5 minutes
 - ✅ **Deployment Frequency** - Daily deployments
 
 ### **Production Metrics**
+
 - ✅ **Uptime** - 99.9% SLA
 - ✅ **Performance** - < 2s response time
 - ✅ **Error Rate** - < 0.1%
@@ -423,17 +457,20 @@ npm run build -- --analyze
 ## 📞 **SUPPORT & RESOURCES**
 
 ### **Daily Standup**
+
 - **Time:** 9:00 AM CET
 - **Platform:** Slack #development
 - **Format:** What did you do? What will you do? Any blockers?
 
 ### **Code Review Guidelines**
+
 - ✅ **Small PRs** - < 300 lines of code
 - ✅ **Tests included** - Unit + integration tests
 - ✅ **Documentation** - Updated README if needed
 - ✅ **Security review** - Security team approval
 
 ### **Learning Resources**
+
 - **Astro Documentation** - [astro.build](https://astro.build)
 - **Vercel Documentation** - [vercel.com/docs](https://vercel.com/docs)
 - **OpenAI API** - [platform.openai.com/docs](https://platform.openai.com/docs)
@@ -444,24 +481,28 @@ npm run build -- --analyze
 ## ✅ **ONBOARDING CHECKLIST**
 
 ### **Day 1: Setup**
+
 - [ ] **GitHub access** granted
 - [ ] **Development environment** configured
 - [ ] **API keys** obtained and configured
 - [ ] **First build** successful
 
 ### **Day 2-3: Learning**
+
 - [ ] **Codebase walkthrough** completed
 - [ ] **Architecture** understood
 - [ ] **Development workflow** practiced
 - [ ] **First PR** submitted
 
 ### **Day 4-5: Contribution**
+
 - [ ] **Feature implementation** started
 - [ ] **Code review** process understood
 - [ ] **Testing procedures** followed
 - [ ] **Deployment process** verified
 
 ### **Week 2: Autonomy**
+
 - [ ] **Independent development** capability
 - [ ] **Security practices** followed
 - [ ] **Performance considerations** applied
@@ -474,12 +515,14 @@ npm run build -- --analyze
 **You are now part of the PAPI Hair Design development team!**
 
 ### **Next Steps**
+
 1. **Complete onboarding checklist** ✅
 2. **Join daily standup** 📅
 3. **Start contributing** 🚀
 4. **Ask questions** 💬
 
 ### **Team Values**
+
 - 🔒 **Security First** - Always prioritize security
 - 🚀 **Quality Code** - Write maintainable, tested code
 - 📚 **Documentation** - Keep docs up to date

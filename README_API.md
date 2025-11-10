@@ -11,11 +11,13 @@ BASE="https://phd-ai-hair-studio-5hbgan143-h4ck3d-labs-projects.vercel.app"
 ## 📡 API Endpointy
 
 ### Chat API
+
 - **URL:** `$BASE/api/chat`
 - **Method:** POST
 - **Content-Type:** `application/json`
 
 **Request:**
+
 ```json
 {
   "message": "Ahoj, ako sa máš?"
@@ -23,6 +25,7 @@ BASE="https://phd-ai-hair-studio-5hbgan143-h4ck3d-labs-projects.vercel.app"
 ```
 
 **Response:**
+
 ```json
 {
   "reply": "Ahoj! Povedal si: Ahoj, ako sa máš?"
@@ -30,11 +33,13 @@ BASE="https://phd-ai-hair-studio-5hbgan143-h4ck3d-labs-projects.vercel.app"
 ```
 
 ### Hair Analysis API
+
 - **URL:** `$BASE/api/hair/analyze`
 - **Method:** POST
 - **Content-Type:** `application/json`
 
 **Request:**
+
 ```json
 {
   "imageUrl": "https://picsum.photos/seed/hair/600"
@@ -42,6 +47,7 @@ BASE="https://phd-ai-hair-studio-5hbgan143-h4ck3d-labs-projects.vercel.app"
 ```
 
 **Response:**
+
 ```json
 {
   "ok": true,
@@ -55,6 +61,7 @@ BASE="https://phd-ai-hair-studio-5hbgan143-h4ck3d-labs-projects.vercel.app"
 API podporuje optional Bearer token autentifikáciu cez `API_AUTH_TOKEN` environment variable.
 
 ### Bez Auth (verejné API)
+
 ```bash
 curl -X POST "$BASE/api/chat" \
   -H 'Content-Type: application/json' \
@@ -62,6 +69,7 @@ curl -X POST "$BASE/api/chat" \
 ```
 
 ### S Auth (chránené API)
+
 ```bash
 TOKEN="<tvoj-api-token>"
 
@@ -72,12 +80,14 @@ curl -X POST "$BASE/api/chat" \
 ```
 
 **Auth Responses:**
+
 - ✅ `200 OK` - správny token alebo žiadny token (ak nie je nastavený `API_AUTH_TOKEN`)
 - ❌ `401 Unauthorized` - nesprávny token (ak je nastavený `API_AUTH_TOKEN`)
 
 ## 🧪 Rýchle Testy
 
 ### Smoke Test (bez auth)
+
 ```bash
 # Chat test
 curl -i -sS -X POST "$BASE/api/chat" \
@@ -91,6 +101,7 @@ curl -i -sS -X POST "$BASE/api/hair/analyze" \
 ```
 
 ### Auth Test (s tokenom)
+
 ```bash
 TOKEN="<tvoj-token>"
 
@@ -129,15 +140,17 @@ Lokálne API funguje rovnako ako produkčné, ale bez Vercel auth middleware.
 ## 🔧 Konfigurácia
 
 ### Astro Config
+
 ```js
 // astro.config.mjs
 export default {
-  output: 'server',
+  output: "server",
   adapter: vercel(),
 };
 ```
 
 ### Environment Variables
+
 - `API_AUTH_TOKEN` - optional Bearer token pre API ochranu
 - `OPENAI_API_KEY` - pre AI funkcionality
 

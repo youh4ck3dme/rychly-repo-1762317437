@@ -2,7 +2,10 @@
 
 import type { HairSuggestion } from "../types";
 
-export async function applyVirtualTryOn(userImage: string, suggestion: HairSuggestion): Promise<string> {
+export async function applyVirtualTryOn(
+  userImage: string,
+  suggestion: HairSuggestion,
+): Promise<string> {
   const res = await fetch("/api/hair/virtual-try-on", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -10,10 +13,13 @@ export async function applyVirtualTryOn(userImage: string, suggestion: HairSugge
   });
   if (!res.ok) {
     const msg = await res.text().catch(() => "");
-    throw new Error(`Virtual try-on failed (${res.status}): ${msg || "unknown error"}`);
+    throw new Error(
+      `Virtual try-on failed (${res.status}): ${msg || "unknown error"}`,
+    );
   }
   const data = await res.json();
-  if (!data?.image) throw new Error("Invalid response from virtual try-on API.");
+  if (!data?.image)
+    throw new Error("Invalid response from virtual try-on API.");
   return data.image;
 }
 
@@ -35,7 +41,9 @@ export function createChatSession(): ChatSession {
       });
       if (!res.ok) {
         const msg = await res.text().catch(() => "");
-        throw new Error(`Chat failed (${res.status}): ${msg || "unknown error"}`);
+        throw new Error(
+          `Chat failed (${res.status}): ${msg || "unknown error"}`,
+        );
       }
       const data = await res.json();
       return data?.reply ?? "";
@@ -50,7 +58,7 @@ export function createChatSession(): ChatSession {
 async function retryWithBackoff<T>(
   fn: () => Promise<T>,
   maxRetries: number = 3,
-  baseDelay: number = 1000
+  baseDelay: number = 1000,
 ): Promise<T> {
   let lastError: Error;
 
@@ -63,16 +71,20 @@ async function retryWithBackoff<T>(
       // Don't retry on certain errors
       if (error instanceof Error) {
         const message = error.message.toLowerCase();
-        if (message.includes('safety') || message.includes('blocked') ||
-            message.includes('invalid') || message.includes('quota') ||
-            message.includes('authentication')) {
+        if (
+          message.includes("safety") ||
+          message.includes("blocked") ||
+          message.includes("invalid") ||
+          message.includes("quota") ||
+          message.includes("authentication")
+        ) {
           throw error; // Don't retry these errors
         }
       }
 
       if (attempt < maxRetries) {
         const delay = baseDelay * Math.pow(2, attempt); // Exponential backoff
-        await new Promise(resolve => setTimeout(resolve, delay));
+        await new Promise((resolve) => setTimeout(resolve, delay));
       }
     }
   }
@@ -84,65 +96,69 @@ async function retryWithBackoff<T>(
 export async function analyzeHairImage(
   imageUrl: string,
   consultationStyle?: string,
-  hairstylePreference?: string
+  hairstylePreference?: string,
 ) {
-  return retryWithBackoff(async () => {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+  return retryWithBackoff(
+    async () => {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
 
-    try {
-      const res = await fetch("/api/hair/analyze", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          imageUrl,
-          lang: "sk",
-          goals: [consultationStyle, hairstylePreference].filter(Boolean)
-        }),
-        signal: controller.signal
-      });
+      try {
+        const res = await fetch("/api/hair/analyze", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            imageUrl,
+            lang: "sk",
+            goals: [consultationStyle, hairstylePreference].filter(Boolean),
+          }),
+          signal: controller.signal,
+        });
 
-      clearTimeout(timeoutId);
+        clearTimeout(timeoutId);
 
-      if (!res.ok) {
-        const errorText = await res.text().catch(() => '');
-        let errorMessage = `Analysis failed: ${res.status}`;
+        if (!res.ok) {
+          const errorText = await res.text().catch(() => "");
+          let errorMessage = `Analysis failed: ${res.status}`;
 
-        // Try to parse error response
-        try {
-          const errorData = JSON.parse(errorText);
-          if (errorData.error) {
-            errorMessage = errorData.error;
+          // Try to parse error response
+          try {
+            const errorData = JSON.parse(errorText);
+            if (errorData.error) {
+              errorMessage = errorData.error;
+            }
+          } catch {
+            // Use raw error text if JSON parsing fails
+            if (errorText) {
+              errorMessage = errorText;
+            }
           }
-        } catch {
-          // Use raw error text if JSON parsing fails
-          if (errorText) {
-            errorMessage = errorText;
-          }
+
+          throw new Error(errorMessage);
         }
 
-        throw new Error(errorMessage);
-      }
+        const data = await res.json();
 
-      const data = await res.json();
-
-      // Validate response structure
-      if (!data || typeof data !== 'object') {
-        throw new Error('Invalid response format from analysis API');
-      }
-
-      return data;
-    } catch (error) {
-      clearTimeout(timeoutId);
-
-      if (error instanceof Error) {
-        if (error.name === 'AbortError') {
-          throw new Error('Request timeout - please try again');
+        // Validate response structure
+        if (!data || typeof data !== "object") {
+          throw new Error("Invalid response format from analysis API");
         }
-        throw error;
-      }
 
-      throw new Error('Unknown error occurred during analysis');
-    }
-  }, 3, 1000); // 3 retries with 1 second base delay
+        return data;
+      } catch (error) {
+        clearTimeout(timeoutId);
+
+        if (error instanceof Error) {
+          if (error.name === "AbortError") {
+            throw new Error("Request timeout - please try again");
+          }
+          throw error;
+        }
+
+        throw new Error("Unknown error occurred during analysis");
+      }
+    },
+    3,
+    1000,
+  ); // 3 retries with 1 second base delay
 }

@@ -13,6 +13,7 @@ All endpoints support JSON request/response format and include proper error hand
 Most endpoints are public for client-side usage. Admin endpoints require API key authentication.
 
 ### Headers
+
 ```
 Authorization: Bearer YOUR_API_TOKEN
 Content-Type: application/json
@@ -27,6 +28,7 @@ Content-Type: application/json
 AI-powered hair analysis using OpenAI Vision.
 
 **Request Body:**
+
 ```json
 {
   "imageUrl": "https://example.com/hair-image.jpg",
@@ -36,6 +38,7 @@ AI-powered hair analysis using OpenAI Vision.
 ```
 
 **Response:**
+
 ```json
 {
   "hairType": "stredne husté, rovné vlasy",
@@ -62,6 +65,7 @@ AI-powered hair analysis using OpenAI Vision.
 Generate virtual hair try-on using AI.
 
 **Request Body:**
+
 ```json
 {
   "userImage": "https://example.com/user-photo.jpg",
@@ -76,6 +80,7 @@ Generate virtual hair try-on using AI.
 ```
 
 **Response:**
+
 ```json
 {
   "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABA...",
@@ -93,6 +98,7 @@ Generate virtual hair try-on using AI.
 Get personalized hair style suggestions.
 
 **Request Body:**
+
 ```json
 {
   "hairType": "straight",
@@ -107,6 +113,7 @@ Get personalized hair style suggestions.
 ```
 
 **Response:**
+
 ```json
 {
   "suggestions": [
@@ -133,6 +140,7 @@ Get personalized hair style suggestions.
 Send push notifications and emails.
 
 **Request Body:**
+
 ```json
 {
   "type": "booking",
@@ -145,6 +153,7 @@ Send push notifications and emails.
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -164,6 +173,7 @@ Send push notifications and emails.
 Retrieve notification history.
 
 **Response:**
+
 ```json
 {
   "notifications": [
@@ -186,6 +196,7 @@ Retrieve notification history.
 All endpoints return appropriate HTTP status codes and error messages.
 
 ### Error Response Format:
+
 ```json
 {
   "error": "Error description",
@@ -195,6 +206,7 @@ All endpoints return appropriate HTTP status codes and error messages.
 ```
 
 ### Common HTTP Status Codes:
+
 - `200` - Success
 - `400` - Bad Request (invalid input)
 - `401` - Unauthorized (invalid API key)
@@ -217,6 +229,7 @@ API endpoints are rate-limited to prevent abuse:
 Subscribe to webhook events for real-time updates:
 
 ### Supported Events:
+
 - `booking.created`
 - `booking.confirmed`
 - `booking.cancelled`
@@ -224,6 +237,7 @@ Subscribe to webhook events for real-time updates:
 - `payment.received`
 
 ### Webhook Payload:
+
 ```json
 {
   "event": "booking.created",
@@ -240,28 +254,29 @@ Subscribe to webhook events for real-time updates:
 ## SDK and Libraries
 
 ### JavaScript/TypeScript SDK
+
 ```typescript
-import { PapiHairAPI } from '@papi-hair-design/sdk';
+import { PapiHairAPI } from "@papi-hair-design/sdk";
 
 const api = new PapiHairAPI({
-  apiKey: 'your-api-key',
-  baseUrl: 'https://api.papihairdesign.sk'
+  apiKey: "your-api-key",
+  baseUrl: "https://api.papihairdesign.sk",
 });
 
 // Analyze hair image
 const result = await api.hair.analyze({
-  imageUrl: 'https://example.com/image.jpg',
-  locale: 'sk'
+  imageUrl: "https://example.com/image.jpg",
+  locale: "sk",
 });
 
 // Generate virtual try-on
 const virtualTryOn = await api.hair.virtualTryOn({
-  userImage: 'https://example.com/user.jpg',
+  userImage: "https://example.com/user.jpg",
   suggestion: {
-    name: 'Blonde Balayage',
-    hairstyle: 'Long Layers',
-    hex: '#D4AF37'
-  }
+    name: "Blonde Balayage",
+    hairstyle: "Long Layers",
+    hex: "#D4AF37",
+  },
 });
 ```
 
@@ -283,6 +298,7 @@ npm run test:load
 ## Support
 
 For API support and questions:
+
 - Email: api@papihairdesign.sk
 - Documentation: https://docs.papihairdesign.sk
 - Status Page: https://status.papihairdesign.sk
@@ -290,6 +306,7 @@ For API support and questions:
 ## Changelog
 
 ### Version 2.0.0 (Latest)
+
 - Added AR camera functionality
 - Enhanced AI analysis with face detection
 - New social sharing features
@@ -297,12 +314,14 @@ For API support and questions:
 - Added comprehensive analytics tracking
 
 ### Version 1.5.0
+
 - Added virtual try-on API
 - Enhanced error handling
 - Improved rate limiting
 - Added webhook support
 
 ### Version 1.0.0
+
 - Initial API release
 - Basic hair analysis
 - Notification system

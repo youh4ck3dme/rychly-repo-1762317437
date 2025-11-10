@@ -1,11 +1,13 @@
 # 🚀 100% FUNKČNÝ PROMPT PRE AUTOMATICKÉ TESTOVANIE A OPRAVU SMTP SERVERA
 
 ## 🎯 ÚČEL
+
 Tento prompt automaticky otestuje SMTP server a v prípade nefunkčnosti ho opraví.
 
 ## 📋 KROKY PRE AUTOMATICKÉ SPRACOVANIE
 
 ### KROK 1: ANALÝZA PROJEKTU
+
 ```
 Najprv analyzuj projekt a nájdi SMTP konfiguráciu:
 
@@ -15,6 +17,7 @@ Najprv analyzuj projekt a nájdi SMTP konfiguráciu:
 ```
 
 ### KROK 2: VYTVORENIE TESTOVACIEHO SCRIPTU
+
 ```
 Vytvor testovací script s názvom "test-smtp.js" s týmto obsahom:
 
@@ -73,6 +76,7 @@ testSMTP().then(result => {
 ```
 
 ### KROK 3: SPUSTENIE TESTU
+
 ```
 node test-smtp.js
 ```
@@ -80,6 +84,7 @@ node test-smtp.js
 ### KROK 4: ANALÝZA VÝSLEDKOV
 
 **✅ AK TEST PREŠIEL:**
+
 - SMTP server funguje správne
 - Žiadna oprava nie je potrebná
 - E-mail bol úspešne odoslaný
@@ -89,6 +94,7 @@ node test-smtp.js
 #### MOŽNÉ PRÍČINY A RIEŠENIA:
 
 1. **Nesprávne credentials:**
+
    ```bash
    # Skontroluj .env súbor
    cat .env
@@ -96,14 +102,16 @@ node test-smtp.js
    ```
 
 2. **Nesprávny host alebo port:**
+
    ```javascript
    // Možné alternatívy pre Websupport:
-   host: 'smtp.m1.websupport.sk' // port 465, secure: true
-   host: 'smtp.websupport.sk'    // port 587, secure: false
-   host: 'mail.websupport.sk'    // port 25, secure: false
+   host: "smtp.m1.websupport.sk"; // port 465, secure: true
+   host: "smtp.websupport.sk"; // port 587, secure: false
+   host: "mail.websupport.sk"; // port 25, secure: false
    ```
 
 3. **Firewall alebo sieťové obmedzenia:**
+
    ```bash
    # Test konektivity
    telnet smtp.m1.websupport.sk 465
@@ -132,27 +140,27 @@ node test-smtp.js
 ```javascript
 // Konfigurácia 1: SSL na porte 465
 const config1 = {
-    host: 'smtp.m1.websupport.sk',
-    port: 465,
-    secure: true,
-    auth: { user: 'info@papihairdesign.sk', pass: 'heslo' }
+  host: "smtp.m1.websupport.sk",
+  port: 465,
+  secure: true,
+  auth: { user: "info@papihairdesign.sk", pass: "heslo" },
 };
 
 // Konfigurácia 2: TLS na porte 587
 const config2 = {
-    host: 'smtp.m1.websupport.sk',
-    port: 587,
-    secure: false,
-    requireTLS: true,
-    auth: { user: 'info@papihairdesign.sk', pass: 'heslo' }
+  host: "smtp.m1.websupport.sk",
+  port: 587,
+  secure: false,
+  requireTLS: true,
+  auth: { user: "info@papihairdesign.sk", pass: "heslo" },
 };
 
 // Konfigurácia 3: Alternatívny host
 const config3 = {
-    host: 'smtp.websupport.sk',
-    port: 587,
-    secure: false,
-    auth: { user: 'info@papihairdesign.sk', pass: 'heslo' }
+  host: "smtp.websupport.sk",
+  port: 587,
+  secure: false,
+  auth: { user: "info@papihairdesign.sk", pass: "heslo" },
 };
 ```
 
@@ -161,6 +169,7 @@ const config3 = {
 Po aplikovaní opráv:
 
 1. **Znova spusti test:**
+
    ```bash
    node test-smtp.js
    ```
@@ -179,6 +188,7 @@ Po aplikovaní opráv:
 **Pre permanentné fungovanie:**
 
 1. **Pridaj SMTP konfiguráciu do .env súboru:**
+
    ```
    SMTP_HOST=smtp.m1.websupport.sk
    SMTP_PORT=465
@@ -190,13 +200,13 @@ Po aplikovaní opráv:
 2. **Uprav kontaktný formulár aby používal .env premenné:**
    ```javascript
    const transporter = nodemailer.createTransport({
-       host: process.env.SMTP_HOST,
-       port: parseInt(process.env.SMTP_PORT),
-       secure: process.env.SMTP_SECURE === 'true',
-       auth: {
-           user: process.env.SMTP_USER,
-           pass: process.env.SMTP_PASS
-       }
+     host: process.env.SMTP_HOST,
+     port: parseInt(process.env.SMTP_PORT),
+     secure: process.env.SMTP_SECURE === "true",
+     auth: {
+       user: process.env.SMTP_USER,
+       pass: process.env.SMTP_PASS,
+     },
    });
    ```
 
@@ -206,48 +216,50 @@ Pre úplnú automatizáciu vytvor aj tento script:
 
 ```javascript
 // auto-repair-smtp.js
-import nodemailer from 'nodemailer';
-import { writeFileSync } from 'fs';
+import nodemailer from "nodemailer";
+import { writeFileSync } from "fs";
 
 const configs = [
-    { host: 'smtp.m1.websupport.sk', port: 465, secure: true },
-    { host: 'smtp.m1.websupport.sk', port: 587, secure: false, requireTLS: true },
-    { host: 'smtp.websupport.sk', port: 587, secure: false },
-    { host: 'mail.websupport.sk', port: 25, secure: false }
+  { host: "smtp.m1.websupport.sk", port: 465, secure: true },
+  { host: "smtp.m1.websupport.sk", port: 587, secure: false, requireTLS: true },
+  { host: "smtp.websupport.sk", port: 587, secure: false },
+  { host: "mail.websupport.sk", port: 25, secure: false },
 ];
 
 async function testConfigs() {
-    for (let i = 0; i < configs.length; i++) {
-        const config = configs[i];
-        console.log(`🧪 Testujem konfiguráciu ${i + 1}: ${config.host}:${config.port}`);
+  for (let i = 0; i < configs.length; i++) {
+    const config = configs[i];
+    console.log(
+      `🧪 Testujem konfiguráciu ${i + 1}: ${config.host}:${config.port}`,
+    );
 
-        const transporter = nodemailer.createTransport({
-            ...config,
-            auth: { user: 'info@papihairdesign.sk', pass: 'Poklop123###' }
-        });
+    const transporter = nodemailer.createTransport({
+      ...config,
+      auth: { user: "info@papihairdesign.sk", pass: "Poklop123###" },
+    });
 
-        try {
-            await transporter.sendMail({
-                from: 'info@papihairdesign.sk',
-                to: 'info@papihairdesign.sk',
-                subject: 'AUTO-REPAIR TEST',
-                text: 'Automatický test konfigurácie'
-            });
+    try {
+      await transporter.sendMail({
+        from: "info@papihairdesign.sk",
+        to: "info@papihairdesign.sk",
+        subject: "AUTO-REPAIR TEST",
+        text: "Automatický test konfigurácie",
+      });
 
-            console.log(`✅ Konfigurácia ${i + 1} funguje!`);
-            return config;
-        } catch (error) {
-            console.log(`❌ Konfigurácia ${i + 1} zlyhala: ${error.message}`);
-        }
+      console.log(`✅ Konfigurácia ${i + 1} funguje!`);
+      return config;
+    } catch (error) {
+      console.log(`❌ Konfigurácia ${i + 1} zlyhala: ${error.message}`);
     }
-    return null;
+  }
+  return null;
 }
 
-testConfigs().then(workingConfig => {
-    if (workingConfig) {
-        console.log('🎉 Našla sa funkčná konfigurácia!');
-        // Ulož konfiguráciu do .env súboru
-        const envContent = `
+testConfigs().then((workingConfig) => {
+  if (workingConfig) {
+    console.log("🎉 Našla sa funkčná konfigurácia!");
+    // Ulož konfiguráciu do .env súboru
+    const envContent = `
 SMTP_HOST=${workingConfig.host}
 SMTP_PORT=${workingConfig.port}
 SMTP_SECURE=${workingConfig.secure}
@@ -255,17 +267,18 @@ SMTP_USER=info@papihairdesign.sk
 SMTP_PASS=Poklop123###
         `.trim();
 
-        writeFileSync('.env.smtp', envContent);
-        console.log('💾 Konfigurácia uložená do .env.smtp');
-    } else {
-        console.log('💥 Žiadna konfigurácia nefunguje');
-    }
+    writeFileSync(".env.smtp", envContent);
+    console.log("💾 Konfigurácia uložená do .env.smtp");
+  } else {
+    console.log("💥 Žiadna konfigurácia nefunguje");
+  }
 });
 ```
 
 ## 📞 KONTAKT PRE PODPORU
 
 Ak žiadna konfigurácia nefunguje:
+
 1. Kontaktuj Websupport podporu
 2. Over si SPF, DKIM, DMARC záznamy
 3. Skontroluj či nie je prekročený limit odoslaných e-mailov
@@ -274,6 +287,7 @@ Ak žiadna konfigurácia nefunguje:
 ## ✅ OVERENIE ÚSPECHU
 
 **SMTP server funguje správne keď:**
+
 - ✅ Testovací script vráti "SUCCESS"
 - ✅ E-mail príde do schránky do 1 minúty
 - ✅ Kontaktný formulár odosiela e-maily

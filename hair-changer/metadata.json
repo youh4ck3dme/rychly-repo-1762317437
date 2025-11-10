@@ -1,7 +1,5 @@
 {
   "name": "HAIR CHANGER",
   "description": "An AI-powered tool from Papi Hair Design that lets you change your hairstyle and color virtually.",
-  "requestFramePermissions": [
-    "camera"
-  ]
+  "requestFramePermissions": ["camera"]
 }
