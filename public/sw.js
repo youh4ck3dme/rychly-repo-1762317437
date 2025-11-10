@@ -3,6 +3,7 @@ const CACHE_NAME = 'papi-hair-design-v1';
 const urlsToCache = [
   '/',
   '/assets/6af2e6b989a158cee5230ee1698e84b3.jpg',
+  'https://cloud.papihairdesign.sk/wp-content/uploads/2025/10/logo-e1761780357968.png',
   '/assets/android-chrome-192x192.png',
   '/assets/android-chrome-512x512.png',
   '/assets/apple-touch-icon.png',

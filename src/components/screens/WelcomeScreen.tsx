@@ -11,40 +11,46 @@ interface WelcomeScreenProps {
 
 const backgroundImageUrl = '/assets/images/welcome-background.webp';
 
-const diamondStars = [
-  { top: '15%', left: '20%', size: 1.5 }, { top: '25%', left: '80%', size: 2 },
-  { top: '50%', left: '10%', size: 1 }, { top: '60%', left: '90%', size: 1.5 },
-  { top: '85%', left: '50%', size: 2 }, { top: '10%', left: '55%', size: 1 },
-  { top: '30%', left: '30%', size: 1.5 }, { top: '70%', left: '75%', size: 1 },
-  { top: '90%', left: '15%', size: 2 }, { top: '45%', left: '60%', size: 1 },
-  { top: '5%', left: '5%', size: 1.5 }, { top: '75%', left: '35%', size: 1 },
-];
+const stars = Array.from({ length: 250 }, (_, i) => ({
+  id: i,
+  top: Math.random() * 100,
+  left: Math.random() * 100,
+  size: Math.random() * 2 + 0.5,
+  brightness: Math.random() * 0.8 + 0.2,
+  twinkleDelay: Math.random() * 5,
+}));
 
 // FIX: Wrapped component in `React.memo` to stabilize its type for the TypeScript compiler, resolving issues with `framer-motion` prop type inference.
-const DiamondStars = React.memo(() => (
+const StarrySky = React.memo(() => (
   <>
-    {diamondStars.map((star, index) => (
+    {stars.map((star) => (
       <motion.div
-        key={index}
-        className="fixed rounded-full bg-white"
+        key={star.id}
+        className="absolute bg-white rounded-full"
         style={{
-          top: star.top,
-          left: star.left,
+          top: `${star.top}%`,
+          left: `${star.left}%`,
           width: `${star.size}px`,
           height: `${star.size}px`,
-          boxShadow: '0 0 8px rgba(255, 255, 220, 0.9), 0 0 12px rgba(255, 255, 220, 0.5)',
+          opacity: star.brightness,
+          boxShadow: `0 0 ${star.size * 2}px rgba(255, 255, 255, ${star.brightness * 0.8})`,
         }}
-        animate={{ opacity: [0.2, 1, 0.2] }}
+        animate={{
+          opacity: [star.brightness * 0.3, star.brightness, star.brightness * 0.3],
+          scale: [0.8, 1, 0.8],
+        }}
         transition={{
-          duration: Math.random() * 4 + 3, // Duration between 3 and 7 seconds
+          duration: 2 + Math.random() * 3,
           repeat: Infinity,
           repeatType: 'mirror',
           ease: 'easeInOut',
+          delay: star.twinkleDelay,
         }}
       />
     ))}
   </>
 ));
+
 
 // FIX: Removed React.FC and explicitly typed props to improve type compatibility.
 // FIX: Wrapped component in `React.memo` to stabilize its type for the TypeScript compiler, resolving issues with `framer-motion` prop type inference.
@@ -69,27 +75,18 @@ export const WelcomeScreen = React.memo(({ onStart }: WelcomeScreenProps) => {
   }, []);
 
   return (
-    <div className="flex flex-col flex-grow bg-black">
-      <div className="relative flex-grow flex flex-col justify-center text-white overflow-hidden">
-        <motion.div 
-            className="fixed inset-0 bg-cover bg-center"
-            style={{
-                backgroundImage: `url(${backgroundImageUrl})`,
-                transform: `translate(${parallaxOffset.x}px, ${parallaxOffset.y}px) scale(1.1)`,
-                transition: 'transform 0.5s ease-out',
-                zIndex: -1
-            }}
-        />
-        <div className="fixed inset-0 bg-black/50" style={{ zIndex: -1 }}></div>
-        <DiamondStars />
+    <div className="flex flex-col flex-grow min-h-screen bg-black">
+      <div className="relative flex flex-col justify-center flex-grow min-h-screen overflow-hidden text-white">
+        <div className="fixed inset-0 bg-gradient-to-b from-indigo-900 via-purple-900 to-black -z-10"></div>
+        <StarrySky />
         
         <main className="relative z-10 flex flex-col justify-end flex-grow p-8 animate-fade-in">
-          <div className="absolute top-1/2 left-8 right-8 transform -translate-y-1/2 translate-y-5 text-center">
+          <div className="absolute text-center -translate-y-1/2 top-1/2 left-8 right-8">
              <motion.h1 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="text-2xl font-bold bg-gradient-to-r from-yellow-300 via-white to-yellow-200 bg-clip-text text-transparent"
+                className="text-2xl font-bold text-transparent bg-gradient-to-r from-yellow-300 via-white to-yellow-200 bg-clip-text"
                 style={{ textShadow: '0 2px 15px rgba(255, 215, 0, 0.3)' }}
             >
                 {t('welcome.title')}
@@ -98,7 +95,7 @@ export const WelcomeScreen = React.memo(({ onStart }: WelcomeScreenProps) => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
-                className="mt-4 text-lg text-balance tracking-wide"
+                className="mt-4 text-lg tracking-wide text-balance"
             >
                 {t('welcome.subtitle')}
             </motion.p>
@@ -106,14 +103,15 @@ export const WelcomeScreen = React.memo(({ onStart }: WelcomeScreenProps) => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
-                className="mt-2 text-xs text-gray-300 tracking-wider"
+                className="mt-2 text-xs tracking-wider text-gray-300"
             >
                 {t('welcome.tagline')}
             </motion.p>
           </div>
         </main>
-        
-        <motion.div 
+
+        {process.env.NODE_ENV === 'development' && (
+        <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
@@ -121,14 +119,15 @@ export const WelcomeScreen = React.memo(({ onStart }: WelcomeScreenProps) => {
         >
             <motion.button
               onClick={onStart}
-              className="w-full bg-gradient-to-b from-gray-900 to-black text-white font-bold py-4 px-6 rounded-lg border border-yellow-200/20 transition-shadow duration-300 flex flex-col items-center group animate-pulse-glow"
+              className="flex flex-col items-center w-full px-6 py-4 font-bold text-white transition-shadow duration-300 border rounded-lg bg-gradient-to-b from-gray-900 to-black border-yellow-200/20 group animate-pulse-glow"
               whileHover={{ scale: 1.03, y: -4 }}
               transition={{ type: 'spring', stiffness: 400, damping: 10 }}
             >
-              <span className="tracking-wider group-hover:tracking-widest transition-all duration-300">{t('welcome.button')}</span>
+              <span className="tracking-wider transition-all duration-300 group-hover:tracking-widest">{t('welcome.button')}</span>
               <span className="text-[70%] font-normal text-yellow-200/80 tracking-widest mt-1 group-hover:text-white transition-colors duration-300">{t('welcome.buttonSubtitle')}</span>
             </motion.button>
         </motion.div>
+        )}
       </div>
     </div>
   );

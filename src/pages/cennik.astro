@@ -3,37 +3,81 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
-let services = [];
-let loading = true;
-let error = '';
-let panske = [];
-let damske = [];
-
-// Fetch data on server side
-try {
-  const res = await fetch('https://api.gruppa.cloud/wp-json/gruppa/services/');
-  if (!res.ok) throw new Error('Nepodarilo sa načítať dáta z API');
-  services = await res.json();
-  panske = services.filter(s => s.post_category && s.post_category.toLowerCase().includes('pánske'));
-  damske = services.filter(s => s.post_category && s.post_category.toLowerCase().includes('dámske'));
-} catch (e) {
-  error = e.message || 'Chyba pri načítaní dát';
-} finally {
-  loading = false;
-}
+const services = {
+  panske: {
+    "Strihy a úprava vlasov": [
+      { title: "Pánsky strih", price: 19 },
+      { title: "Junior strih", price: 15 },
+      { title: "Vlasy + brada", price: 27 },
+      { title: "Pánsky špeciál", price: 50 }
+    ],
+    "Brada a fúzy": [
+      { title: "Úprava brady", price: 12 },
+      { title: "Farbenie brady", price: 10 }
+    ],
+    "Farbenie a špeciálne techniky": [
+      { title: "Tónovanie šedín", price: 10, duration: "30 min." },
+      { title: "Zosvetľovanie vlasov", price: 40, duration: "1 h 30 min." },
+      { title: "Trvalá ondulácia", price: 40, duration: "1 h 30 min." }
+    ],
+    "Wellness & starostlivosť": [
+      { title: "Depilácia nosa", price: 5, duration: "10 min." },
+      { title: "Depilácia uší", price: 5, duration: "10 min." },
+      { title: "Peeling / čierna maska", price: 10, duration: "25 min." },
+      { title: "Ušné sviečky", price: 10, duration: "20 min." }
+    ]
+  },
+  damske: {
+    "Strihy a styling": [
+      { title: "Strih", price: "od 30 €", duration: "1 h", desc: "umytie, strihanie, styling" },
+      { title: "Finálny styling", price: "od 20 €", duration: "30 min.", desc: "úprava účesu na konkrétnu príležitosť" },
+      { title: "Spoločenský účes", price: 40, duration: "1 h", desc: "detailný styling na spoločenské udalosti" },
+      { title: "Fúkaná (polodlhé vlasy)", price: 20, duration: "30 min." },
+      { title: "Fúkaná (dlhé vlasy)", price: 30, duration: "1 h" }
+    ],
+    "Copríky a špeciálne účesy": [
+      { title: "Copríky / braids", price: "od 30 €", duration: "4 h", desc: "komplexné pletenie a styling" }
+    ],
+    "Ošetrenie a keratín": [
+      { title: "Brazílsky keratín", price: "od 130 €", duration: "3 h", desc: "hlboká regenerácia a vyhladenie vlasov" },
+      { title: "Methamorphyc exclusive", price: 50, duration: "1 h 30 min.", desc: "exkluzívna kúra s intenzívnou starostlivosťou" },
+      { title: "Methamorphyc quick", price: "od 35 €", duration: "1 h", desc: "rýchla regenerácia a lesk vlasov" }
+    ],
+    "Farbenie a odlesky": [
+      { title: "Farbenie (celé vlasy)", price: 70, duration: "2 h" },
+      { title: "Farbenie (odrasty)", price: 45, duration: "1 h 30 min." },
+      { title: "Farbenie + strih (celé vlasy)", price: 90, duration: "2 h" },
+      { title: "Farbenie + strih (odrasty)", price: 60, duration: "2 h" },
+      { title: "Zosvetľovanie / gumovanie farby", price: "od 160 €", duration: "4 h" },
+      { title: "Čistenie odleskov", price: "od 100 €", duration: "3 h" }
+    ],
+    "Melíry a balayage": [
+      { title: "Melír (odrasty)", price: "od 120 €", duration: "3 h" },
+      { title: "Melír (celé vlasy)", price: "od 150 €", duration: "4 h" },
+      { title: "Balayage (doplnenie odrastov)", price: "od 120 €", duration: "3 h" },
+      { title: "Balayage (celé vlasy)", price: "od 150 €", duration: "4 h" },
+      { title: "Airtouch (doplnenie odrastov)", price: "od 140 €", duration: "4 h" },
+      { title: "Airtouch (celé vlasy)", price: "od 170 €", duration: "5 h" }
+    ],
+    "Predlžovanie vlasov": [
+      { title: "Napojenie TAPE IN", price: "od 40 €", duration: "1 h" },
+      { title: "Prepojenie TAPE IN", price: "od
+    ]
+  }
+};
 ---
 
 <BaseLayout title="Cenník - Papi Hair Design | Transparentné ceny kaderníckych služieb" description="Transparentný cenník kaderníckych služieb v Košiciach. Žiadne skryté poplatky, profesionálne služby a výhodné balíčky.">
   <Header />
 
   <!-- Hero Section -->
-  <section class="bg-gradient-to-br from-primary-50 to-white py-20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <section class="py-20 bg-gradient-to-br from-primary-50 to-white">
+    <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
       <div class="text-center">
-        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+        <h1 class="mb-6 text-4xl font-bold text-gray-900 md:text-5xl">
           Transparentný <span class="text-primary-600">cenník</span>
         </h1>
-        <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+        <p class="max-w-3xl mx-auto mb-8 text-xl text-gray-600">
           Žiadne skryté poplatky ani nepríjemné prekvapenia. Všetky ceny sú stanovené vopred a konečné.
         </p>
       </div>
@@ -42,183 +86,131 @@ try {
 
   <!-- Pricing Cards -->
   <section class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      {loading ? (
-        <div class="text-center text-xl text-gray-500">Načítavam služby…</div>
-      ) : error ? (
-        <div class="text-center text-red-600 font-semibold">{error}</div>
-      ) : (
-        <>
-          <h2 class="text-3xl font-bold text-gray-900 mb-8">Dámske služby</h2>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-            {damske && damske.length > 0 ? (
-              damske.map((service) => (
-                <div class="relative bg-white rounded-2xl shadow-lg border-2 p-8 border-gray-200 hover:border-primary-300 transition-all duration-300">
-                  <div class="text-center mb-8">
-                    <h3 class="text-2xl font-bold text-gray-900 mb-2">{service.post_title}</h3>
-                    <div class="text-4xl font-bold text-primary-600 mb-2">{service.post_price ? `${service.post_price}€` : ''}</div>
-                    <p class="text-gray-600 mb-2">{service.post_desc}</p>
-                    <div class="text-sm text-gray-500 mb-1">Kategória: {service.post_category}</div>
-                    {service.post_subcategory && <div class="text-sm text-gray-500 mb-1">Podkategória: {service.post_subcategory}</div>}
-                    {service.post_duration && <div class="text-sm text-gray-500 mb-1">Trvanie: {service.post_duration} min</div>}
-                    {service._ID && <div class="text-xs text-gray-400">ID služby: {service._ID}</div>}
-                    {service._post_id && <div class="text-xs text-gray-400">ID klienta: {service._post_id}</div>}
-                    {service.cct_author_id && <div class="text-xs text-gray-400">Autor: {service.cct_author_id}</div>}
-                    {service.cct_created && <div class="text-xs text-gray-400">Vytvorené: {service.cct_created}</div>}
-                    {service.cct_modified && <div class="text-xs text-gray-400">Upravené: {service.cct_modified}</div>}
-                    {service.cct_status && <div class="text-xs text-gray-400">Stav: {service.cct_status}</div>}
-                    {/* Zobraz ďalšie polia ak existujú */}
-                    {Object.entries(service).map(([key, value]) => {
-                      if ([
-                        '_ID','_post_id','post_title','post_desc','post_category','post_subcategory','post_price','post_duration',
-                        'cct_author_id','cct_created','cct_modified','cct_status'
-                      ].includes(key)) return null;
-                      if (!value) return null;
-                      return <div class="text-xs text-gray-400">{key}: {String(value)}</div>;
-                    })}
-                  </div>
-                  <a
-                    href="/kontakty"
-                    class="w-full block text-center py-3 px-6 rounded-lg font-semibold transition-all bg-primary-600 hover:bg-primary-700 text-white shadow-lg hover:shadow-xl transform hover:scale-105"
-                  >
-                    Vybrať službu
-                  </a>
-                </div>
-              ))
-            ) : (
-              <div class="text-center text-gray-500">Žiadne dámske služby neboli nájdené.</div>
-            )}
-          </div>
-          <h2 class="text-3xl font-bold text-gray-900 mb-8">Pánske služby</h2>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-            {panske && panske.length > 0 ? (
-              panske.map((service) => (
-                <div class="relative bg-white rounded-2xl shadow-lg border-2 p-8 border-gray-200 hover:border-primary-300 transition-all duration-300">
-                  <div class="text-center mb-8">
-                    <h3 class="text-2xl font-bold text-gray-900 mb-2">{service.post_title}</h3>
-                    <div class="text-4xl font-bold text-primary-600 mb-2">{service.post_price ? `${service.post_price}€` : ''}</div>
-                    <p class="text-gray-600">{service.post_desc}</p>
-                  </div>
-                  <a
-                    href="/kontakty"
-                    class="w-full block text-center py-3 px-6 rounded-lg font-semibold transition-all bg-primary-600 hover:bg-primary-700 text-white shadow-lg hover:shadow-xl transform hover:scale-105"
-                  >
-                    Vybrať službu
-                  </a>
-                </div>
-              ))
-            ) : (
-              <div class="text-center text-gray-500">Žiadne pánske služby neboli nájdené.</div>
-            )}
-          </div>
-        </>
-      )}
-    </div>
-  </section>
+    <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+      <!-- Dámske služby -->
+      <h2 class="mb-12 text-3xl font-bold text-center text-gray-900">Dámsky cenník</h2>
 
-  <!-- Additional Services -->
-  <!-- Doplnkové služby môžu byť zobrazené podľa typu v services, ak existujú -->
-  <!-- Ak API poskytuje typ služby alebo kategóriu, je možné filtrovať a zobraziť ich tu. -->
-
-  <!-- Price Calculator Section -->
-  <section class="py-20 bg-white">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-12">
-        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-          Orientačná kalkulácia
-        </h2>
-        <p class="text-xl text-gray-600">
-          Získajte orientačnú cenu pre požadované služby
-        </p>
+      <div class="mb-16">
+        <h3 class="pb-2 mb-8 text-2xl font-semibold border-b-2 text-primary-600 border-primary-200">Strihy a styling</h3>
+        <ul class="space-y-4">
+          <li><strong>Strih</strong> (1 h) – <span class="font-bold text-primary-600">od 30 €</span> <span class="text-gray-500">(umytie, strihanie, styling)</span></li>
+          <li><strong>Finálny styling</strong> (30 min.) – <span class="font-bold text-primary-600">od 20 €</span> <span class="text-gray-500">(úprava účesu na konkrétnu príležitosť)</span></li>
+          <li><strong>Spoločenský účes</strong> (1 h) – <span class="font-bold text-primary-600">40 €</span> <span class="text-gray-500">(detailný styling na spoločenské udalosti)</span></li>
+          <li><strong>Fúkaná (polodlhé vlasy)</strong> (30 min.) – <span class="font-bold text-primary-600">20 €</span></li>
+          <li><strong>Fúkaná (dlhé vlasy)</strong> (1 h) – <span class="font-bold text-primary-600">30 €</span></li>
+        </ul>
       </div>
 
-      <div class="bg-gray-50 rounded-2xl p-8">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <!-- Calculator Form -->
-          <div class="space-y-6">
-            <h3 class="text-xl font-semibold text-gray-900 mb-4">Zadajte požadované služby</h3>
+      <div class="mb-16">
+        <h3 class="pb-2 mb-8 text-2xl font-semibold border-b-2 text-primary-600 border-primary-200">Copríky a špeciálne účesy</h3>
+        <ul class="space-y-4">
+          <li><strong>Copíky / braids</strong> (4 h) – <span class="font-bold text-primary-600">od 30 €</span> <span class="text-gray-500">(komplexné pletenie a styling)</span></li>
+        </ul>
+      </div>
 
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">
-                Typ služby
-              </label>
-              <select id="service-type" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
-                <option value="haircut">Strihanie</option>
-                <option value="coloring">Farbenie</option>
-                <option value="balayage">Balayage</option>
-                <option value="treatment">Ošetrenie</option>
-                <option value="styling">Styling</option>
-                <option value="wedding">Svadobný účes</option>
-              </select>
-            </div>
+      <div class="mb-16">
+        <h3 class="pb-2 mb-8 text-2xl font-semibold border-b-2 text-primary-600 border-primary-200">Ošetrenie a keratín</h3>
+        <ul class="space-y-4">
+          <li><strong>Brazílsky keratín</strong> (3 h) – <span class="font-bold text-primary-600">od 130 €</span> <span class="text-gray-500">(hlboká regenerácia a vyhladenie vlasov)</span></li>
+          <li><strong>Methamorphyc exclusive</strong> (1 h 30 min.) – <span class="font-bold text-primary-600">50 €</span> <span class="text-gray-500">(exkluzívna kúra s intenzívnou starostlivosťou)</span></li>
+          <li><strong>Methamorphyc quick</strong> (1 h) – <span class="font-bold text-primary-600">od 35 €</span> <span class="text-gray-500">(rýchla regenerácia a lesk vlasov)</span></li>
+        </ul>
+      </div>
 
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">
-                Dĺžka vlasov
-              </label>
-              <select id="hair-length" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
-                <option value="short">Krátke</option>
-                <option value="medium">Stredné</option>
-                <option value="long">Dlhé</option>
-                <option value="verylong">Veľmi dlhé</option>
-              </select>
-            </div>
+      <div class="mb-16">
+        <h3 class="pb-2 mb-8 text-2xl font-semibold border-b-2 text-primary-600 border-primary-200">Farbenie a odlesky</h3>
+        <ul class="space-y-4">
+          <li><strong>Farbenie (celé vlasy)</strong> (2 h) – <span class="font-bold text-primary-600">70 €</span></li>
+          <li><strong>Farbenie (odrasty)</strong> (1 h 30 min.) – <span class="font-bold text-primary-600">45 €</span></li>
+          <li><strong>Farbenie + strih (celé vlasy)</strong> (2 h) – <span class="font-bold text-primary-600">90 €</span></li>
+          <li><strong>Farbenie + strih (odrasty)</strong> (2 h) – <span class="font-bold text-primary-600">60 €</span></li>
+          <li><strong>Zosvetľovanie / gumovanie farby</strong> (4 h) – <span class="font-bold text-primary-600">od 160 €</span></li>
+          <li><strong>Čistenie odleskov</strong> (3 h) – <span class="font-bold text-primary-600">od 100 €</span></li>
+        </ul>
+      </div>
 
-            <div class="space-y-3">
-              <label class="flex items-center">
-                <input type="checkbox" id="wash" class="rounded border-gray-300 text-primary-600 focus:ring-primary-500">
-                <span class="ml-2 text-gray-700">Umytie vlasov</span>
-              </label>
-              <label class="flex items-center">
-                <input type="checkbox" id="treatment" class="rounded border-gray-300 text-primary-600 focus:ring-primary-500">
-                <span class="ml-2 text-gray-700">Ošetrenie vlasov</span>
-              </label>
-              <label class="flex items-center">
-                <input type="checkbox" id="makeup" class="rounded border-gray-300 text-primary-600 focus:ring-primary-500">
-                <span class="ml-2 text-gray-700">Líčenie</span>
-              </label>
-            </div>
+      <div class="mb-16">
+        <h3 class="pb-2 mb-8 text-2xl font-semibold border-b-2 text-primary-600 border-primary-200">Melíry a balayage</h3>
+        <ul class="space-y-4">
+          <li><strong>Melír (odrasty)</strong> (3 h) – <span class="font-bold text-primary-600">od 120 €</span></li>
+          <li><strong>Melír (celé vlasy)</strong> (4 h) – <span class="font-bold text-primary-600">od 150 €</span></li>
+          <li><strong>Balayage (doplnenie odrastov)</strong> (3 h) – <span class="font-bold text-primary-600">od 120 €</span></li>
+          <li><strong>Balayage (celé vlasy)</strong> (4 h) – <span class="font-bold text-primary-600">od 150 €</span></li>
+          <li><strong>Airtouch (doplnenie odrastov)</strong> (4 h) – <span class="font-bold text-primary-600">od 140 €</span></li>
+          <li><strong>Airtouch (celé vlasy)</strong> (5 h) – <span class="font-bold text-primary-600">od 170 €</span></li>
+        </ul>
+      </div>
 
-            <button
-              id="calculate-btn"
-              class="w-full bg-primary-600 hover:bg-primary-700 text-white py-3 px-6 rounded-lg font-semibold transition-all transform hover:scale-105"
-            >
-              Vypočítať orientačnú cenu
-            </button>
-          </div>
+      <div class="mb-16">
+        <h3 class="pb-2 mb-8 text-2xl font-semibold border-b-2 text-primary-600 border-primary-200">Predlžovanie vlasov</h3>
+        <ul class="space-y-4">
+          <li><strong>Napojenie TAPE IN</strong> (1 h) – <span class="font-bold text-primary-600">od 40 €</span></li>
+          <li><strong>Prepojenie TAPE IN</strong> (2 h 30 min.) – <span class="font-bold text-primary-600">od 120 €</span></li>
+        </ul>
+      </div>
 
-          <!-- Result -->
-          <div class="bg-white rounded-lg p-6 border-2 border-dashed border-gray-300 flex items-center justify-center">
-            <div id="result" class="text-center">
-              <div class="text-3xl font-bold text-primary-600 mb-2">0€</div>
-              <p class="text-gray-600">Orientačná cena</p>
-              <p class="text-sm text-gray-500 mt-2">*Konečná cena sa stanoví po obhliadke</p>
-            </div>
-          </div>
-        </div>
+      <!-- Pánske služby -->
+      <h2 class="mb-12 text-3xl font-bold text-center text-gray-900">Pánsky cenník</h2>
+
+      <div class="mb-16">
+        <h3 class="pb-2 mb-8 text-2xl font-semibold border-b-2 text-primary-600 border-primary-200">Strihy a úprava vlasov</h3>
+        <ul class="space-y-4">
+          <li><strong>Pánsky strih</strong> – <span class="font-bold text-primary-600">19 €</span></li>
+          <li><strong>Junior strih</strong> – <span class="font-bold text-primary-600">15 €</span></li>
+          <li><strong>Vlasy + brada</strong> – <span class="font-bold text-primary-600">27 €</span></li>
+          <li><strong>Pánsky špeciál</strong> – <span class="font-bold text-primary-600">50 €</span></li>
+        </ul>
+      </div>
+
+      <div class="mb-16">
+        <h3 class="pb-2 mb-8 text-2xl font-semibold border-b-2 text-primary-600 border-primary-200">Brada a fúzy</h3>
+        <ul class="space-y-4">
+          <li><strong>Úprava brady</strong> – <span class="font-bold text-primary-600">12 €</span></li>
+          <li><strong>Farbenie brady</strong> – <span class="font-bold text-primary-600">10 €</span></li>
+        </ul>
+      </div>
+
+      <div class="mb-16">
+        <h3 class="pb-2 mb-8 text-2xl font-semibold border-b-2 text-primary-600 border-primary-200">Farbenie a špeciálne techniky</h3>
+        <ul class="space-y-4">
+          <li><strong>Tónovanie šedín</strong> (30 min.) – <span class="font-bold text-primary-600">10 €</span></li>
+          <li><strong>Zosvetľovanie vlasov</strong> (1 h 30 min.) – <span class="font-bold text-primary-600">40 €</span></li>
+          <li><strong>Trvalá ondulácia</strong> (1 h 30 min.) – <span class="font-bold text-primary-600">40 €</span></li>
+        </ul>
+      </div>
+
+      <div class="mb-16">
+        <h3 class="pb-2 mb-8 text-2xl font-semibold border-b-2 text-primary-600 border-primary-200">Wellness & starostlivosť</h3>
+        <ul class="space-y-4">
+          <li><strong>Depilácia nosa</strong> (10 min.) – <span class="font-bold text-primary-600">5 €</span></li>
+          <li><strong>Depilácia uší</strong> (10 min.) – <span class="font-bold text-primary-600">5 €</span></li>
+          <li><strong>Peeling / čierna maska</strong> (25 min.) – <span class="font-bold text-primary-600">10 €</span></li>
+          <li><strong>Ušné sviečky</strong> (20 min.) – <span class="font-bold text-primary-600">10 €</span></li>
+        </ul>
       </div>
     </div>
   </section>
+
 
   <!-- CTA Section -->
   <section class="py-20 bg-primary-600">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+    <div class="max-w-4xl px-4 mx-auto text-center sm:px-6 lg:px-8">
+      <h2 class="mb-4 text-3xl font-bold text-white md:text-4xl">
         Chcete presnejšiu cenovú ponuku?
       </h2>
-      <p class="text-xl text-primary-100 mb-8">
+      <p class="mb-8 text-xl text-primary-100">
         Kontaktujte nás pre osobnú konzultáciu a cenovú ponuku šitú na mieru vašim potrebám.
       </p>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <div class="flex flex-col justify-center gap-4 sm:flex-row">
         <a
           href="/kontakty"
-          class="bg-white text-primary-600 hover:bg-gray-100 px-8 py-4 rounded-lg text-lg font-semibold transition-all transform hover:scale-105 shadow-lg"
+          class="px-8 py-4 text-lg font-semibold transition-all transform bg-white rounded-lg shadow-lg text-primary-600 hover:bg-gray-100 hover:scale-105"
         >
           Rezervovať konzultáciu
         </a>
         <a
           href="tel:+421949459624"
-          class="border-2 border-white text-white hover:bg-white hover:text-primary-600 px-8 py-4 rounded-lg text-lg font-semibold transition-all"
+          class="px-8 py-4 text-lg font-semibold text-white transition-all border-2 border-white rounded-lg hover:bg-white hover:text-primary-600"
         >
           +421 949 459 624
         </a>
@@ -229,54 +221,14 @@ try {
   <Footer />
 </BaseLayout>
 
-<script>
-  function calculatePrice() {
-    const serviceType = document.getElementById('service-type') as HTMLSelectElement;
-    const hairLength = document.getElementById('hair-length') as HTMLSelectElement;
-    const wash = document.getElementById('wash') as HTMLInputElement;
-    const treatment = document.getElementById('treatment') as HTMLInputElement;
-    const makeup = document.getElementById('makeup') as HTMLInputElement;
-    const result = document.getElementById('result');
-
-    if (!result) return;
-
-    let basePrice = 0;
-    switch(serviceType.value) {
-      case 'haircut': basePrice = 25; break;
-      case 'coloring': basePrice = 60; break;
-      case 'balayage': basePrice = 80; break;
-      case 'treatment': basePrice = 40; break;
-      case 'styling': basePrice = 35; break;
-      case 'wedding': basePrice = 70; break;
-      default: basePrice = 25;
-    }
-
-    const lengthMultiplier = hairLength.value === 'short' ? 1 : hairLength.value === 'medium' ? 1.2 : hairLength.value === 'long' ? 1.5 : 2;
-    const washPrice = wash.checked ? 10 : 0;
-    const treatmentPrice = treatment.checked ? 25 : 0;
-    const makeupPrice = makeup.checked ? 30 : 0;
-
-    const totalPrice = Math.round((basePrice * lengthMultiplier + washPrice + treatmentPrice + makeupPrice));
-
-    if (totalPrice > 0) {
-      result.innerHTML = `
-        <div class="text-3xl font-bold text-primary-600 mb-2">${totalPrice}€</div>
-        <p class="text-gray-600">Orientačná cena</p>
-        <p class="text-sm text-gray-500 mt-2">*Konečná cena sa stanoví pri rezervácii</p>
-      `;
-    } else {
-      result.innerHTML = `
-        <div class="text-3xl font-bold text-primary-600 mb-2">0€</div>
-        <p class="text-gray-600">Orientačná cena</p>
-        <p class="text-sm text-gray-500 mt-2">*Konečná cena sa stanoví pri rezervácii</p>
-      `;
-    }
-  }
-
-  document.getElementById('calculate-btn')?.addEventListener('click', calculatePrice);
-  document.getElementById('service-type')?.addEventListener('change', calculatePrice);
-  document.getElementById('hair-length')?.addEventListener('change', calculatePrice);
-  document.getElementById('wash')?.addEventListener('change', calculatePrice);
-  document.getElementById('treatment')?.addEventListener('change', calculatePrice);
-  document.getElementById('makeup')?.addEventListener('change', calculatePrice);
-</script>
+<style>
+ .logo-hero {
+   display: block;
+   max-width: 180px;
+   animation: floatLogo 3s ease-in-out infinite;
+ }
+ @keyframes floatLogo {
+   0%, 100% { transform: translateY(0); }
+   50% { transform: translateY(-12px); }
+ }
+</style>

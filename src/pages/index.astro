@@ -138,74 +138,83 @@ const testimonials = [
   <Header />
 
   <!-- Hero Section with Starry Background -->
-  <section class="relative min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-emerald-900 overflow-hidden">
+  <section class="relative min-h-screen overflow-hidden bg-gradient-to-br from-gray-900 via-purple-900 to-emerald-900">
     <!-- Starry Background Animation -->
     <div class="absolute inset-0">
       <div class="stars"></div>
       <div class="twinkling"></div>
       <div class="clouds"></div>
     </div>
-    
+
+    <!-- Logo Placement -->
+    <div class="absolute z-50 top-8 left-8">
+      <img
+        src="https://cloud.papihairdesign.sk/wp-content/uploads/2025/10/logo-e1761780357968.png"
+        alt="Papi Hair Design logo"
+        class="logo-hero"
+      />
+    </div>
+
     <!-- Background Image with Overlay -->
     <div class="absolute inset-0">
       <img 
         src="/assets/6af2e6b989a158cee5230ee1698e84b3.jpg" 
         alt="PAPI Hair Design Studio"
-        class="w-full h-full object-cover opacity-20"
+        class="object-cover w-full h-full opacity-20"
       />
       <div class="absolute inset-0 bg-gradient-to-br from-gray-900/90 via-purple-900/80 to-emerald-900/90"></div>
     </div>
 
     <!-- Main Content -->
-    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+    <div class="relative z-10 px-4 py-32 mx-auto max-w-7xl sm:px-6 lg:px-8">
+      <div class="grid items-center grid-cols-1 gap-16 lg:grid-cols-2">
         <!-- Left Column - Content -->
         <div class="text-center lg:text-left">
-          <div class="mb-8">
-            <span class="inline-flex items-center px-4 py-2 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-sm font-semibold mb-4">
-              🏆 Hair Awards Slovakia Winner 2024
-            </span>
-          </div>
+           <div class="mb-8">
+             <!-- Replace the external logo URL with the local file path -->
+             <span class="inline-flex items-center px-4 py-2 mb-4 text-sm font-semibold border rounded-full bg-emerald-500/20 border-emerald-400/30 text-emerald-300">
+               🏆 Hair Awards Slovakia Winner 2024
+             </span>
+           </div>
+
+           <h1 class="mb-8 text-5xl font-bold leading-tight text-white md:text-7xl">
+             PAPI <span class="text-transparent bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text glow-text">Hair Design</span>
+           </h1>
           
-          <h1 class="text-5xl md:text-7xl font-bold text-white leading-tight mb-8">
-            PAPI <span class="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent glow-text">Hair Design</span>
-          </h1>
-          
-          <h2 class="text-2xl md:text-3xl text-gray-200 font-light mb-8 leading-relaxed">
-            Luxury Hair Studio s <span class="text-emerald-400 font-semibold">AI technológiou</span><br/>
-            Kde sa kaderníctvo stretáva s <span class="text-purple-400 font-semibold">umením</span>
+          <h2 class="mb-8 text-2xl font-light leading-relaxed text-gray-200 md:text-3xl">
+            Luxury Hair Studio s <span class="font-semibold text-emerald-400">AI technológiou</span><br/>
+            Kde sa kaderníctvo stretáva s <span class="font-semibold text-purple-400">umením</span>
           </h2>
           
-          <p class="text-xl text-gray-300 mb-12 leading-relaxed max-w-2xl">
+          <p class="max-w-2xl mb-12 text-xl leading-relaxed text-gray-300">
             Jediné hair štúdio na východnom Slovensku s AI analýzou vlasov. 
             <strong class="text-white">16 rokov</strong> tradície, <strong class="text-emerald-400">medzinárodné certifikáty</strong> 
             a <strong class="text-purple-400">99.2% spokojnosť</strong> klientov.
           </p>
 
           <!-- CTA Buttons -->
-          <div class="flex flex-col sm:flex-row gap-6 mb-12">
+          <div class="flex flex-col gap-6 mb-12 sm:flex-row">
             <a
               href="/kontakty"
-              class="group bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white px-10 py-5 rounded-full text-xl font-bold transition-all duration-300 transform hover:scale-105 shadow-2xl glow-button"
+              class="px-10 py-5 text-xl font-bold text-white transition-all duration-300 transform rounded-full shadow-2xl group bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 hover:scale-105 glow-button"
             >
               <span class="flex items-center justify-center">
                 Rezervovať termín
-                <svg class="w-6 h-6 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-6 h-6 ml-2 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
                 </svg>
               </span>
-            </a>
             <a
               href="#ai-analysis"
-              class="border-2 border-emerald-400/50 text-emerald-300 hover:bg-emerald-400/10 hover:border-emerald-400 px-10 py-5 rounded-full text-xl font-bold transition-all duration-300 backdrop-blur-lg"
+              class="px-10 py-5 text-xl font-bold transition-all duration-300 border-2 rounded-full border-emerald-400/50 text-emerald-300 hover:bg-emerald-400/10 hover:border-emerald-400 backdrop-blur-lg"
             >
               🤖 Vyskúšať AI analýzu
             </a>
           </div>
 
           <!-- Bubble Animation Section - 100vh Perfect Pixel Layout -->
-          <div class="mb-8 relative w-full" style="height: 100vh; min-height: 100vh; max-height: 100vh;">
-            <div class="particle-container absolute inset-0 overflow-hidden">
+          <div class="relative w-full mb-8" style="height: 100vh; min-height: 100vh; max-height: 100vh;">
+            <div class="absolute inset-0 overflow-hidden particle-container">
               <!-- Bubbles Animation -->
               <div class="particle" style="width: 1.4411px; height: 1.4411px; left: 55.696%; bottom: -1.4411px; animation-delay: 4.87302s; animation-duration: 16.3585s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 4.45672px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
               <div class="particle" style="width: 1.00618px; height: 1.00618px; left: 30.6716%; bottom: -1.00618px; animation-delay: 7.94045s; animation-duration: 15.6655s; box-shadow: rgba(255, 215, 0, 0.7) 0px 0px 5.8544px; background: rgba(255, 215, 0, 0.8); border-radius: 50%;"></div>
@@ -262,17 +271,17 @@ const testimonials = [
             <!-- Animation Text Overlay -->
             <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-transparent via-black/20 to-transparent">
               <div class="text-center text-white">
-                <h3 class="text-4xl md:text-6xl font-bold mb-4 glow-text">✨ PAPI Magic ✨</h3>
-                <p class="text-xl md:text-2xl text-yellow-300 animate-pulse">Bublinky kreativity a krásy</p>
+                <h3 class="mb-4 text-4xl font-bold md:text-6xl glow-text">✨ PAPI Magic ✨</h3>
+                <p class="text-xl text-yellow-300 md:text-2xl animate-pulse">Bublinky kreativity a krásy</p>
               </div>
             </div>
           </div>
 
           <!-- Hero Stats -->
-          <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="grid grid-cols-2 gap-6 lg:grid-cols-4">
             {stats.map((stat) => (
-              <div class="text-center bg-white/5 backdrop-blur-lg rounded-xl p-4 border border-white/10 hover:bg-white/10 transition-all">
-                <div class="text-2xl mb-1">{stat.icon}</div>
+              <div class="p-4 text-center transition-all border bg-white/5 backdrop-blur-lg rounded-xl border-white/10 hover:bg-white/10">
+                <div class="mb-1 text-2xl">{stat.icon}</div>
                 <div class="text-2xl font-bold text-white glow-text">
                   <AnimatedCounter value={stat.number} suffix={stat.suffix} client:visible />
                 </div>
@@ -287,19 +296,19 @@ const testimonials = [
           {heroServices.map((service, index) => (
             <div class={`group relative bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-6 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-2 ${service.highlight ? 'ring-2 ring-emerald-400/50' : ''}`}>
               {service.badge && (
-                <div class="absolute -top-2 -right-2 bg-gradient-to-r from-emerald-400 to-teal-500 text-white px-3 py-1 rounded-full text-xs font-bold">
+                <div class="absolute px-3 py-1 text-xs font-bold text-white rounded-full -top-2 -right-2 bg-gradient-to-r from-emerald-400 to-teal-500">
                   {service.badge}
                 </div>
               )}
               <div class="flex items-start space-x-4">
-                <div class="text-4xl flex-shrink-0">
+                <div class="flex-shrink-0 text-4xl">
                   {service.icon}
                 </div>
                 <div>
-                  <h3 class="text-xl font-bold text-white mb-2 group-hover:text-emerald-300 transition-colors">
+                  <h3 class="mb-2 text-xl font-bold text-white transition-colors group-hover:text-emerald-300">
                     {service.title}
                   </h3>
-                  <p class="text-gray-300 group-hover:text-gray-200 transition-colors">
+                  <p class="text-gray-300 transition-colors group-hover:text-gray-200">
                     {service.description}
                   </p>
                 </div>
@@ -312,7 +321,7 @@ const testimonials = [
 
     <!-- Floating Elements -->
     <div class="absolute top-20 left-10 animate-float">
-      <div class="w-4 h-4 bg-emerald-400 rounded-full glow-dot"></div>
+      <div class="w-4 h-4 rounded-full bg-emerald-400 glow-dot"></div>
     </div>
     <div class="absolute top-40 right-20 animate-float-delayed">
       <div class="w-6 h-6 bg-purple-400 rounded-full glow-dot"></div>
@@ -327,38 +336,30 @@ const testimonials = [
 
   <!-- AI Hair Analysis Section -->
   <section id="ai-analysis" class="py-24 bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-600">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+    <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+      <div class="grid items-center grid-cols-1 gap-16 lg:grid-cols-2">
         <div class="text-white">
           <div class="flex items-center mb-6">
-            <span class="text-5xl mr-4">🤖</span>
+            <span class="mr-4 text-5xl">🤖</span>
             <div>
-              <h2 class="text-4xl font-bold mb-2">AI Hair Analysis</h2>
-              <p class="text-emerald-100 text-lg">Prvé štúdio na Slovensku</p>
+              <h2 class="mb-2 text-4xl font-bold">AI Hair Analysis</h2>
+              <p class="text-lg text-emerald-100">Prvé štúdio na Slovensku</p>
             </div>
           </div>
           
-          <p class="text-xl text-emerald-100 mb-8 leading-relaxed">
+          <p class="mb-8 text-xl leading-relaxed text-emerald-100">
             Revolučná technológia, ktorá analyzuje váš typ vlasov, tvár a štýl pre 
             <strong class="text-white">personalizované odporúčania</strong>. 
             Zistite, ktorý strih a farba vám bude sedieť ešte pred návštevou štúdia!
           </p>
 
-          <div class="space-y-4 mb-8">
+          <div class="mb-8 space-y-4">
             <div class="flex items-center">
-              <svg class="w-6 h-6 text-emerald-300 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-              </svg>
-              <span class="text-emerald-100">Analýza typu vlasov a pokožky hlavy</span>
-            </div>
-            <div class="flex items-center">
-              <svg class="w-6 h-6 text-emerald-300 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-              </svg>
+              <svg class="w-6 h-6 mr-3 text-emerald-300" fill="currentColor" viewBox="0 0 20 20">
               <span class="text-emerald-100">Odporúčania na mieru pre váš typ tváre</span>
             </div>
             <div class="flex items-center">
-              <svg class="w-6 h-6 text-emerald-300 mr-3" fill="currentColor" viewBox="0 0 20 20">
+              <svg class="w-6 h-6 mr-3 text-emerald-300" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
               </svg>
               <span class="text-emerald-100">Virtuálny náhľad budúceho vzhľadu</span>
@@ -367,7 +368,7 @@ const testimonials = [
 
           <a
             href="/analyze"
-            class="inline-flex items-center bg-white text-emerald-600 hover:bg-gray-100 px-8 py-4 rounded-full text-lg font-bold transition-all duration-300 transform hover:scale-105 shadow-2xl"
+            class="inline-flex items-center px-8 py-4 text-lg font-bold transition-all duration-300 transform bg-white rounded-full shadow-2xl text-emerald-600 hover:bg-gray-100 hover:scale-105"
           >
             Spustiť AI analýzu
             <svg class="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -377,19 +378,19 @@ const testimonials = [
         </div>
 
         <div class="relative">
-          <div class="bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-8">
-            <div class="aspect-square bg-gradient-to-br from-white/20 to-white/5 rounded-2xl flex items-center justify-center">
+          <div class="p-8 border bg-white/10 backdrop-blur-lg border-white/20 rounded-3xl">
+            <div class="flex items-center justify-center aspect-square bg-gradient-to-br from-white/20 to-white/5 rounded-2xl">
               <div class="text-center text-white">
-                <div class="text-6xl mb-4">📱</div>
-                <h3 class="text-2xl font-bold mb-2">Nahrajte fotku</h3>
+                <div class="mb-4 text-6xl">📱</div>
+                <h3 class="mb-2 text-2xl font-bold">Nahrajte fotku</h3>
                 <p class="text-emerald-200">AI analyzuje za 30 sekúnd</p>
               </div>
             </div>
           </div>
-          <div class="absolute -top-6 -right-6 bg-white/20 backdrop-blur-lg rounded-xl p-4 border border-white/30">
+          <div class="absolute p-4 border -top-6 -right-6 bg-white/20 backdrop-blur-lg rounded-xl border-white/30">
             <span class="text-2xl">🎯</span>
           </div>
-          <div class="absolute -bottom-4 -left-4 bg-white/20 backdrop-blur-lg rounded-xl p-4 border border-white/30">
+          <div class="absolute p-4 border -bottom-4 -left-4 bg-white/20 backdrop-blur-lg rounded-xl border-white/30">
             <span class="text-2xl">✨</span>
           </div>
         </div>
@@ -399,45 +400,45 @@ const testimonials = [
 
   <!-- Premium Services Section -->
   <section class="py-24 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-20">
-        <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+    <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+      <div class="mb-20 text-center">
+        <h2 class="mb-6 text-4xl font-bold text-gray-900 md:text-5xl">
           Naše <span class="text-emerald-600">premium služby</span>
         </h2>
-        <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+        <p class="max-w-3xl mx-auto text-xl leading-relaxed text-gray-600">
           Každá služba je výsledkom <strong>rokov skúseností</strong> a <strong>medzinárodného školenia</strong>. 
           Používame len najkvalitnejšie produkty a najmodernejšie techniky.
         </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
         {services.map((service, index) => (
-          <div class="group relative bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
-            <div class="absolute -top-3 -right-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold text-sm">
+          <div class="relative p-8 transition-all duration-300 transform border border-gray-100 shadow-lg group bg-gradient-to-br from-gray-50 to-white rounded-2xl hover:shadow-2xl hover:-translate-y-2">
+            <div class="absolute flex items-center justify-center w-12 h-12 text-sm font-bold text-white rounded-full -top-3 -right-3 bg-gradient-to-r from-emerald-500 to-teal-600">
               {index + 1}
             </div>
 
-            <div class="w-16 h-16 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <div class="flex items-center justify-center w-16 h-16 mb-6 transition-transform bg-gradient-to-br from-emerald-100 to-teal-100 rounded-2xl group-hover:scale-110">
               <span class="text-2xl text-emerald-600">{service.icon === 'scissors' ? '✂️' : service.icon === 'palette' ? '🎨' : service.icon === 'heart' ? '💆‍♀️' : service.icon === 'star' ? '👰' : service.icon === 'sparkles' ? '✨' : '🔧'}</span>
             </div>
 
-            <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-emerald-600 transition-colors">
+            <h3 class="mb-3 text-xl font-bold text-gray-900 transition-colors group-hover:text-emerald-600">
               {service.title}
             </h3>
-            <p class="text-gray-600 mb-6 leading-relaxed">
+            <p class="mb-6 leading-relaxed text-gray-600">
               {service.description}
             </p>
 
-            <div class="space-y-3 mb-6">
-              <div class="flex justify-between items-center">
+            <div class="mb-6 space-y-3">
+              <div class="flex items-center justify-between">
                 <span class="text-sm text-gray-500">Cena:</span>
                 <span class="font-semibold text-emerald-600">{service.price}</span>
               </div>
-              <div class="flex justify-between items-center">
+              <div class="flex items-center justify-between">
                 <span class="text-sm text-gray-500">Trvanie:</span>
                 <span class="font-semibold text-gray-800">{service.duration}</span>
               </div>
-              <div class="flex justify-between items-center">
+              <div class="flex items-center justify-between">
                 <span class="text-sm text-gray-500">Úroveň:</span>
                 <span class={`font-semibold ${service.difficulty === 'Master' ? 'text-purple-600' : service.difficulty === 'Expert' ? 'text-blue-600' : service.difficulty === 'Specialist' ? 'text-orange-600' : 'text-green-600'}`}>
                   {service.difficulty}
@@ -445,19 +446,19 @@ const testimonials = [
               </div>
             </div>
 
-            <button class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white py-3 rounded-xl font-semibold transition-all duration-300 transform group-hover:scale-105">
+            <button class="w-full py-3 font-semibold text-white transition-all duration-300 transform bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 rounded-xl group-hover:scale-105">
               Rezervovať
             </button>
 
-            <div class="absolute top-4 right-4 w-8 h-8 bg-emerald-200 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-0 group-hover:scale-100"></div>
+            <div class="absolute w-8 h-8 transition-all duration-300 transform scale-0 rounded-full opacity-0 top-4 right-4 bg-emerald-200 group-hover:opacity-100 group-hover:scale-100"></div>
           </div>
         ))}
       </div>
 
-      <div class="text-center mt-16">
+      <div class="mt-16 text-center">
         <a
           href="/sluzby"
-          class="inline-flex items-center bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white px-10 py-5 rounded-full text-xl font-bold transition-all duration-300 transform hover:scale-105 shadow-2xl"
+          class="inline-flex items-center px-10 py-5 text-xl font-bold text-white transition-all duration-300 transform rounded-full shadow-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 hover:scale-105"
         >
           Zobraziť všetky služby
           <svg class="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -470,37 +471,37 @@ const testimonials = [
 
   <!-- Why Choose Us Section -->
   <section class="py-24 bg-gradient-to-br from-gray-50 to-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-20">
-        <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+    <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+      <div class="mb-20 text-center">
+        <h2 class="mb-6 text-4xl font-bold text-gray-900 md:text-5xl">
           Prečo si vybrať <span class="text-emerald-600">PAPI Hair Design</span>?
         </h2>
-        <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+        <p class="max-w-3xl mx-auto text-xl leading-relaxed text-gray-600">
           16 rokov tradície, medzinárodné certifikáty a stovky spokojných klientov. 
           Sme viac ako len kadernícky salón - sme váš partner pre dokonalý vzhľad.
         </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
         {features.map((feature, index) => (
-          <div class="group relative bg-white rounded-2xl p-8 shadow-lg border-2 border-emerald-100 hover:border-emerald-300 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl">
-            <div class="absolute inset-0 bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div class="relative p-8 transition-all duration-300 transform bg-white border-2 shadow-lg group rounded-2xl border-emerald-100 hover:border-emerald-300 hover:-translate-y-2 hover:shadow-2xl">
+            <div class="absolute inset-0 transition-opacity duration-300 opacity-0 bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-2xl group-hover:opacity-100"></div>
             
             <div class="relative z-10">
-              <div class="w-20 h-20 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+              <div class="flex items-center justify-center w-20 h-20 mx-auto mb-6 transition-transform duration-300 shadow-lg bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl group-hover:scale-110">
                 <span class="text-3xl">{feature.icon}</span>
               </div>
               
-              <h3 class="text-xl font-bold text-gray-900 mb-4 group-hover:text-emerald-700 transition-colors text-center">
+              <h3 class="mb-4 text-xl font-bold text-center text-gray-900 transition-colors group-hover:text-emerald-700">
                 {feature.title}
               </h3>
               
-              <p class="text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors text-center">
+              <p class="leading-relaxed text-center text-gray-600 transition-colors group-hover:text-gray-700">
                 {feature.description}
               </p>
             </div>
 
-            <div class="absolute top-4 right-4 w-8 h-8 bg-emerald-200 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-0 group-hover:scale-100"></div>
+            <div class="absolute w-8 h-8 transition-all duration-300 transform scale-0 rounded-full opacity-0 top-4 right-4 bg-emerald-200 group-hover:opacity-100 group-hover:scale-100"></div>
           </div>
         ))}
       </div>
@@ -509,19 +510,19 @@ const testimonials = [
 
   <!-- Testimonials Section -->
   <section class="py-24 bg-gradient-to-r from-gray-900 via-purple-900 to-emerald-900">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-16">
-        <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
+    <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+      <div class="mb-16 text-center">
+        <h2 class="mb-6 text-4xl font-bold text-white md:text-5xl">
           Čo hovoria naši <span class="text-emerald-400">klienti</span>
         </h2>
-        <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+        <p class="max-w-3xl mx-auto text-xl text-gray-300">
           Najlepším dôkazom našej kvality sú spokojní klienti, ktorí sa k nám radi vracia
         </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
         {testimonials.map((testimonial, index) => (
-          <div class="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-8 text-center hover:bg-white/10 transition-all duration-300">
+          <div class="p-8 text-center transition-all duration-300 border bg-white/5 backdrop-blur-lg border-white/10 rounded-2xl hover:bg-white/10">
             <div class="flex justify-center mb-4">
               {[...Array(testimonial.rating)].map((_, i) => (
                 <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
@@ -530,13 +531,13 @@ const testimonials = [
               ))}
             </div>
 
-            <blockquote class="text-white text-lg mb-6 italic leading-relaxed">
+            <blockquote class="mb-6 text-lg italic leading-relaxed text-white">
               "{testimonial.text}"
             </blockquote>
 
-            <div class="border-t border-white/20 pt-6">
-              <p class="text-emerald-400 font-bold text-lg">{testimonial.name}</p>
-              <p class="text-teal-400 text-sm font-medium">{testimonial.service}</p>
+            <div class="pt-6 border-t border-white/20">
+              <p class="text-lg font-bold text-emerald-400">{testimonial.name}</p>
+              <p class="text-sm font-medium text-teal-400">{testimonial.service}</p>
             </div>
           </div>
         ))}
@@ -545,40 +546,40 @@ const testimonials = [
   </section>
 
   <!-- Final CTA Section -->
-  <section class="py-24 bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-600 relative overflow-hidden">
+  <section class="relative py-24 overflow-hidden bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-600">
     <div class="absolute inset-0">
       <div class="stars"></div>
     </div>
     
-    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <h2 class="text-4xl md:text-5xl font-bold text-white mb-6 glow-text">
+    <div class="relative z-10 max-w-4xl px-4 mx-auto text-center sm:px-6 lg:px-8">
+      <h2 class="mb-6 text-4xl font-bold text-white md:text-5xl glow-text">
         Pripravení na <span class="text-yellow-300">transformáciu</span>?
       </h2>
-      <p class="text-xl text-emerald-100 mb-8 leading-relaxed">
+      <p class="mb-8 text-xl leading-relaxed text-emerald-100">
         Pridajte sa k tisíckam spokojných klientov a zažite kaderníctvo na najvyššej úrovni. 
         Vaša cesta k dokonalému vzhľadu začína jediným kliknutím.
       </p>
 
-      <div class="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-8 mb-8">
-        <h3 class="text-2xl font-bold text-white mb-4">🎉 Špeciálna ponuka pre nových klientov</h3>
-        <p class="text-emerald-100 mb-4">
-          Prvá konzultácia + AI analýza vlasov <span class="text-yellow-300 font-bold">ZADARMO</span>
+      <div class="p-8 mb-8 border bg-white/10 backdrop-blur-lg border-white/20 rounded-2xl">
+        <h3 class="mb-4 text-2xl font-bold text-white">🎉 Špeciálna ponuka pre nových klientov</h3>
+        <p class="mb-4 text-emerald-100">
+          Prvá konzultácia + AI analýza vlasov <span class="font-bold text-yellow-300">ZADARMO</span>
         </p>
         <p class="text-sm text-emerald-200">
           * Platné do konca tohto mesiaca. Nezlučiteľné s inými akciami.
         </p>
       </div>
 
-      <div class="flex flex-col sm:flex-row gap-6 justify-center">
+      <div class="flex flex-col justify-center gap-6 sm:flex-row">
         <a
           href="/kontakty"
-          class="bg-white text-emerald-600 hover:bg-yellow-50 hover:text-emerald-700 px-10 py-5 rounded-full text-xl font-bold transition-all duration-300 transform hover:scale-105 shadow-2xl glow-button"
+          class="px-10 py-5 text-xl font-bold transition-all duration-300 transform bg-white rounded-full shadow-2xl text-emerald-600 hover:bg-yellow-50 hover:text-emerald-700 hover:scale-105 glow-button"
         >
           Rezervovať termín
         </a>
         <a
           href="/sluzby"
-          class="border-2 border-white text-white hover:bg-white hover:text-emerald-600 px-10 py-5 rounded-full text-xl font-bold transition-all duration-300 backdrop-blur-lg"
+          class="px-10 py-5 text-xl font-bold text-white transition-all duration-300 border-2 border-white rounded-full hover:bg-white hover:text-emerald-600 backdrop-blur-lg"
         >
           Pozrieť služby
         </a>
@@ -649,6 +650,16 @@ const testimonials = [
     50% {
       transform: translateY(-20px);
     }
+  }
+
+  .logo-hero {
+    display: block;
+    max-width: 180px;
+    animation: floatLogo 3s ease-in-out infinite;
+  }
+  @keyframes floatLogo {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
   }
 
   /* Responsive adjustments */
