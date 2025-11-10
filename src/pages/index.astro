@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ServiceCard from '../components/ServiceCard.astro';
 import AnimatedCounter from '../components/AnimatedCounter.astro';
+import VirtualTryOn from '../components/hair-changer/VirtualTryOn';
 
 const heroServices = [
   {
@@ -138,7 +139,7 @@ const testimonials = [
   <Header />
 
   <!-- Hero Section with Starry Background -->
-  <section class="relative min-h-screen overflow-hidden bg-gradient-to-br from-gray-900 via-purple-900 to-emerald-900">
+  <section class="relative h-screen overflow-hidden bg-black">
     <!-- Starry Background Animation -->
     <div class="absolute inset-0">
       <div class="stars"></div>
@@ -587,16 +588,22 @@ const testimonials = [
     </div>
   </section>
 
-  <!-- PAPI HAIR STUDIO Button Above Footer - Centered -->
-  <div class="fixed z-50 transform -translate-x-1/2 bottom-20 left-1/2">
-    <button
-      onclick="window.location.href='/hair-changer/'"
-      class="flex items-center gap-2 px-6 py-3 font-bold text-white transition-all duration-300 transform rounded-full shadow-lg bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 hover:shadow-xl hover:scale-105"
-    >
-      <span>🏪</span>
-      PAPI HAIR STUDIO
-    </button>
-  </div>
+  <!-- Virtual Try On Section -->
+  <section id="virtual-try-on" class="py-24 bg-gradient-to-br from-gray-900 via-purple-900 to-emerald-900">
+    <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+      <div class="mb-16 text-center">
+        <h2 class="mb-6 text-4xl font-bold text-white md:text-5xl">
+          Virtual Try On <span class="text-emerald-400">AI</span>
+        </h2>
+        <p class="max-w-3xl mx-auto text-xl text-gray-300">
+          Vyskúšajte si nový účes pred návštevou salónu. Naša AI technológia vám ukáže,
+          ako by ste vyzerali s rôznymi štýlmi vlasov.
+        </p>
+      </div>
+
+      <VirtualTryOn client:load />
+    </div>
+  </section>
 
   <Footer />
 </BaseLayout>

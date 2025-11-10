@@ -14,10 +14,12 @@ Moderná webová aplikácia pre kaderníctvo s AI analýzou vlasov a inteligentn
 
 - **🎨 AI Analýza Vlasov** - Pokročilá analýza vlasov pomocou OpenAI Vision
 - **💬 Inteligentný Chatbot** - AI asistent pre kadernícke poradenstvo
-- **📱 Responzívny Dizajn** - Optimalizované pre všetky zariadenia
+- **📸 Virtual Try On AI** - Vyskúšajte si nový účes pred návštevou salónu pomocou Gemini AI
+- **� Responzívny Dizajn** - Optimalizované pre všetky zariadenia
 - **🔒 Bezpečná Autentifikácia** - Chránené API endpointy
 - **⚡ Vysoký Výkon** - Server-side rendering s Astro
 - **🎯 SEO Optimalizácia** - Rýchle načítavanie a vyhľadávanie
+- **🔄 Monorepo Architektúra** - Jedna aplikácia s integrovanými modulmi
 
 ## 🚀 Rýchly Štart
 

@@ -94,7 +94,7 @@ const availableServicesList = `
     `;
 
 // Generic function to call our backend proxy
-const API_BASE = (import.meta as any).env?.VITE_API_BASE || "";
+const API_BASE = (import.meta as any).env?.VITE_API_BASE || "http://localhost:5174";
 async function callApiProxy(action: string, payload: unknown) {
   const response = await fetch(`${API_BASE}/api/gemini`, {
     method: "POST",

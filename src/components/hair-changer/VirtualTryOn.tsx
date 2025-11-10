@@ -187,8 +187,7 @@ const HairstyleCard: React.FC<{
         />
         <div className="absolute inset-0 flex flex-col justify-end p-2 bg-gradient-to-t from-black/60 via-black/20 to-transparent sm:p-3">
           <h3
-            className="text-base font-bold text-white font-display sm:text-lg"
-            style={{ textShadow: "1px 1px 4px rgba(0,0,0,0.8)" }}
+            className="text-base font-bold text-white font-display sm:text-lg text-shadow-black"
           >
             {t(`style_${style.id}_name`)}
           </h3>
@@ -648,18 +647,20 @@ const VirtualTryOn: React.FC<{ sharedImage?: string }> = ({ sharedImage }) => {
           {t("vto_activateCameraPrompt")}
         </p>
         <div className="flex flex-col gap-4 mt-6">
+          <button
+            onClick={() => window.open('https://papi-hair-design.vercel.app', '_blank')}
+            className="px-8 py-4 text-lg font-bold text-white transition-all duration-300 transform rounded-full shadow-lg bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 hover:shadow-xl hover:scale-105"
+          >
+            SPUSTIŤ KONZULTÁCIU
+            <br />
+            <span className="text-sm font-normal opacity-90">Personalizovaná AI Analýza</span>
+          </button>
           <FancyButton
             onClick={handleStartCameraClick}
             className="text-base"
           >
             {t("vto_button_startCamera")}
           </FancyButton>
-          <button
-            onClick={() => window.open('https://papi-hair-design.vercel.app', '_blank')}
-            className="text-sm btn-primary"
-          >
-            PAPI HAIR STUDIO
-          </button>
         </div>
       </div>
     );
@@ -703,8 +704,7 @@ const VirtualTryOn: React.FC<{ sharedImage?: string }> = ({ sharedImage }) => {
       <div className="container px-4 mx-auto sm:px-6 lg:px-8">
         <div className="mb-20 text-center">
           <h2
-            className="font-serif text-5xl font-bold text-black md:text-6xl dark:text-white"
-            style={{ textShadow: "0 2px 10px rgba(0,0,0,0.1)" }}
+            className="font-serif text-5xl font-bold text-black md:text-6xl dark:text-white text-shadow-light"
           >
             {t("vto_title")}
           </h2>
@@ -716,8 +716,7 @@ const VirtualTryOn: React.FC<{ sharedImage?: string }> = ({ sharedImage }) => {
         </div>
 
         <div
-          className="flex items-center justify-center min-h-[500px]"
-          style={{ perspective: "1000px" }}
+          className="flex items-center justify-center min-h-[500px] perspective-1000"
         >
           <div key={viewState} className="w-full animate-flip-in">
             {renderInteractiveArea()}

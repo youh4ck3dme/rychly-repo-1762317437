@@ -1,6 +1,6 @@
 import { GoogleGenAI, Modality } from "@google/genai";
 
-const API_KEY = process.env.API_KEY || process.env.GEMINI_API_KEY;
+const API_KEY = import.meta.env.API_KEY || import.meta.env.GEMINI_API_KEY;
 
 let ai: GoogleGenAI | null = null;
 
@@ -57,7 +57,7 @@ export const editImageWithSofia = async (
     if (candidate?.content?.parts) {
       for (const part of candidate.content.parts) {
         if (part.inlineData) {
-          return { data: part.inlineData.data, error: null };
+          return { data: part.inlineData.data || null, error: null };
         }
       }
     }

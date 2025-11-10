@@ -18,7 +18,11 @@ function isValidImageUrl(url: string): boolean {
       return false;
     }
     // Basic check for image extensions or data URLs
-    const imageExtensions = [".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp"];
+    const imageExtensions = [
+      ".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp",
+      ".tiff", ".tif", ".svg", ".ico", ".heic", ".heif",
+      ".raw", ".cr2", ".nef", ".arw", ".dng"
+    ];
     const isDataUrl = url.startsWith("data:image/");
     const hasImageExtension = imageExtensions.some((ext) =>
       url.toLowerCase().includes(ext),

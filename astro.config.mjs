@@ -52,7 +52,7 @@ export default defineConfig({
   integrations: [
     tailwind(),
     preact({
-      include: ["**/preact/*", "**/screens/*", "**/ui/*"],
+      include: ["**/preact/*", "**/screens/*", "**/ui/*", "**/hair-changer/*"],
     }),
     sentry({
       dsn:

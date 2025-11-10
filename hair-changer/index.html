@@ -14,7 +14,10 @@
       name="keywords"
       content="hair changer, virtual hair changer, AI kaderník, zmena účesu online, zmena farby vlasov, Papi Hair Design, kaderníctvo Košice"
     />
-    <meta name="theme-color" content="#0b0f14" />
+    <!-- Theme color for supported browsers -->
+    <meta name="theme-color" content="#0b0f14" /> <!-- Chrome, Edge, Opera -->
+    <meta name="msapplication-TileColor" content="#0b0f14" /> <!-- Windows Phone/Edge -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" /> <!-- Safari/iOS -->
     <link rel="manifest" href="./public/manifest.json" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -42,7 +45,7 @@
     </script>
     <link rel="stylesheet" href="/index.css" />
   </head>
-  <body class="bg-white text-black dark:bg-black dark:text-white">
+  <body class="text-black bg-white dark:bg-black dark:text-white">
     <div id="root"></div>
     <script type="module" src="./index.tsx"></script>
     <script>
