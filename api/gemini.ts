@@ -1,4 +1,12 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
+import { GoogleGenAI } from "@google/genai";
+
+// Initialize Gemini API
+const API_KEY = process.env.GEMINI_API_KEY;
+if (!API_KEY) {
+  throw new Error("GEMINI_API_KEY environment variable is required");
+}
+const ai = new GoogleGenAI({ apiKey: API_KEY });
 
 // Simple in-memory rate limit (IP based) - replace with durable store for production
 const rateMap = new Map<string, { count: number; ts: number }>();
@@ -62,48 +70,79 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     switch (action) {
       case "analyzeHair": {
-        // Placeholder: would call Google GenAI with schema
-        return json(res, 200, {
-          currentHair: {
-            color: "Dark Brown",
-            condition: "Healthy",
-            type: "Wavy",
+        const { imagePart, textPart, schema } = payload;
+        const result = await ai.models.generateContent({
+          model: "gemini-1.5-flash",
+          contents: [{ parts: [imagePart, textPart] }],
+          config: {
+            responseMimeType: "application/json",
+            responseSchema: schema,
           },
-          suggestions: [
-            {
-              name: "Caramel Dimension",
-              hairstyle: "Layered",
-              hex: "#B98555",
-              description: "Warm caramel layers enhance natural movement.",
-              services: ["Farbenie (celých vlasov)"],
-            },
-            {
-              name: "Ash Gloss Upgrade",
-              hairstyle: "Current Style",
-              hex: "#8A7F74",
-              description: "Soft neutral ash tone balances complexion.",
-              services: ["Farbenie (odrasty)"],
-            },
-          ],
         });
+        const candidate = result.candidates?.[0];
+        if (!candidate?.content?.parts?.[0]?.text) {
+          throw new Error("No response generated");
+        }
+        const response = JSON.parse(candidate.content.parts[0].text);
+        return json(res, 200, response);
       }
       case "virtualTryOn": {
-        return json(res, 200, {
-          imageUrl: "data:image/png;base64,MOCK_IMAGE_DATA",
+        const { imagePart, textPart } = payload;
+        const result = await ai.models.generateContent({
+          model: "gemini-2.0-flash-exp",
+          contents: [{ parts: [imagePart, textPart] }],
+          config: {
+            responseModalities: ["image"],
+          },
         });
+        const candidate = result.candidates?.[0];
+        if (!candidate?.content?.parts?.[0]?.inlineData) {
+          throw new Error("No image generated");
+        }
+        const imageUrl = `data:image/png;base64,${candidate.content.parts[0].inlineData.data}`;
+        return json(res, 200, { imageUrl });
       }
       case "editImage": {
-        // Placeholder for image editing with prompt
-        return json(res, 200, { data: "MOCK_BASE64_DATA" });
+        const { imagePart, textPart } = payload;
+        const result = await ai.models.generateContent({
+          model: "gemini-2.0-flash-exp",
+          contents: [{ parts: [imagePart, textPart] }],
+          config: {
+            responseModalities: ["image"],
+          },
+        });
+        const candidate = result.candidates?.[0];
+        if (!candidate?.content?.parts?.[0]?.inlineData) {
+          throw new Error("No image generated");
+        }
+        const data = candidate.content.parts[0].inlineData.data;
+        return json(res, 200, { data });
       }
       case "chat": {
-        const text = payload?.messages?.slice(-1)?.[0]?.text || "Hello";
-        return json(res, 200, { text: `Model reply: ${text}` });
+        const { messages, systemInstruction } = payload;
+        const chat = ai.chats.create({
+          model: "gemini-1.5-flash",
+          history: messages.slice(0, -1).map((msg: any) => ({
+            role: msg.role === "user" ? "user" : "model",
+            parts: [{ text: msg.text }],
+          })),
+          config: {
+            systemInstruction,
+          },
+        });
+        const lastMessage = messages[messages.length - 1];
+        const result = await chat.sendMessage(lastMessage.text);
+        const candidate = result.candidates?.[0];
+        if (!candidate?.content?.parts?.[0]?.text) {
+          throw new Error("No response generated");
+        }
+        return json(res, 200, { text: candidate.content.parts[0].text });
       }
       default:
         return json(res, 400, { error: "Unknown action" });
     }
   } catch (e: any) {
+    console.error("Gemini API error:", e);
     return json(res, 500, { error: e?.message || "Internal error" });
   }
 }

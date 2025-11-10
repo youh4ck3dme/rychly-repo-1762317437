@@ -1,6 +1,6 @@
 import { GoogleGenAI, Modality } from "@google/genai";
 
-const API_KEY = process.env.API_KEY;
+const API_KEY = process.env.API_KEY || process.env.GEMINI_API_KEY;
 
 let ai: GoogleGenAI | null = null;
 
@@ -33,7 +33,7 @@ export const editImageWithSofia = async (
 
     const response = await ai!.models.generateContent({
       // FIX: Use the correct model for image editing as per the guidelines.
-      model: "gemini-2.5-flash-image",
+      model: "gemini-2.0-flash-exp",
       contents: {
         // For this model, `contents` is a single Content object
         parts: [

@@ -197,6 +197,33 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
   animation: simpleFadeInUp 0.8s ease-out forwards;
 }
 
+/* Tablet-specific styles */
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Header menu color to black in tablet mode */
+  .glass-panel {
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+  }
+
+  .dark .glass-panel {
+    background: rgba(0, 0, 0, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.7);
+  }
+
+  /* Change purple background to black in tablet mode */
+  body {
+    background-color: #000000 !important;
+    background-image: none !important;
+  }
+
+  .dark body {
+    background-color: #000000 !important;
+    background-image: none !important;
+  }
+}
+
 /* Accessibility Focus Ring */
 *:focus-visible {
   outline: 3px solid var(--color-accent);
