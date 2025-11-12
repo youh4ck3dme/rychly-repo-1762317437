@@ -46,11 +46,13 @@ export const AnalysisScreen = React.memo(
       retryable?: boolean;
       showRetryButton?: boolean;
     } | null>(null);
+    const [analysisComplete, setAnalysisComplete] = useState(false);
     const { t } = useTranslation();
 
     const performAnalysis = useCallback(async () => {
       try {
         setIsRetrying(false);
+        setAnalysisComplete(false); // Reset completion state
         const result = await analyzeHairImage(
           userImage,
           consultationStyle,
@@ -58,6 +60,7 @@ export const AnalysisScreen = React.memo(
         );
         onAnalysisComplete(result);
         setErrorOptions(null); // Clear any previous error state
+        setAnalysisComplete(true); // Mark analysis as complete
       } catch (error) {
         // Log more detailed error information for debugging
         console.error("Detailed error during hair analysis:", error);
@@ -143,6 +146,7 @@ export const AnalysisScreen = React.memo(
         const options = { retryable, showRetryButton };
         setErrorOptions(options);
         onAnalysisError(userMessage, options);
+        setAnalysisComplete(true); // Mark analysis as complete even on error
       }
     }, [
       userImage,
@@ -153,6 +157,8 @@ export const AnalysisScreen = React.memo(
     ]);
 
     useEffect(() => {
+      setAnalysisComplete(false); // Reset completion state when inputs change
+      setCurrentStep(0); // Reset step counter when starting new analysis
       performAnalysis();
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userImage, consultationStyle, hairstylePreference]);
@@ -163,11 +169,17 @@ export const AnalysisScreen = React.memo(
     }, [performAnalysis]);
 
     useEffect(() => {
+      if (analysisComplete) return; // Don't start interval if analysis is already complete
+
       const interval = setInterval(() => {
-        setCurrentStep((prev) => (prev + 1) % analysisStepKeys.length);
+        setCurrentStep((prev) => {
+          const nextStep = (prev + 1) % analysisStepKeys.length;
+          return nextStep;
+        });
       }, 2000);
+
       return () => clearInterval(interval);
-    }, []);
+    }, [analysisComplete]);
 
     return (
       <div className="flex flex-col items-center justify-center flex-grow p-8 text-center text-white bg-black">

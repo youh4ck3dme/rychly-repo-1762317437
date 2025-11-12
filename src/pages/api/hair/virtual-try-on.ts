@@ -109,6 +109,17 @@ export const POST: APIRoute = secureAPI(
         processingTime: virtualTryOnResult.processingTime,
       };
 
+      // Detailed logging for successful API responses
+      console.log("Virtual try-on API success:", {
+        method: "ai",
+        confidence: virtualTryOnResult.confidence,
+        processingTime: virtualTryOnResult.processingTime,
+        imageSize: virtualTryOnResult.image?.length || 0,
+        suggestion: suggestion.name || "unknown",
+        timestamp: new Date().toISOString(),
+        userAgent: request.headers.get("user-agent"),
+      });
+
       return new Response(JSON.stringify(response), {
         status: 200,
         headers: {
@@ -117,29 +128,58 @@ export const POST: APIRoute = secureAPI(
         },
       });
     } catch (error: any) {
-      console.error("Virtual try-on error:", error);
+      // Enhanced error logging with detailed information
+      console.error("Virtual try-on API error:", {
+        error: error.message,
+        stack: error.stack,
+        userImage: userImage.substring(0, 100) + "...", // Truncate for logging
+        suggestion: JSON.stringify(suggestion),
+        timestamp: new Date().toISOString(),
+        userAgent: request.headers.get("user-agent"),
+        ip: request.headers.get("x-forwarded-for") || "unknown",
+      });
 
-      // Generate fallback image on error
+      // Generate validated fallback image on error
       try {
         const fallbackImage = await generateFallbackTryOn(
           userImage,
           suggestion,
         );
+
+        // Validate fallback data
+        if (!fallbackImage || typeof fallbackImage !== "string" || !fallbackImage.startsWith("data:")) {
+          throw new Error("Invalid fallback image generated");
+        }
+
+        console.log("Using fallback virtual try-on due to API error:", {
+          originalError: error.message,
+          fallbackMethod: "canvas-overlay",
+          timestamp: new Date().toISOString(),
+        });
+
         return new Response(
           JSON.stringify({
             image: fallbackImage,
             method: "fallback",
             note: `AI service unavailable: ${error.message}`,
+            errorDetails: process.env.NODE_ENV === "development" ? error.stack : undefined,
           }),
           {
             status: 200,
             headers: { "Content-Type": "application/json" },
           },
         );
-      } catch (fallbackError) {
+      } catch (fallbackError: any) {
+        console.error("Fallback generation failed:", {
+          fallbackError: fallbackError.message,
+          originalError: error.message,
+          timestamp: new Date().toISOString(),
+        });
+
         return new Response(
           JSON.stringify({
             error: "Virtual try-on service temporarily unavailable",
+            details: process.env.NODE_ENV === "development" ? fallbackError.message : undefined,
           }),
           {
             status: 503,
@@ -159,51 +199,68 @@ export const POST: APIRoute = secureAPI(
   },
 );
 
-// Fallback virtual try-on generator using canvas manipulation
+// Fallback virtual try-on generator - server-compatible
 async function generateFallbackTryOn(
   userImage: string,
   suggestion: any,
 ): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
-
-    if (!ctx) {
-      reject(new Error("Canvas not supported"));
-      return;
+  try {
+    // Validate inputs
+    if (!userImage || typeof userImage !== "string") {
+      throw new Error("Invalid user image URL");
     }
 
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.onload = () => {
-      canvas.width = img.width;
-      canvas.height = img.height;
+    if (!suggestion || typeof suggestion !== "object") {
+      throw new Error("Invalid suggestion object");
+    }
 
-      // Draw original image
-      ctx.drawImage(img, 0, 0);
-
-      // Apply color overlay based on suggestion
-      if (suggestion.hex) {
-        ctx.globalCompositeOperation = "multiply";
-        ctx.fillStyle = suggestion.hex;
-        ctx.globalAlpha = 0.3;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        // Reset
-        ctx.globalCompositeOperation = "source-over";
-        ctx.globalAlpha = 1;
-      }
-
-      // Add subtle text overlay
-      ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
-      ctx.font = "bold 24px Arial";
-      ctx.textAlign = "center";
-      ctx.fillText("PAPI", canvas.width / 2, canvas.height - 30);
-
-      resolve(canvas.toDataURL("image/jpeg", 0.9));
+    // For server-side, return a placeholder with suggestion info
+    // In production, this could be replaced with a proper image processing library
+    const placeholderData = {
+      originalImage: userImage,
+      suggestion: suggestion,
+      generatedAt: new Date().toISOString(),
+      method: "server-fallback",
     };
 
-    img.onerror = () => reject(new Error("Failed to load image"));
-    img.src = userImage;
-  });
+    // Create a simple SVG placeholder that can be displayed as an image
+    const svgContent = `
+      <svg width="400" height="600" xmlns="http://www.w3.org/2000/svg">
+        <rect width="100%" height="100%" fill="#f3f4f6"/>
+        <text x="50%" y="40%" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" fill="#6b7280">
+          Virtual Try-On Preview
+        </text>
+        <text x="50%" y="50%" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#9ca3af">
+          ${suggestion.name || "Hair Style"}
+        </text>
+        ${suggestion.hex ? `<rect x="45%" y="60%" width="10%" height="5%" fill="${suggestion.hex}"/>` : ""}
+        <text x="50%" y="80%" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#6b7280">
+          PAPI Hair Design
+        </text>
+      </svg>
+    `;
+
+    // Convert SVG to data URL
+    const svgDataUrl = `data:image/svg+xml;base64,${Buffer.from(svgContent).toString("base64")}`;
+
+    console.log("Generated fallback image:", {
+      method: "svg-placeholder",
+      suggestionName: suggestion.name,
+      hasColor: !!suggestion.hex,
+      timestamp: new Date().toISOString(),
+    });
+
+    return svgDataUrl;
+  } catch (error) {
+    console.error("Error generating fallback image:", error);
+    // Return a minimal fallback
+    return `data:image/svg+xml;base64,${Buffer.from(`
+      <svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+        <rect width="100%" height="100%" fill="#f3f4f6"/>
+        <text x="50%" y="50%" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#6b7280">
+          Preview Unavailable
+        </text>
+      </svg>
+    `).toString("base64")}`;
+  }
 }

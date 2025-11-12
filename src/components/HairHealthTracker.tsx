@@ -31,15 +31,27 @@ export const HairHealthTracker: React.FC<HairHealthTrackerProps> = ({
 
   useEffect(() => {
     // Load existing data from localStorage
-    const existing = localStorage.getItem("papi-hair-health-data");
-    if (existing) {
-      setHealthData(JSON.parse(existing));
+    try {
+      const existing = localStorage.getItem("papi-hair-health-data");
+      if (existing) {
+        setHealthData(JSON.parse(existing));
+      }
+    } catch (error) {
+      console.error("Failed to load hair health data from localStorage:", error);
+      // Initialize with empty array if data is corrupted
+      setHealthData([]);
     }
   }, []);
 
   const saveHealthData = (data: HairHealthData[]) => {
-    localStorage.setItem("papi-hair-health-data", JSON.stringify(data));
-    setHealthData(data);
+    try {
+      localStorage.setItem("papi-hair-health-data", JSON.stringify(data));
+      setHealthData(data);
+    } catch (error) {
+      console.error("Failed to save hair health data to localStorage:", error);
+      // Still update state even if localStorage fails
+      setHealthData(data);
+    }
   };
 
   const addNewEntry = () => {
@@ -108,7 +120,7 @@ export const HairHealthTracker: React.FC<HairHealthTrackerProps> = ({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
         onClick={onClose}
       >
         <motion.div
@@ -118,14 +130,14 @@ export const HairHealthTracker: React.FC<HairHealthTrackerProps> = ({
           className="bg-gradient-to-br from-gray-900 to-black border border-amber-400/30 rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="flex justify-between items-center mb-8">
-            <h2 className="text-3xl font-bold text-white flex items-center gap-3">
-              <div className="w-3 h-3 bg-amber-400 rounded-full animate-pulse"></div>
+          <div className="flex items-center justify-between mb-8">
+            <h2 className="flex items-center gap-3 text-3xl font-bold text-white">
+              <div className="w-3 h-3 rounded-full bg-amber-400 animate-pulse"></div>
               Hair Health Tracker
             </h2>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-white transition-colors"
+              className="text-gray-400 transition-colors hover:text-white"
             >
               <svg
                 className="w-6 h-6"
@@ -144,8 +156,8 @@ export const HairHealthTracker: React.FC<HairHealthTrackerProps> = ({
           </div>
 
           {/* Current Health Score */}
-          <div className="bg-gradient-to-r from-amber-900/20 to-amber-800/20 rounded-xl p-6 mb-8 border border-amber-400/30">
-            <h3 className="text-xl font-semibold text-amber-200 mb-4">
+          <div className="p-6 mb-8 border bg-gradient-to-r from-amber-900/20 to-amber-800/20 rounded-xl border-amber-400/30">
+            <h3 className="mb-4 text-xl font-semibold text-amber-200">
               Aktuálne skóre zdravia vlasov
             </h3>
             <div className="flex items-center gap-6">
@@ -210,13 +222,13 @@ export const HairHealthTracker: React.FC<HairHealthTrackerProps> = ({
           </div>
 
           {/* Add New Entry */}
-          <div className="bg-gray-800/50 rounded-xl p-6 mb-8">
-            <h3 className="text-xl font-semibold text-white mb-4">
+          <div className="p-6 mb-8 bg-gray-800/50 rounded-xl">
+            <h3 className="mb-4 text-xl font-semibold text-white">
               Pridať nový záznam
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block mb-2 text-sm font-medium text-gray-300">
                   Stav vlasov
                 </label>
                 <select
@@ -227,7 +239,7 @@ export const HairHealthTracker: React.FC<HairHealthTrackerProps> = ({
                       condition: e.target.value as HairHealthData["condition"],
                     })
                   }
-                  className="w-full bg-gray-700 text-white rounded-lg px-4 py-3 border border-gray-600 focus:border-amber-400 focus:outline-none"
+                  className="w-full px-4 py-3 text-white bg-gray-700 border border-gray-600 rounded-lg focus:border-amber-400 focus:outline-none"
                 >
                   <option value="excellent">Výborný</option>
                   <option value="good">Dobrý</option>
@@ -237,7 +249,7 @@ export const HairHealthTracker: React.FC<HairHealthTrackerProps> = ({
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block mb-2 text-sm font-medium text-gray-300">
                   Hydratácia (1-10)
                 </label>
                 <input
@@ -253,13 +265,13 @@ export const HairHealthTracker: React.FC<HairHealthTrackerProps> = ({
                   }
                   className="w-full"
                 />
-                <div className="text-center text-amber-400 font-semibold">
+                <div className="font-semibold text-center text-amber-400">
                   {newEntry.hydration}
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block mb-2 text-sm font-medium text-gray-300">
                   Lesk (1-10)
                 </label>
                 <input
@@ -275,13 +287,13 @@ export const HairHealthTracker: React.FC<HairHealthTrackerProps> = ({
                   }
                   className="w-full"
                 />
-                <div className="text-center text-amber-400 font-semibold">
+                <div className="font-semibold text-center text-amber-400">
                   {newEntry.shine}
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block mb-2 text-sm font-medium text-gray-300">
                   Sila (1-10)
                 </label>
                 <input
@@ -297,14 +309,14 @@ export const HairHealthTracker: React.FC<HairHealthTrackerProps> = ({
                   }
                   className="w-full"
                 />
-                <div className="text-center text-amber-400 font-semibold">
+                <div className="font-semibold text-center text-amber-400">
                   {newEntry.strength}
                 </div>
               </div>
             </div>
 
             <div className="mt-4">
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className="block mb-2 text-sm font-medium text-gray-300">
                 Poznámky (voliteľné)
               </label>
               <textarea
@@ -312,7 +324,7 @@ export const HairHealthTracker: React.FC<HairHealthTrackerProps> = ({
                 onChange={(e) =>
                   setNewEntry({ ...newEntry, notes: e.target.value })
                 }
-                className="w-full bg-gray-700 text-white rounded-lg px-4 py-3 border border-gray-600 focus:border-amber-400 focus:outline-none"
+                className="w-full px-4 py-3 text-white bg-gray-700 border border-gray-600 rounded-lg focus:border-amber-400 focus:outline-none"
                 rows={3}
                 placeholder="Pridajte poznámky o vašich vlasoch..."
               />
@@ -320,7 +332,7 @@ export const HairHealthTracker: React.FC<HairHealthTrackerProps> = ({
 
             <button
               onClick={addNewEntry}
-              className="w-full mt-6 bg-gradient-to-r from-amber-400 to-amber-600 text-black font-bold py-3 px-6 rounded-lg hover:from-amber-300 hover:to-amber-500 transition-all transform hover:scale-105"
+              className="w-full px-6 py-3 mt-6 font-bold text-black transition-all transform rounded-lg bg-gradient-to-r from-amber-400 to-amber-600 hover:from-amber-300 hover:to-amber-500 hover:scale-105"
             >
               Pridať záznam
             </button>
@@ -332,7 +344,7 @@ export const HairHealthTracker: React.FC<HairHealthTrackerProps> = ({
               História záznamov
             </h3>
             {healthData.length === 0 ? (
-              <div className="text-center py-8 text-gray-400">
+              <div className="py-8 text-center text-gray-400">
                 <svg
                   className="w-12 h-12 mx-auto mb-4 opacity-50"
                   fill="none"
@@ -352,16 +364,16 @@ export const HairHealthTracker: React.FC<HairHealthTrackerProps> = ({
                 </p>
               </div>
             ) : (
-              <div className="space-y-3 max-h-64 overflow-y-auto">
+              <div className="space-y-3 overflow-y-auto max-h-64">
                 {healthData.map((entry, index) => (
                   <motion.div
                     key={entry.date}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1 }}
-                    className="bg-gray-800/30 rounded-lg p-4 border border-gray-700/50"
+                    className="p-4 border rounded-lg bg-gray-800/30 border-gray-700/50"
                   >
-                    <div className="flex justify-between items-start mb-3">
+                    <div className="flex items-start justify-between mb-3">
                       <div
                         className={`px-3 py-1 rounded-full text-xs font-medium ${getConditionColor(entry.condition)}`}
                       >
@@ -380,19 +392,19 @@ export const HairHealthTracker: React.FC<HairHealthTrackerProps> = ({
 
                     <div className="grid grid-cols-3 gap-4 text-sm">
                       <div className="text-center">
-                        <div className="text-blue-400 font-semibold">
+                        <div className="font-semibold text-blue-400">
                           {entry.hydration}/10
                         </div>
                         <div className="text-gray-400">Hydratácia</div>
                       </div>
                       <div className="text-center">
-                        <div className="text-amber-400 font-semibold">
+                        <div className="font-semibold text-amber-400">
                           {entry.shine}/10
                         </div>
                         <div className="text-gray-400">Lesk</div>
                       </div>
                       <div className="text-center">
-                        <div className="text-green-400 font-semibold">
+                        <div className="font-semibold text-green-400">
                           {entry.strength}/10
                         </div>
                         <div className="text-gray-400">Sila</div>
@@ -400,8 +412,8 @@ export const HairHealthTracker: React.FC<HairHealthTrackerProps> = ({
                     </div>
 
                     {entry.notes && (
-                      <div className="mt-3 pt-3 border-t border-gray-700/50">
-                        <p className="text-gray-300 text-sm">{entry.notes}</p>
+                      <div className="pt-3 mt-3 border-t border-gray-700/50">
+                        <p className="text-sm text-gray-300">{entry.notes}</p>
                       </div>
                     )}
                   </motion.div>

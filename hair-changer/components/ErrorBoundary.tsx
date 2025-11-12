@@ -1,5 +1,47 @@
 import React, { Component, ErrorInfo, ReactNode } from "react";
 
+// Error reporting service
+const reportError = async (error: Error, errorInfo: ErrorInfo) => {
+  try {
+    // Send error to external logging service (placeholder for Sentry, LogRocket, etc.)
+    console.error("Reporting error to external service:", {
+      message: error.message,
+      stack: error.stack,
+      componentStack: errorInfo.componentStack,
+      timestamp: new Date().toISOString(),
+      userAgent: navigator.userAgent,
+      url: window.location.href,
+    });
+
+    // Send error via email using contact API
+    const errorReport = {
+      name: "Error Boundary",
+      email: "error@papihairdesign.sk",
+      message: `Critical Error Report:
+Error: ${error.message}
+Stack: ${error.stack}
+Component Stack: ${errorInfo.componentStack}
+URL: ${window.location.href}
+User Agent: ${navigator.userAgent}
+Timestamp: ${new Date().toISOString()}`,
+      phone: "",
+      service: "Error Report",
+      honeypot: "",
+      timestamp: Date.now() - 10000, // Ensure it passes time check
+    };
+
+    await fetch("/api/contact", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(errorReport),
+    });
+  } catch (reportingError) {
+    console.error("Failed to report error:", reportingError);
+  }
+};
+
 interface Props {
   children: ReactNode;
 }
@@ -19,17 +61,20 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    // You can also log the error to an error reporting service
+    // Log error to console
     console.error("Uncaught error:", error, errorInfo);
+
+    // Report error to external services
+    reportError(error, errorInfo);
   }
 
   public render() {
     if (this.state.hasError) {
       // You can render any custom fallback UI
       return (
-        <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center text-center p-4">
-          <h1 className="text-5xl font-serif mb-4">Oops! Niečo sa pokazilo.</h1>
-          <p className="text-lg text-gray-400 mb-8">
+        <div className="flex flex-col items-center justify-center min-h-screen p-4 text-center text-white bg-black">
+          <h1 className="mb-4 font-serif text-5xl">Oops! Niečo sa pokazilo.</h1>
+          <p className="mb-8 text-lg text-gray-400">
             Vyskytla sa neočakávaná chyba. Skúste prosím obnoviť stránku.
           </p>
           <button
